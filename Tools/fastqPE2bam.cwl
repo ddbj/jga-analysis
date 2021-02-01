@@ -50,11 +50,11 @@ inputs:
     doc: FastQ file from next-generation sequencers
   - id: outprefix
     type: string
-  - id: bwa_nthreads
+  - id: bwa_num_threads
     type: int
     doc: number of cpu cores to be used
     default: 1
-  - id: bwa_batch_size
+  - id: bwa_bases_per_batch
     type: int
     doc: bases in each batch
     default: 10000000
@@ -88,7 +88,7 @@ requirements:
       RG_LB: $(inputs.RG_LB)
       RG_SM: $(inputs.RG_SM)
       BAM: $(inputs.outprefix).bam
-      BWA_BATCH_SIZE: $(inputs.bwa_batch_size)
-      BWA_NTHREADS: $(inputs.bwa_nthreads)
+      BWA_BASES_PER_BATCH: $(inputs.bwa_bases_per_batch)
+      BWA_NUM_THREADS: $(inputs.bwa_num_threads)
       SORTSAM_JAVA_OPTIONS: $(inputs.sortsam_java_options)
       SORTSAM_MAX_RECORDS_IN_RAM: $(inputs.sortsam_max_records_in_ram)

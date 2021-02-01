@@ -3,8 +3,8 @@
 READ_GROUP=@RG\\tID:${RG_ID}\\tPL:${RG_PL}\\tPU:${RG_PU}\\tLB:${RG_LB}\\tSM:${RG_SM}
 
 /tools/bwa-0.7.15/bwa mem \
-    -t $BWA_NTHREADS \
-    -K $BWA_BATCH_SIZE \
+    -t $BWA_NUM_THREADS \
+    -K $BWA_BASES_PER_BATCH \
     -T 0 \
     -Y \
     -R $READ_GROUP \
