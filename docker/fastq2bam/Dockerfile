@@ -20,6 +20,10 @@ RUN apt-get update && \
     wget \
     zlib1g-dev
 
+RUN apt-get -y clean && \
+    apt-get -y autoremove && \
+    apt-get -y autoclean
+
 # bwa-0.7.15
 RUN wget http://sourceforge.net/projects/bio-bwa/files/bwa-0.7.15.tar.bz2 && \
     tar xjf bwa-0.7.15.tar.bz2 && \
@@ -46,6 +50,8 @@ RUN wget https://github.com/samtools/htslib/releases/download/1.9/htslib-1.9.tar
 # gatk-4.1.0.0
 RUN wget https://github.com/broadinstitute/gatk/releases/download/4.1.0.0/gatk-4.1.0.0.zip && \
     unzip gatk-4.1.0.0.zip && \
-    rm -f gatk-4.1.0.0.zip
+	rm -f gatk-4.1.0.0.zip
+
+COPY fastq2bam.sh .
 
 CMD ["/bin/bash"]

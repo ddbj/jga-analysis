@@ -6,20 +6,18 @@ label: fastqPE2bam
 cwlVersion: v1.1
 
 $namespaces:
-  edam: 'http://edamontology.org/'
+  edam: http://edamontology.org/
 
 hints:
   - class: DockerRequirement
-    dockerPull: 'fastq2bam'
+    dockerPull: ghcr.io/tafujino/human-seq-secondary/fastq2bam:latest
 
-baseCommand: [ /tools/bwa-0.7.15/bwa, mem ]
+baseCommand: [ bash, /tools/fastq2bam.sh ]
 
 inputs:
   - id: reference
     type: File
     format: edam:format_1929
-    inputBinding:
-      position: 4
     doc: FastA file for reference genome
     secondaryFiles:
       - .amb
@@ -42,41 +40,55 @@ inputs:
   - id: RG_SM
     type: string
     doc: Sample (SM) identifier in RG line
-  - id: fq1
+  - id: fastq1
     type: File
     format: edam:format_1930
-    inputBinding:
-      position: 5
     doc: FastQ file from next-generation sequencers
-  - id: fq2
+  - id: fastq2
     type: File
     format: edam:format_1930
-    inputBinding:
-      position: 6
     doc: FastQ file from next-generation sequencers
-  - id: nthreads
-    type: int
-    inputBinding:
-      prefix: -t
-      position: 3
-    doc: number of cpu cores to be used
   - id: outprefix
     type: string
+  - id: bwa_nthreads
+    type: int
+    doc: number of cpu cores to be used
+    default: 1
+  - id: bwa_batch_size
+    type: int
+    doc: bases in each batch
+    default: 10000000
+  - id: sortsam_java_options
+    type: string
+    default: -XX:-UseContainerSupport -Xmx30g
+  - id: sortsam_max_records_in_ram
+    type: int
+    default: 5000000
 
 outputs:
-  - id: sam
-    type: stdout
-    format: edam:format_2573
+  - id: bam
+    type: File
+    outputBinding:
+      glob: $(inputs.outprefix).bam
+    format: edam:format_2572
   - id: log
     type: stderr
 
-stdout: $(inputs.outprefix).sam
-stderr: $(inputs.outprefix).sam.log
+stderr: $(inputs.outprefix).bam.log
 
-arguments:
-  - position: 1
-    prefix: -K
-    valueFrom: "10000000"
-  - position: 2
-    prefix: -R
-    valueFrom: "@RG\tID:$(inputs.RG_ID)\tPL:$(inputs.RG_PL)\tPU:$(inputs.RG_PU)\tLB:$(inputs.RG_LB)\tSM:$(inputs.RG_SM)"
+requirements:
+  EnvVarRequirement:
+    envDef:
+      REFERENCE: $(inputs.reference.path)
+      FASTQ1: $(inputs.fastq1.path)
+      FASTQ2: $(inputs.fastq2.path)
+      RG_ID: $(inputs.RG_ID)
+      RG_PL: $(inputs.RG_PL)
+      RG_PU: $(inputs.RG_PU)
+      RG_LB: $(inputs.RG_LB)
+      RG_SM: $(inputs.RG_SM)
+      BAM: $(inputs.outprefix).bam
+      BWA_BATCH_SIZE: $(inputs.bwa_batch_size)
+      BWA_NTHREADS: $(inputs.bwa_nthreads)
+      SORTSAM_JAVA_OPTIONS: $(inputs.sortsam_java_options)
+      SORTSAM_MAX_RECORDS_IN_RAM: $(inputs.sortsam_max_records_in_ram)
