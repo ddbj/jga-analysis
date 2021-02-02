@@ -10,7 +10,7 @@ $namespaces:
 
 hints:
   DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram:latest
+    dockerPull: ghcr.io/biosciencedbc/jga-analysis/fastq2cram:latest
 
 baseCommand: [ samtools, index ]
 
