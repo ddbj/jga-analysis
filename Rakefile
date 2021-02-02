@@ -2,7 +2,7 @@
 
 require 'pathname'
 
-GITHUB_ACCOUNT = 'biosciencedbc'
+GITHUB_ACCOUNT = 'tafujino'
 REPOSITORY = 'jga-analysis'
 
 # @param workflow [String]
