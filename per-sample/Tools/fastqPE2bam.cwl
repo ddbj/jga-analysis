@@ -9,13 +9,13 @@ $namespaces:
   edam: http://edamontology.org/
 
 hints:
-  - class: DockerRequirement
-    dockerPull: ghcr.io/tafujino/human-seq-secondary/fastq2bam:latest
+  DockerRequirement:
+    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram:latest
 
 baseCommand: [ bash, /tools/fastq2bam.sh ]
 
 inputs:
-  - id: reference
+  reference:
     type: File
     format: edam:format_1929
     doc: FastA file for reference genome
@@ -25,53 +25,53 @@ inputs:
       - .bwt
       - .pac
       - .sa
-  - id: RG_ID
+  RG_ID:
     type: string
     doc: Read group identifier (ID) in RG line
-  - id: RG_PL
+  RG_PL:
     type: string
     doc: Platform/technology used to produce the read (PL) in RG line
-  - id: RG_PU
+  RG_PU:
     type: string
     doc: Platform Unit (PU) in RG line
-  - id: RG_LB
+  RG_LB:
     type: string
     doc: DNA preparation library identifier (LB) in RG line
-  - id: RG_SM
+  RG_SM:
     type: string
     doc: Sample (SM) identifier in RG line
-  - id: fastq1
+  fastq1:
     type: File
     format: edam:format_1930
     doc: FastQ file from next-generation sequencers
-  - id: fastq2
+  fastq2:
     type: File
     format: edam:format_1930
     doc: FastQ file from next-generation sequencers
-  - id: outprefix
+  outprefix:
     type: string
-  - id: bwa_num_threads
+  bwa_num_threads:
     type: int
     doc: number of cpu cores to be used
     default: 1
-  - id: bwa_bases_per_batch
+  bwa_bases_per_batch:
     type: int
     doc: bases in each batch
     default: 10000000
-  - id: sortsam_java_options
+  sortsam_java_options:
     type: string
     default: -XX:-UseContainerSupport -Xmx30g
-  - id: sortsam_max_records_in_ram
+  sortsam_max_records_in_ram:
     type: int
     default: 5000000
 
 outputs:
-  - id: bam
+  bam:
     type: File
     outputBinding:
       glob: $(inputs.outprefix).bam
     format: edam:format_2572
-  - id: log
+  log:
     type: stderr
 
 stderr: $(inputs.outprefix).bam.log

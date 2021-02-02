@@ -1,1 +1,1 @@
-# human-seq-secondary
+# jga-analysis

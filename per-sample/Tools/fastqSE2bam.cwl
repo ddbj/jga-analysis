@@ -10,7 +10,7 @@ $namespaces:
 
 hints:
   - class: DockerRequirement
-    dockerPull: ghcr.io/tafujino/human-seq-secondary/fastq2bam:latest
+    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram:latest
 
 baseCommand: [ bash, /tools/fastq2bam.sh ]
 
