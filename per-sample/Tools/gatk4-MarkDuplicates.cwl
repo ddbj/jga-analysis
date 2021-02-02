@@ -8,6 +8,9 @@ cwlVersion: v1.1
 $namespaces:
   edam: http://edamontology.org/
 
+requirements:
+  ShellCommandRequirement: {}
+
 hints:
   DockerRequirement:
     dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram:latest
@@ -16,8 +19,13 @@ baseCommand: /usr/bin/java
 
 inputs:
   in_bams:
-    type: File[]
-    format: edam:format_2572
+    type:
+      # Inside CommandInputArraySchema, file format (= format: edam:format_2572) cannot be specified
+      type: array
+      items: File
+      inputBinding:
+        prefix: -I=
+        separate: false
     inputBinding:
       position: 4
     doc: BAM files to be merged
@@ -28,6 +36,7 @@ inputs:
     default: -XX:-UseContainerSupport -Xmx30g
     inputBinding:
       position: 1
+      shellQuote: false
 
 outputs:
   markdup_bam:
