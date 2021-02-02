@@ -20,7 +20,7 @@ baseCommand: /usr/bin/java
 inputs:
   in_bams:
     type:
-      # Inside CommandInputArraySchema, file format (= format: edam:format_2572) cannot be specified
+      # Under CommandInputArraySchema, file format (= format: edam:format_2572) cannot be specified
       type: array
       items: File
       inputBinding:
