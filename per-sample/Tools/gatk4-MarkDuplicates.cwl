@@ -9,17 +9,12 @@ $namespaces:
   edam: http://edamontology.org/
 
 hints:
-  - class: DockerRequirement
+  DockerRequirement:
     dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram:latest
 
 baseCommand: /usr/bin/java
 
 inputs:
-  java_options:
-    type: string
-    default: -XX:-UseContainerSupport -Xmx30g
-    inputBinding:
-      position: 1
   in_bams:
     type: File[]
     format: edam:format_2572
@@ -28,6 +23,11 @@ inputs:
     doc: BAM files to be merged
   outprefix:
     type: string
+  java_options:
+    type: string
+    default: -XX:-UseContainerSupport -Xmx30g
+    inputBinding:
+      position: 1
 
 outputs:
   markdup_bam:
@@ -56,4 +56,5 @@ arguments:
     valueFrom: $(inputs.outprefix).markdup.bam
   - position: 6
     prefix: -M=
+    separate: false
     valueFrom: $(inputs.outprefix).markdup.metrics.txt
