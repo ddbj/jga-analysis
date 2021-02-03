@@ -18,6 +18,7 @@ inputs:
   bam:
     type: File
     format: edam:format_2572
+    doc: BAM to be coverted to CRAM
     inputBinding:
       position: 1
   reference:
