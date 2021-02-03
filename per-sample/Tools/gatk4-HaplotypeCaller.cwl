@@ -13,7 +13,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram:latest
+    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
 
 baseCommand: /usr/bin/java
 
