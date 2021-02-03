@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: gatk4-MarkDuplicates
-label: gatk4-MarkDuplicates
+id: gatk4-Haplotypecaller
+label: gatk4-Haplotypecaller
 cwlVersion: v1.1
 
 $namespaces:
