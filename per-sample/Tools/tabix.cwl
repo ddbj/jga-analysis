@@ -28,7 +28,7 @@ inputs:
       position: 1
 
 outputs:
-  tabix:
+  tbi:
     type: File
     format: edam:format_3616
     outputBinding:
