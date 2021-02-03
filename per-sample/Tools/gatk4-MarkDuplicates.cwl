@@ -20,7 +20,7 @@ baseCommand: /usr/bin/java
 inputs:
   in_bams:
     type:
-      # Under CommandInputArraySchema, file format (= format: edam:format_2572) cannot be specified
+      # Under CommandInputArraySchema, file format (= "format: edam:format_2572") cannot be specified
       type: array
       items: File
       inputBinding:
@@ -32,7 +32,7 @@ inputs:
   outprefix:
     type: string
   java_options:
-    type: string
+    type: string?
     default: -XX:-UseContainerSupport -Xmx30g
     inputBinding:
       position: 1
