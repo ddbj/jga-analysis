@@ -24,6 +24,7 @@ inputs:
     doc: FastA file for reference genome
     secondaryFiles:
       - .fai
+      - ^.dict
     inputBinding:
       prefix: -R=
       separate: false
@@ -31,6 +32,8 @@ inputs:
   cram:
     type: File
     format: edam:format_3462
+    secondaryFiles:
+      - .crai
     inputBinding:
       prefix: -I=
       separate: false
@@ -44,8 +47,6 @@ inputs:
       prefix: -L=
       separate: false
       position: 5
-  outprefix:
-    type: string
   java_options:
     type: string?
     default: -XX:-UseContainerSupport -Xmx14g
@@ -62,24 +63,20 @@ inputs:
   ploidy:
     type: int
     inputBinding:
-      prefix: --sample-ploidy
+      prefix: --sample-ploidy=
       separate: false
       position: 10
 
 outputs:
-  markdup_bam:
+  vcf:
     type: File
-    format: edam:format_2572
+    format: edam:format_3016
     outputBinding:
-      glob: $(inputs.outprefix).markdup.bam
-  metrics:
-    type: File
-    outputBinding:
-      glob: $(inputs.outprefix).markdup.metrics.txt
+      glob: $(inputs.cram.nameroot).$(inputs.interval_name).g.vcf
   log:
     type: stderr
 
-stderr: $(inputs.outprefix).markdup.log
+stderr: $(inputs.cram.nameroot).$(inputs.interval_name).g.vcf.log
 
 arguments:
   - position: 2
@@ -93,4 +90,4 @@ arguments:
   - position: 7
     prefix: -O=
     separate: false
-    valueFrom: $(inputs.cram.nameroot).$(input.interval_name).g.vcf
+    valueFrom: $(inputs.cram.nameroot).$(inputs.interval_name).g.vcf
