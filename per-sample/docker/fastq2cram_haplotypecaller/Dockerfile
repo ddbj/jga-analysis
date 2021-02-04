@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Takeshi Fujino <fujino@edu.k.u-tokyo.ac.jp>
+LABEL maintainer="fujino@edu.k.u-tokyo.ac.jp"
 
 WORKDIR /tools
 

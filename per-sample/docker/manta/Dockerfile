@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER Takeshi Fujino <fujino@edu.k.u-tokyo.ac.jp>
+LABEL maintainer="fujino@edu.k.u-tokyo.ac.jp"
 
 WORKDIR /tools
 
@@ -21,5 +21,7 @@ RUN wget https://github.com/Illumina/manta/releases/download/v1.6.0/manta-1.6.0.
     cd build && \
     ../manta-1.6.0.release_src/configure --jobs=4 --prefix=/manta && \
     make -j4 install
+
+COPY manta-germline.sh .
 
 CMD ["/bin/bash"]

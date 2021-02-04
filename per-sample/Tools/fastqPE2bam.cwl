@@ -8,6 +8,23 @@ cwlVersion: v1.1
 $namespaces:
   edam: http://edamontology.org/
 
+requirements:
+  EnvVarRequirement:
+    envDef:
+      REFERENCE: $(inputs.reference.path)
+      FASTQ1: $(inputs.fastq1.path)
+      FASTQ2: $(inputs.fastq2.path)
+      RG_ID: $(inputs.RG_ID)
+      RG_PL: $(inputs.RG_PL)
+      RG_PU: $(inputs.RG_PU)
+      RG_LB: $(inputs.RG_LB)
+      RG_SM: $(inputs.RG_SM)
+      BAM: $(inputs.outprefix).bam
+      BWA_BASES_PER_BATCH: $(inputs.bwa_bases_per_batch)
+      BWA_NUM_THREADS: $(inputs.bwa_num_threads)
+      SORTSAM_JAVA_OPTIONS: $(inputs.sortsam_java_options)
+      SORTSAM_MAX_RECORDS_IN_RAM: $(inputs.sortsam_max_records_in_ram)
+
 hints:
   DockerRequirement:
     dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
@@ -75,20 +92,3 @@ outputs:
     type: stderr
 
 stderr: $(inputs.outprefix).bam.log
-
-requirements:
-  EnvVarRequirement:
-    envDef:
-      REFERENCE: $(inputs.reference.path)
-      FASTQ1: $(inputs.fastq1.path)
-      FASTQ2: $(inputs.fastq2.path)
-      RG_ID: $(inputs.RG_ID)
-      RG_PL: $(inputs.RG_PL)
-      RG_PU: $(inputs.RG_PU)
-      RG_LB: $(inputs.RG_LB)
-      RG_SM: $(inputs.RG_SM)
-      BAM: $(inputs.outprefix).bam
-      BWA_BASES_PER_BATCH: $(inputs.bwa_bases_per_batch)
-      BWA_NUM_THREADS: $(inputs.bwa_num_threads)
-      SORTSAM_JAVA_OPTIONS: $(inputs.sortsam_java_options)
-      SORTSAM_MAX_RECORDS_IN_RAM: $(inputs.sortsam_max_records_in_ram)
