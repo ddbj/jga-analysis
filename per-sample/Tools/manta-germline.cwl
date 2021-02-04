@@ -47,6 +47,46 @@ inputs:
     default: ''
 
 outputs:
+  alignmentStatsSummary:
+    type: File
+    outputBinding:
+      glob: MantaWorkflow/results/stats/alignmentStatsSummary.txt
+  svCandidateGenerationStats_tsv:
+    type: File
+    outputBinding:
+      glob: Mantaworkflow/results/stats/svCandidateGenerationStats.tsv
+  svCandidateGenerationStats_xml:
+    type: File
+    outputBinding:
+      glob: Mantaworkflow/results/stats/svCandidateGenerationStats.xml
+  svLocusGraphStats_tsv:
+    type: File
+    outputBinding:
+      glob: Mantaworkflow/results/stats/svLocusGraphStats.tsv
+  candidateSV_vcf_gz:
+    type: File
+    outputBinding:
+      glob: Mantaworkflow/results/variants/candidateSV.vcf.gz
+  candidateSV_vcf_gz_tbi:
+    type: File
+    outputBinding:
+      glob: Mantaworkflow/results/variants/candidateSV.vcf.gz.tbi
+  candidateSmallIndels_vcf_gz:
+    type: File
+    outputBinding:
+      glob: Mantaworkflow/results/variants/candidateSmallIndels.vcf.gz
+  candidateSmallIndels_vcf_gz_tbi:
+    type: File
+    outputBinding:
+      glob: Mantaworkflow/results/variants/candidateSmallIndels.vcf.gz.tbi
+  diploidSV_vcf_gz:
+    type: File
+    outputBinding:
+      glob: Mantaworkflow/results/variants/diploidSV.vcf.gz
+  diploidSV_vcf_gz_tbi:
+    type: File
+    outputBinding:
+      glob: Mantaworkflow/results/variants/diploidSV.vcf.gz.tbi
   log:
     type: stderr
 
