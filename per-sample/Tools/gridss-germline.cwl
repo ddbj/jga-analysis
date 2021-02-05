@@ -9,14 +9,17 @@ $namespaces:
   edam: http://edamontology.org/
 
 requirements:
+  EnvVarRequirement:
+    envDef:
+      JAVA_TOOL_OPTIONS: ''
   DockerRequirement:
-    dockerPull: docker.io/gridss/gridss:2.10.2
+    dockerPull: gridss/gridss:2.10.2
   InitialWorkDirRequirement:
     listing:
       - entry: $(inputs.reference)
         writable: true # .gridsslock file should be created
 
-baseCommand: [ ]
+baseCommand: [ /opt/gridss/gridss.sh ]
 
 inputs:
   reference:
@@ -37,7 +40,7 @@ inputs:
     type: File
     format: edam:format_3462
     secondaryFiles:
-      - .bai
+      - .crai
     inputBinding:
       position: 1
   num_threads:
