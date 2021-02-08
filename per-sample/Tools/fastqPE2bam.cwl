@@ -42,6 +42,7 @@ inputs:
       - .bwt
       - .pac
       - .sa
+      - .alt
   RG_ID:
     type: string
     doc: Read group identifier (ID) in RG line
