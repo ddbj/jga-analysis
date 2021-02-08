@@ -53,6 +53,15 @@ inputs:
     default: 25g
 
 outputs:
+  vcf:
+    type: File
+    format: edam:format_3016
+    outputBinding:
+      glob: $(inputs.cram.nameroot).vcf
+  idx:
+    type: File
+    outputBinding:
+      glob: $(inputs.cram.nameroot).vcf.idx
   log:
     type: stderr
 
