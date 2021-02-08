@@ -9,6 +9,8 @@ $namespaces:
   edam: http://edamontology.org/
 
 requirements:
+  DockerRequirement:
+    dockerPull: ghcr.io/tafujino/jga-analysis/gridss:latest
   EnvVarRequirement:
     envDef:
       CRAM: $(inputs.cram.path)
@@ -16,10 +18,9 @@ requirements:
       ASSEMBLY: $(inputs.cram.nameroot).assembly.bam
       REFERENCE: $(inputs.reference.path)
       NUM_THREADS: $(inputs.num_threads)
+      GRIDSS_JAR: /opt/gridss/gridss-2.9.4-gridss-jar-with-dependencies.jar
       JAVA_TOOL_OPTIONS: $(inputs.java_tool_options)
       JVM_HEAP: $(inputs.jvm_heap)
-  DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/gridss:latest
 
 baseCommand: [ bash, /tools/gridss-germline.sh ]
 
