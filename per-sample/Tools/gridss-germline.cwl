@@ -11,15 +11,17 @@ $namespaces:
 requirements:
   EnvVarRequirement:
     envDef:
-      JAVA_TOOL_OPTIONS: ''
+      CRAM: $(inputs.cram.path)
+      VCF: $(inputs.cram.nameroot).vcf
+      ASSEMBLY: $(inputs.cram.nameroot).assembly.bam
+      REFERENCE: $(inputs.reference.path)
+      NUM_THREADS: $(inputs.num_threads)
+      JAVA_TOOL_OPTIONS: $(inputs.java_tool_options)
+      JVM_HEAP: $(inputs.jvm_heap)
   DockerRequirement:
-    dockerPull: gridss/gridss:2.10.2
-  InitialWorkDirRequirement:
-    listing:
-      - entry: $(inputs.reference)
-        writable: true # .gridsslock file should be created
+    dockerPull: ghcr.io/tafujino/jga-analysis/gridss:latest
 
-baseCommand: [ /opt/gridss/gridss.sh ]
+baseCommand: [ bash, /tools/gridss-germline.sh ]
 
 inputs:
   reference:
@@ -32,40 +34,25 @@ inputs:
       - .bwt
       - .pac
       - .sa
+      - .alt
       - .fai
-    inputBinding:
-      prefix: -r
-      position: 4
   cram:
     type: File
     format: edam:format_3462
     secondaryFiles:
       - .crai
-    inputBinding:
-      position: 1
   num_threads:
     type: int
     default: 1
-    inputBinding:
-      prefix: -t
-      position: 5
+  java_tool_options:
+    type: string
+    default: ''
+  jvm_heap:
+    type: string
+    default: 25g
 
 outputs:
   log:
     type: stderr
 
 stderr: $(inputs.cram.basename).vcf.log
-
-arguments:
-  - position: 2
-    prefix: -o
-    valueFrom: $(inputs.cram.nameroot).vcf
-  - position: 2
-    prefix: -a
-    valueFrom: $(inputs.cram.nameroot).assembly.bam
-  - position: 6
-    prefix: --picardoptions
-    valueFrom: VALIDATION_STRINGENCY=LENIENT
-  - position: 7
-    prefix: --workingdir
-    valueFrom: $(runtime.outdir)
