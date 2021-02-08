@@ -8,7 +8,7 @@ cwlVersion: v1.1
 $namespaces:
   edam: http://edamontology.org/
 
-hints:
+requirements:
   DockerRequirement:
     dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
 

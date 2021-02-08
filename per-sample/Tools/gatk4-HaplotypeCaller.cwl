@@ -9,11 +9,9 @@ $namespaces:
   edam: http://edamontology.org/
 
 requirements:
-  ShellCommandRequirement: {}
-
-hints:
   DockerRequirement:
     dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
+  ShellCommandRequirement: {}
 
 baseCommand: /usr/bin/java
 

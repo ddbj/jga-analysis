@@ -9,14 +9,12 @@ $namespaces:
   edam: http://edamontology.org/
 
 requirements:
+  DockerRequirement:
+    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
   InitialWorkDirRequirement:
     listing:
       - entry: $(inputs.vcf)
         writable: true
-
-hints:
-  DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
 
 baseCommand: bgzip
 

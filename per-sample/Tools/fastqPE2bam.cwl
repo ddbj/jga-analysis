@@ -9,6 +9,8 @@ $namespaces:
   edam: http://edamontology.org/
 
 requirements:
+  DockerRequirement:
+    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
   EnvVarRequirement:
     envDef:
       REFERENCE: $(inputs.reference.path)
@@ -24,10 +26,6 @@ requirements:
       BWA_NUM_THREADS: $(inputs.bwa_num_threads)
       SORTSAM_JAVA_OPTIONS: $(inputs.sortsam_java_options)
       SORTSAM_MAX_RECORDS_IN_RAM: $(inputs.sortsam_max_records_in_ram)
-
-hints:
-  DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
 
 baseCommand: [ bash, /tools/fastq2bam.sh ]
 

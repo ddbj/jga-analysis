@@ -9,6 +9,8 @@ $namespaces:
   edam: http://edamontology.org/
 
 requirements:
+  DockerRequirement:
+    dockerPull: ghcr.io/tafujino/jga-analysis/manta:latest
   ShellCommandRequirement: {}
   EnvVarRequirement:
     envDef:
@@ -16,10 +18,6 @@ requirements:
       BAM: $(inputs.cram.path)
       CONFIG_MANTA_OPTION: $(inputs.config_manta_option)
       WORKFLOW_OPTION: $(inputs.workflow_option)
-
-hints:
-  DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/manta:latest
 
 baseCommand: [ bash, /tools/manta-germline.sh ]
 
