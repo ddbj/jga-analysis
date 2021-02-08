@@ -11,25 +11,20 @@ $namespaces:
 requirements:
   DockerRequirement:
     dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
-  InitialWorkDirRequirement:
-    listing:
-      - entry: $(inputs.vcf)
-        writable: true
+  EnvVarRequirement:
+    envDef:
+      VCF: $(inputs.vcf.path)
+      NUM_THREADS: $(inputs.num_threads)
 
-baseCommand: bgzip
+baseCommand: [ bash, /tools/bgzip.sh ]
 
 inputs:
   vcf:
     type: File
     format: edam:format_3016
-    inputBinding:
-      position: 2
   num_threads:
     type: int
     default: 1
-    inputBinding:
-      prefix: -@
-      position: 1
 
 outputs:
   vcf_gz:

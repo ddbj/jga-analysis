@@ -50,8 +50,10 @@ RUN wget https://github.com/samtools/htslib/releases/download/1.9/htslib-1.9.tar
 # gatk-4.1.0.0
 RUN wget https://github.com/broadinstitute/gatk/releases/download/4.1.0.0/gatk-4.1.0.0.zip && \
     unzip gatk-4.1.0.0.zip && \
-	rm -f gatk-4.1.0.0.zip
+    rm -f gatk-4.1.0.0.zip
 
 COPY fastq2bam.sh .
+COPY bgzip.sh .
+COPY tabix.sh .
 
 CMD ["/bin/bash"]

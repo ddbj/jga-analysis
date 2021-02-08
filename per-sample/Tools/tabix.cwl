@@ -11,19 +11,16 @@ $namespaces:
 requirements:
   DockerRequirement:
     dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
-  InitialWorkDirRequirement:
-    listing:
-      - entry: $(inputs.vcf_gz)
-        writable: true
+  EnvVarRequirement:
+    envDef:
+      VCF_GZ: $(inputs.vcf_gz.path)
 
-baseCommand: [ tabix, -p, vcf ]
+baseCommand: [ bash, /tools/tabix.sh ]
 
 inputs:
   vcf_gz:
     type: File
     format: edam:format_3016
-    inputBinding:
-      position: 1
 
 outputs:
   tbi:
