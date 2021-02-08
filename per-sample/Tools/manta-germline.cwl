@@ -10,10 +10,6 @@ $namespaces:
 
 requirements:
   ShellCommandRequirement: {}
-  InitialWorkDirRequirement:
-    listing:
-      - entry: MantaWorkflow
-        writable: true
   EnvVarRequirement:
     envDef:
       REFERENCE: $(inputs.reference.path)
@@ -25,7 +21,7 @@ hints:
   DockerRequirement:
     dockerPull: ghcr.io/tafujino/jga-analysis/manta:latest
 
-baseCommand: [bash, /tools/manta-germline.sh ]
+baseCommand: [ bash, /tools/manta-germline.sh ]
 
 inputs:
   reference:
