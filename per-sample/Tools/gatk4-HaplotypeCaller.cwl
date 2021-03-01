@@ -36,6 +36,8 @@ inputs:
       prefix: -I=
       separate: false
       position: 6
+  sample_name:
+    type: string
   interval_name:
     type: string
   interval_bed:
@@ -70,11 +72,11 @@ outputs:
     type: File
     format: edam:format_3016
     outputBinding:
-      glob: $(inputs.cram.nameroot).$(inputs.interval_name).g.vcf
+      glob: $(inputs.sample_name).$(inputs.interval_name).g.vcf
   log:
     type: stderr
 
-stderr: $(inputs.cram.nameroot).$(inputs.interval_name).g.vcf.log
+stderr: $(inputs.sample_name).$(inputs.interval_name).g.vcf.log
 
 arguments:
   - position: 2
@@ -88,4 +90,4 @@ arguments:
   - position: 7
     prefix: -O=
     separate: false
-    valueFrom: $(inputs.cram.nameroot).$(inputs.interval_name).g.vcf
+    valueFrom: $(inputs.sample_name).$(inputs.interval_name).g.vcf

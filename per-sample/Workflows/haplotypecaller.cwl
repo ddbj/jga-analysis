@@ -21,6 +21,8 @@ inputs:
     format: edam:format_3462
     secondaryFiles:
       - .crai
+  sample_name:
+    type: string
   interval_name:
     type: string
   interval_bed:
@@ -44,6 +46,7 @@ steps:
     in:
       reference: reference
       cram: cram
+      sample_name: sample_name
       interval_name: interval_name
       interval_bed: interval_bed
       java_options: gatk4-HaplotypeCaller_java_options
