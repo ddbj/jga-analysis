@@ -29,7 +29,7 @@ inputs:
       position: 4
     doc: gVCF files to be imported
 
-  interval_name:
+  outprefix:
     type: string
   
   interval_bed:
@@ -75,11 +75,11 @@ outputs:
   genomics-db:
     type: Directory
     outputBinding:
-      glob: $(inputs.interval_name).genomics-db
+      glob: $(inputs.outprefix).genomics-db
   log:
     type: stderr
 
-stderr: $(inputs.interval_name).genomics-db.log
+stderr: $(inputs.outprefix).genomics-db.log
 
 arguments:
   - position: 2
@@ -90,6 +90,6 @@ arguments:
   - position: 5
     prefix: --genomicsdb-workspace-path=
     separate: false
-    valueFrom: $(inputs.interval_name).genomics-db
+    valueFrom: $(inputs.outprefix).genomics-db
 
   
