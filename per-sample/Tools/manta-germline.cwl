@@ -16,6 +16,7 @@ requirements:
     envDef:
       REFERENCE: $(inputs.reference.path)
       BAM: $(inputs.cram.path)
+      NUM_THREADS: $(inputs.num_threads)
       CONFIG_MANTA_OPTION: $(inputs.config_manta_option)
       WORKFLOW_OPTION: $(inputs.workflow_option)
 
@@ -33,6 +34,9 @@ inputs:
     format: edam:format_3462
     secondaryFiles:
       - .crai
+  num_threads:
+    type: int
+    default: 1
   config_manta_option:
     type: string
     default: ''
