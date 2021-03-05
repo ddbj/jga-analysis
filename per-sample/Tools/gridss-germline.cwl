@@ -14,7 +14,7 @@ requirements:
   EnvVarRequirement:
     envDef:
       CRAM: $(inputs.cram.path)
-      VCF: $(inputs.cram.nameroot).vcf
+      VCF: $(inputs.cram.nameroot).gridss.vcf
       ASSEMBLY: $(inputs.cram.nameroot).assembly.bam
       REFERENCE: $(inputs.reference.path)
       NUM_THREADS: $(inputs.num_threads)
@@ -57,12 +57,12 @@ outputs:
     type: File
     format: edam:format_3016
     outputBinding:
-      glob: $(inputs.cram.nameroot).vcf
+      glob: $(inputs.cram.nameroot).gridss.vcf
   idx:
     type: File
     outputBinding:
-      glob: $(inputs.cram.nameroot).vcf.idx
+      glob: $(inputs.cram.nameroot).gridss.vcf.idx
   log:
     type: stderr
 
-stderr: $(inputs.cram.basename).vcf.log
+stderr: $(inputs.cram.nameroot).gridss.vcf.log
