@@ -41,15 +41,15 @@ outputs:
     type: File
     format: edam:format_2572
     outputBinding:
-      glob: $(inputs.outprefix).markdup.bam
+      glob: $(inputs.outprefix).bam
   metrics:
     type: File
     outputBinding:
-      glob: $(inputs.outprefix).markdup.metrics.txt
+      glob: $(inputs.outprefix).metrics.txt
   log:
     type: stderr
 
-stderr: $(inputs.outprefix).markdup.log
+stderr: $(inputs.outprefix).log
 
 arguments:
   - position: 2
@@ -60,8 +60,8 @@ arguments:
   - position: 5
     prefix: -O=
     separate: false
-    valueFrom: $(inputs.outprefix).markdup.bam
+    valueFrom: $(inputs.outprefix).bam
   - position: 6
     prefix: -M=
     separate: false
-    valueFrom: $(inputs.outprefix).markdup.metrics.txt
+    valueFrom: $(inputs.outprefix).metrics.txt
