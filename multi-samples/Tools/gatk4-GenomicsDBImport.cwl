@@ -55,7 +55,8 @@ inputs:
       position: 1
       shellQuote: false
 
-  num_threads:
+    # Multithreaded reader initialization does not scale well beyond 5 threads.
+    num_threads:
     type: int
     default: 1
     inputBinding:
