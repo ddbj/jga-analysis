@@ -47,7 +47,7 @@ inputs:
 
   java_options:
     type: string?
-    default: -XX:-UseContainerSupport -Xmx14g
+    default: -XX:-UseContainerSupport -Xmx4g -Xms4g
     inputBinding:
       position: 1
       shellQuote: false
