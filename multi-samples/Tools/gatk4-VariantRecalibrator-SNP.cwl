@@ -117,6 +117,8 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.outprefix).tranches
+    secondaryFiles:
+      - .pdf
   R:
     type: File
     outputBinding:
