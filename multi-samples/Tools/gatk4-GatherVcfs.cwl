@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: picard-GatherVcfs
-label: picard-GatherVcfs
+id: gatk4-GatherVcfs
+label: gatk4-GatherVcfs
 cwlVersion: v1.1
 
 $namespaces:
