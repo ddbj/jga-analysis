@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_haplotypecaller:latest
+    dockerPull: broadinstitute/gatk:4.2.0.0
   ShellCommandRequirement: {}
 
 baseCommand: /usr/bin/java
@@ -21,8 +21,7 @@ inputs:
       type: array
       items: File
       inputBinding:
-        prefix: -V=
-        separate: false
+        prefix: -V
     secondaryFiles:
       - .tbi
     inputBinding:
@@ -36,16 +35,14 @@ inputs:
     type: File
     format: edam:format_3584
     inputBinding:
-      prefix: -L=
-      separate: false
+      prefix: -L
       position: 6
 
   batch_size:
     type: int
     default: 0
     inputBinding:
-      prefix: --batch-size=
-      separate: false
+      prefix: --batch-size
       position: 7
 
   java_options:
@@ -55,21 +52,19 @@ inputs:
       position: 1
       shellQuote: false
 
-    # Multithreaded reader initialization does not scale well beyond 5 threads.
+  # Multithreaded reader initialization does not scale well beyond 5 threads.
   num_threads:
     type: int
     default: 1
     inputBinding:
-      prefix: --reader-threads=
-      separate: false
+      prefix: --reader-threads
       position: 8
 
   interval_padding:
     type: int
     default: 0
     inputBinding:
-      prefix: --interval-padding=
-      separate: false
+      prefix: --interval-padding
       position: 9
       
 outputs:
@@ -85,12 +80,11 @@ stderr: $(inputs.outprefix).genomics-db.log
 arguments:
   - position: 2
     prefix: -jar
-    valueFrom: /tools/gatk-4.1.0.0/gatk-package-4.1.0.0-local.jar
+    valueFrom: /gatk/gatk-package-4.2.0.0-local.jar
   - position: 3
     valueFrom: GenomicsDBImport
   - position: 5
-    prefix: --genomicsdb-workspace-path=
-    separate: false
+    prefix: --genomicsdb-workspace-path
     valueFrom: $(inputs.outprefix).genomics-db
 
   
