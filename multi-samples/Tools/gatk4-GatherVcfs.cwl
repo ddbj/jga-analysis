@@ -45,7 +45,7 @@ outputs:
     outputBinding:
       glob: $(inputs.outprefix).vcf
     secondaryFiles:
-      - ^.idx
+      - .idx
   - id: log
     type: stderr
 
