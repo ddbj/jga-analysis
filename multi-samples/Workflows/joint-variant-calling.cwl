@@ -121,27 +121,6 @@ steps:
       java_options: gatk4-MakeSitesOnlyVcf_java_options
     out:
       [sites_only_vcf, log]
-      
-    
-  # samtools-bam2cram:
-  #   label: samtools-bam2cram
-  #   doc: Coverts BAM to CRAM
-  #   run: ../Tools/samtools-bam2cram.cwl
-  #   in:
-  #     bam: gatk4-MarkDuplicates/markdup_bam
-  #     reference: reference
-  #     num_threads: samtools_num_threads
-  #   out:
-  #     [cram, log]
-  # samtools-index:
-  #   label: samtools-index
-  #   doc: Indexes CRAM
-  #   run: ../Tools/samtools-index.cwl
-  #   in:
-  #     cram: samtools-bam2cram/cram
-  #     num_threads: samtools_num_threads
-  #   out:
-  #     [crai, log]
 
 outputs:
   genomics-db:
