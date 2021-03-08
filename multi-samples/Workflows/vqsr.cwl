@@ -142,6 +142,10 @@ inputs:
   gatk4-CollectVariantCallingMetrics_num_threads:
     type: int
     default: 1
+
+  bgzip_num_threads:
+    type: int
+    default: 1
     
 steps:
   gatk4-GatherVcfs:
@@ -245,6 +249,24 @@ steps:
       outprefix: outprefix
     out:
       [variant_calling_detail_metrics, variant_calling_summary_metrics, log]
+
+  bgzip:
+    label: bgzip
+    run: ../../per-sample/Tools/bgzip.cwl
+    in:
+      vcf: gatk4-ApplyVQSR-SNP/vqsr_vcf
+      num_threads: bgzip_num_threads
+    out:
+      [vcf_gz, log]
+
+  tabix:
+    label: tabix
+    run: ../../per-sample/Tools/tabix.cwl
+    in:
+      vcf_gz: bgzip/vcf_gz
+    out:
+      [tbi, log]
+      
         
 outputs:
   gather-vcfs_log:
@@ -265,7 +287,12 @@ outputs:
     
   filnal_vcf:
     type: File
-    outputSource: gatk4-ApplyVQSR-SNP/vqsr_vcf
+    format: edam:format_3016
+    outputSource: bgzip/vcf_gz
+
+  final_tbi:
+    type: File
+    outputSource: tabix/tbi
 
   summary_metrics:
     type: File
@@ -279,19 +306,26 @@ outputs:
     type: File
     outputSource: gatk4-VariantRecalibrator-INDEL/log
 
-  # vqsr-SNP_log:
-  #   type: File
-  #   outputSource: gatk4-VariantRecalibrator-SNP/log
+  vqsr-SNP_log:
+    type: File
+    outputSource: gatk4-VariantRecalibrator-SNP/log
 
-  # apply-vqsr-INDEL_log:
-  #   type: File
-  #   outputSource: gatk4-ApplyVQSR-INDEL/log
+  apply-vqsr-INDEL_log:
+    type: File
+    outputSource: gatk4-ApplyVQSR-INDEL/log
 
-  # apply-vqsr-SNP_log:
-  #   type: File
-  #   outputSource: gatk4-ApplyVQSR-SNP/log
+  apply-vqsr-SNP_log:
+    type: File
+    outputSource: gatk4-ApplyVQSR-SNP/log
 
-  # metrics_log:
-  #   type: File
-  #   outputSource: gatk4-CollectVariantCallingMetrics/log
+  metrics_log:
+    type: File
+    outputSource: gatk4-CollectVariantCallingMetrics/log
     
+  bgzip_log:
+    type: File
+    outputSource: bgzip/log
+    
+  tabix_log:
+    type: File
+    outputSource: tabix/log
