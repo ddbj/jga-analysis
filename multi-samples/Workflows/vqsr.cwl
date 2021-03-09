@@ -143,6 +143,9 @@ inputs:
     type: int
     default: 1
 
+  gatk4-MakeSitesOnlyVcf_java_options:
+    type: string?
+    
   bgzip_num_threads:
     type: int
     default: 1
@@ -267,7 +270,36 @@ steps:
     out:
       [tbi, log]
       
-        
+  gatk4-MakeSitesOnlyVcf:
+    label: gatk4-MakeSitesOnlyVcf
+    doc: Make sites-only vcf
+    run: ../Tools/gatk4-MakeSitesOnlyVcf.cwl
+    in:
+      vcf: gatk4-ApplyVQSR-SNP/vqsr_vcf
+      outprefix:
+        source: outprefix
+        valueFrom: $(inputs.outprefix).sites-only
+      java_options: gatk4-MakeSitesOnlyVcf_java_options
+    out:
+      [sites_only_vcf, log]
+
+  bgzip-sites-only:
+    label: bgzip
+    run: ../../per-sample/Tools/bgzip.cwl
+    in:
+      vcf: gatk4-MakeSitesOnlyVcf/sites_only_vcf
+      num_threads: bgzip_num_threads
+    out:
+      [vcf_gz, log]
+
+  tabix-sites-only:
+    label: tabix
+    run: ../../per-sample/Tools/tabix.cwl
+    in:
+      vcf_gz: bgzip-sites-only/vcf_gz
+    out:
+      [tbi, log]
+      
 outputs:
   gather-vcfs_log:
     type: File
@@ -294,6 +326,15 @@ outputs:
     type: File
     outputSource: tabix/tbi
 
+  sites_only_vcf:
+    type: File
+    format: edam:format_3016
+    outputSource: bgzip-sites-only/vcf_gz
+
+  sites_only_tbi:
+    type: File
+    outputSource: tabix-sites-only/tbi
+    
   summary_metrics:
     type: File
     outputSource: gatk4-CollectVariantCallingMetrics/variant_calling_summary_metrics
@@ -329,3 +370,16 @@ outputs:
   tabix_log:
     type: File
     outputSource: tabix/log
+
+  sites-only_log:
+    type: File
+    outputSource: gatk4-MakeSitesOnlyVcf/log
+
+  bgzip-sites-only_log:
+    type: File
+    outputSource: bgzip-sites-only/log
+
+  tabix-sites-only_log:
+    type: File
+    outputSource: tabix-sites-only/log
+    
