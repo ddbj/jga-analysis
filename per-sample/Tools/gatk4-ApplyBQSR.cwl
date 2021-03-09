@@ -74,6 +74,7 @@ inputs:
 outputs:
   out_bam:
     type: File
+    format: edam:format_2572
     outputBinding:
       glob: $(inputs.outprefix).bam
     secondaryFiles:
