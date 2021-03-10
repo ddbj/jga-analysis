@@ -29,7 +29,7 @@ inputs:
 
   cram:
     type: File
-    format: edam:format_2572
+    format: edam:format_3462
     doc: A CRAM file containing sequencing reads
     inputBinding:
       prefix: -I
