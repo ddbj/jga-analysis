@@ -109,9 +109,7 @@ steps:
       bam: gatk4-MarkDuplicates/markdup_bam
       use_original_qualities: use_original_qualities
       bqsr: gatk4-BaseRecalibrator/table
-      outprefix:
-        source: outprefix
-        valueFrom: $(inputs.outprefix).gatk4-ApplyBQSR
+      outprefix: outprefix
       java_options: gatk4-ApplyBQSR_java_options
     out:
       [out_bam, log]
