@@ -35,7 +35,6 @@ inputs:
       - .bwt
       - .pac
       - .sa
-      - .alt
       - .fai
   cram:
     type: File
