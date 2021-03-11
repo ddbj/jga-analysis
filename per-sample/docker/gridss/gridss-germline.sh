@@ -6,11 +6,10 @@ ln -s $REFERENCE.ann .
 ln -s $REFERENCE.bwt .
 ln -s $REFERENCE.pac .
 ln -s $REFERENCE.sa .
-ln -s $REFERENCE.alt .
 ln -s $REFERENCE.fai .
 
 /opt/gridss/gridss.sh \
-    $CRAM \
+    $BAM \
     -o $VCF \
     -a $ASSEMBLY \
     -r $(basename $REFERENCE) \

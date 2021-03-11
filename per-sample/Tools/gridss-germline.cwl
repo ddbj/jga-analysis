@@ -13,9 +13,9 @@ requirements:
     dockerPull: ghcr.io/tafujino/jga-analysis/gridss:latest
   EnvVarRequirement:
     envDef:
-      CRAM: $(inputs.cram.path)
-      VCF: $(inputs.cram.nameroot).gridss.vcf
-      ASSEMBLY: $(inputs.cram.nameroot).assembly.bam
+      BAM: $(inputs.bam.path)
+      VCF: $(inputs.bam.nameroot).gridss.vcf
+      ASSEMBLY: $(inputs.bam.nameroot).assembly.bam
       REFERENCE: $(inputs.reference.path)
       NUM_THREADS: $(inputs.num_threads)
       GRIDSS_JAR: /opt/gridss/gridss-2.9.4-gridss-jar-with-dependencies.jar
@@ -36,11 +36,9 @@ inputs:
       - .pac
       - .sa
       - .fai
-  cram:
+  bam:
     type: File
-    format: edam:format_3462
-    secondaryFiles:
-      - .crai
+    format: edam:format_2572
   num_threads:
     type: int
     default: 1
@@ -56,12 +54,12 @@ outputs:
     type: File
     format: edam:format_3016
     outputBinding:
-      glob: $(inputs.cram.nameroot).gridss.vcf
+      glob: $(inputs.bam.nameroot).gridss.vcf
   idx:
     type: File
     outputBinding:
-      glob: $(inputs.cram.nameroot).gridss.vcf.idx
+      glob: $(inputs.bam.nameroot).gridss.vcf.idx
   log:
     type: stderr
 
-stderr: $(inputs.cram.nameroot).gridss.vcf.log
+stderr: $(inputs.bam.nameroot).gridss.vcf.log
