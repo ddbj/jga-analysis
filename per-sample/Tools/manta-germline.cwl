@@ -97,4 +97,4 @@ outputs:
   log:
     type: stderr
 
-stderr: $(inputs.cram.basename).vcf.log
+stderr: $(inputs.cram.basename).manta.log
