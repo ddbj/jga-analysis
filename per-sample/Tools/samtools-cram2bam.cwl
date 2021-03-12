@@ -50,7 +50,9 @@ stderr: $(inputs.cram.nameroot).bam.log
 
 arguments:
   - position: 3
-    valueFrom: -C
+    valueFrom: -b
   - position: 4
+    valueFrom: -h
+  - position: 5
     prefix: -o
     valueFrom: $(inputs.cram.nameroot).bam
