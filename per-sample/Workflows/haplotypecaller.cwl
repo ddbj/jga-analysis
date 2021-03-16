@@ -55,7 +55,7 @@ steps:
     out:
       [vcf, log]
   bgzip:
-    label: gatk4-HaplotypeCaller
+    label: bgzip
     run: ../Tools/bgzip.cwl
     in:
       vcf: gatk4-HaplotypeCaller/vcf
