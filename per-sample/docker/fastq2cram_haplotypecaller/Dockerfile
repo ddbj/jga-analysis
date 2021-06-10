@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 LABEL maintainer="fujino@edu.k.u-tokyo.ac.jp"
 
 WORKDIR /tools
@@ -55,5 +55,6 @@ RUN wget https://github.com/broadinstitute/gatk/releases/download/4.1.0.0/gatk-4
 COPY fastq2bam.sh .
 COPY bgzip.sh .
 COPY tabix.sh .
+COPY optional-bqsr.sh .
 
 CMD ["/bin/bash"]
