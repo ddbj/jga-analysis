@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram_bqsr_haplotypecaller:latest
+    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram-bqsr-haplotypecaller:latest
   EnvVarRequirement:
     envDef:
       VCF_GZ: $(inputs.vcf_gz.path)
