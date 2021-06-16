@@ -28,9 +28,9 @@ inputs:
   interval_bed:
     type: File
     format: edam:format_3584
-  gatk4-HaplotypeCaller_java_options:
+  gatk4_HaplotypeCaller_java_options:
     type: string?
-  gatk4-HaplotypeCaller_num_threads:
+  gatk4_HaplotypeCaller_num_threads:
     type: int
     default: 1
   ploidy:
@@ -49,8 +49,8 @@ steps:
       sample_name: sample_name
       interval_name: interval_name
       interval_bed: interval_bed
-      java_options: gatk4-HaplotypeCaller_java_options
-      num_threads: gatk4-HaplotypeCaller_num_threads
+      java_options: gatk4_HaplotypeCaller_java_options
+      num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy: ploidy
     out:
       [vcf, log]

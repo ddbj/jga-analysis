@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   - class: StepInputExpressionRequirement
-  
+
 inputs:
   reference:
     type: File
@@ -19,7 +19,7 @@ inputs:
     secondaryFiles:
       - .fai
       - ^.dict
-      
+
   bams:
     type:
       type: array
@@ -44,26 +44,26 @@ inputs:
     secondaryFiles:
       - .tbi
     doc: Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-    
+
   known_indels:
     type: File
     format: edam:format_3016
     secondaryFiles:
       - .tbi
     doc: Homo_sapiens_assembly38.known_indels.vcf.gz
-    
+
   outprefix:
     type: string
-  
-  gatk4-MarkDuplicates_java_options:
+
+  gatk4_MarkDuplicates_java_options:
     type: string?
-  
-  gatk4-BaseRecalibrator_java_options:
+
+  gatk4_BaseRecalibrator_java_options:
     type: string?
-  
-  gatk4-ApplyBQSR_java_options:
+
+  gatk4_ApplyBQSR_java_options:
     type: string?
-  
+
   samtools_num_threads:
     type: int
     default: 1
@@ -77,8 +77,8 @@ steps:
       in_bams: bams
       outprefix:
         source: outprefix
-        valueFrom: $(inputs.outprefix).gatk4-MarkDuplicates
-      java_options: gatk4-MarkDuplicates_java_options
+        valueFrom: $(inputs.outprefix).gatk4_MarkDuplicates
+      java_options: gatk4_MarkDuplicates_java_options
     out:
       [markdup_bam, metrics, log]
 
@@ -95,8 +95,8 @@ steps:
       known_indels: known_indels
       outprefix:
         source: outprefix
-        valueFrom: $(inputs.outprefix).gatk4-BaseRecalibrator
-      java_options: gatk4-BaseRecalibrator_java_options
+        valueFrom: $(inputs.outprefix).gatk4_BaseRecalibrator
+      java_options: gatk4_BaseRecalibrator_java_options
     out:
       [table, log]
 
@@ -110,10 +110,10 @@ steps:
       use_original_qualities: use_original_qualities
       bqsr: gatk4-BaseRecalibrator/table
       outprefix: outprefix
-      java_options: gatk4-ApplyBQSR_java_options
+      java_options: gatk4_ApplyBQSR_java_options
     out:
       [out_bam, log]
-      
+
   samtools-bam2cram:
     label: samtools-bam2cram
     doc: Coverts BAM to CRAM
@@ -124,7 +124,7 @@ steps:
       num_threads: samtools_num_threads
     out:
       [cram, log]
-      
+
   samtools-index:
     label: samtools-index
     doc: Indexes CRAM
