@@ -4,6 +4,7 @@ echo $USE_BQSR
 
 if ! $USE_BQSR; then
     cp $BAM $OUT_PREFIX.bam
+    touch $OUT_PREFIX.recal_data.table
     exit 0
 fi
 
