@@ -18,15 +18,15 @@ requirements:
       REFERENCE: $(inputs.reference.path)
       BAM: $(inputs.bam.path)
       USE_ORIGINAL_QUALITIES: $(inputs.use_original_qualities)
-      GATK4_BASE_RECALIBRATOR_JAVA_OPTIONS: $(inputs.gatk4_base_recablirator_java_options)
-      GATK4_APPLY_BQSR_JAVA_OPTIONS: $(inputs.gatk4_apply_bqsr_java_options)
+      GATK4_BASE_RECALIBRATOR_JAVA_OPTIONS: $(inputs.gatk4_BaseRecalibrator_java_options)
+      GATK4_APPLY_BQSR_JAVA_OPTIONS: $(inputs.gatk4_ApplyBQSR_java_options)
       DBSNP: $(inputs.dbsnp.path)
       MILLS: $(inputs.mills.path)
       KNOWN_INDELS: $(inputs.known_indels.path)
       STATIC_QUANTIZED_QUALS_OPTIONS: |
         $(
           inputs.static_quantized_quals.map(
-            x => '--static-quantized-quals ' + String(x)
+            function(x) { '--static-quantized-quals ' + String(x) }
           ).join(' ')
         )
       OUT_PREFIX: $(inputs.outprefix)
@@ -51,10 +51,10 @@ inputs:
     type: string
     doc: true or false
     default: "false"
-  gatk4_base_recablirator_java_options:
+  gatk4_BaseRecalibrator_java_options:
     type: string?
     default: -XX:-UseContainerSupport -Xmx4g -Xms4g
-  gatk4_apply_bqsr_java_options:
+  gatk4_ApplyBQSR_java_options:
     type: string?
     default: -XX:-UseContainerSupport -Xmx3g -Xms3g
   dbsnp:
@@ -92,6 +92,10 @@ outputs:
       glob: $(inputs.outprefix).bam
     secondaryFiles:
       - ^.bai
+  table:
+    type: File
+    outputBinding:
+      glob: $(inputs.outprefix).recal_data.table
   log:
     type: stderr
 
