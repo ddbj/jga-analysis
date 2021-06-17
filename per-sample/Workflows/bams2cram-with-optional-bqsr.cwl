@@ -109,7 +109,7 @@ steps:
       gatk4_ApplyBQSR_java_options: gatk4_ApplyBQSR_java_options
       static_quantized_quals: static_quantized_quals
     out:
-      [out_bam, table, log]
+      [out_bam, log]
 
   samtools-bam2cram:
     label: samtools-bam2cram
