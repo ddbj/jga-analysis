@@ -25,17 +25,17 @@ inputs:
     inputBinding:
       prefix: --threads
       position: 1
-  - id: in_bam
+  - id: in_cram
     type: File
-    format: edam:format_2572
+    format: edam:format_3462
     inputBinding:
       position: 2
-    doc: input BAM alignment file
+    doc: input CRAM alignment file
 
 outputs:
   - id: flagstat
     type: stdout
 
-stdout: $(inputs.in_bam.basename).flagstat
+stdout: $(inputs.in_cram.basename).flagstat
 
 arguments: []
