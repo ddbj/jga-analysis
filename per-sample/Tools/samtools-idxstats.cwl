@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: samtools-flagstat-1.6
-label: samtools-flagstat-1.6
+id: samtools-idxstats-1.10
+label: samtools-idxstats-1.10
 cwlVersion: v1.0
 
 $namespaces:
@@ -10,32 +10,29 @@ $namespaces:
 
 hints:
   - class: DockerRequirement
-    dockerPull: 'quay.io/biocontainers/samtools:1.6--0'
+    dockerPull: 'quay.io/biocontainers/samtools:1.10--h9402c20_2'
 
 requirements:
   - class: ShellCommandRequirement
   - class: ResourceRequirement
     ramMin: 4000
 
-baseCommand: [ samtools, flagstat ]
+baseCommand: [ samtools, idxstats ]
 
 inputs:
-  - id: nthreads
-    type: int
-    inputBinding:
-      prefix: --threads
-      position: 1
-  - id: in_cram
+  - id: cram
     type: File
     format: edam:format_3462
     inputBinding:
-      position: 2
+      position: 1
     doc: input CRAM alignment file
+    secondaryFiles:
+      - .crai
 
 outputs:
-  - id: flagstat
+  - id: idxstats
     type: stdout
 
-stdout: $(inputs.in_cram.basename).flagstat
+stdout: $(inputs.in_cram.basename).idxstats
 
 arguments: []

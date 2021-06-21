@@ -20,13 +20,13 @@ requirements:
 baseCommand: [ java, -Xmx12G, -jar, /usr/local/share/picard-2.10.6-0/picard.jar, CollectWgsMetrics ]
 
 inputs:
-  - id: in_bam
+  - id: in_cram
     type: File
-    format: edam:format_2572
+    format: edam:format_3462
     inputBinding:
       prefix: "INPUT="
       position: 1
-    doc: input BAM alignment file
+    doc: input CRAM alignment file
   - id: reference
     type: File
     format: edam:format_1929
@@ -36,6 +36,7 @@ inputs:
     doc: FastA file for reference genome
   - id: reference_interval_name
     type: string
+    doc: Interval name for reference genome
   - id: reference_interval_list
     type: File
     inputBinding:
@@ -47,15 +48,15 @@ outputs:
   - id: wgs_metrics
     type: File
     outputBinding:
-      glob: $(inputs.in_bam.basename).$(inputs.reference_interval_name).wgs_metrics
+      glob: $(inputs.in_cram.basename).$(inputs.reference_interval_name).wgs_metrics
   - id: log
     type: stderr
 
-stderr: $(inputs.in_bam.basename).$(inputs.reference_interval_name).wgs_metrics.log
+stderr: $(inputs.in_cram.basename).$(inputs.reference_interval_name).wgs_metrics.log
 
 arguments:
   - position: 2
-    valueFrom: "OUTPUT=$(inputs.in_bam.basename).$(inputs.reference_interval_name).wgs_metrics"
+    valueFrom: "OUTPUT=$(inputs.in_cram.basename).$(inputs.reference_interval_name).wgs_metrics"
   - position: 5
     valueFrom: "TMP_DIR=temp"
   - position: 6

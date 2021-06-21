@@ -11,6 +11,8 @@ $namespaces:
 requirements:
   DockerRequirement:
     dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram-bqsr-haplotypecaller:latest
+  InitialWorkDirRequirement:
+    listing: [ $(inputs.cram) ]
 
 baseCommand: [ samtools, index ]
 
@@ -28,15 +30,14 @@ inputs:
       position: 2
 
 outputs:
-  crai:
+  indexed_cram:
     type: File
+    format: edam:format_3462
     outputBinding:
-      glob: $(inputs.cram.basename).crai
+      glob: $(inputs.cram.basename)
+    secondaryFiles:
+      - .crai
   log:
     type: stderr
 
 stderr: $(inputs.cram.basename).crai.log
-
-arguments:
-  - position: 3
-    valueFrom: $(inputs.cram.basename).crai

@@ -20,14 +20,14 @@ requirements:
 baseCommand: [ java, -Xmx12G, -jar, /usr/local/share/picard-2.23.3-0/picard.jar, CollectBaseDistributionByCycle ]
 
 inputs:
-  - id: in_cram
+  cram:
     type: File
     format: edam:format_2572
     inputBinding:
       prefix: "INPUT="
       position: 1
     doc: input CRAM alignment file
-  - id: reference
+  reference:
     type: File
     format: edam:format_1929
     secondaryFiles:
@@ -38,16 +38,16 @@ inputs:
     doc: FastA file for reference genome
 
 outputs:
-  - id: collect_base_dist_by_cycle
+  collect_base_dist_by_cycle:
     type: File
     outputBinding:
       glob: $(inputs.in_cram.basename).collect_base_dist_by_cycle
-  - id: chart
+  chart:
     type: File
     format: format_3508
     outputBinding:
       glob: $(inputs.in_cram.basename).collect_base_dist_by_cycle.chart.pdf
-  - id: log
+  log:
     type: stderr
 
 stderr: $(inputs.in_cram.basename).collect_base_dist_by_cycle.log
