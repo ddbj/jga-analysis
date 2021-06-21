@@ -44,7 +44,7 @@ outputs:
       glob: $(inputs.cram.basename).collect_base_dist_by_cycle
   chart:
     type: File
-    format: format_3508
+    format: edam:format_3508
     outputBinding:
       glob: $(inputs.cram.basename).collect_base_dist_by_cycle.chart.pdf
   log:
