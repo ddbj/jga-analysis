@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: Workflow
-id: bams2cram-with-optional-bqsr
-label: bams2cram-with-optional-bqsr
+id: bams2cram
+label: bams2cram
 cwlVersion: v1.1
 
 $namespaces:
