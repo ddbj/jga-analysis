@@ -18,6 +18,7 @@ inputs:
     doc: FastA file for reference genome
     secondaryFiles:
       - .fai
+      - ^.dict
   bams:
     type:
       type: array

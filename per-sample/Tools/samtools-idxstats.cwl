@@ -20,7 +20,7 @@ requirements:
 baseCommand: [ samtools, idxstats ]
 
 inputs:
-  - id: cram
+  cram:
     type: File
     format: edam:format_3462
     inputBinding:
@@ -30,7 +30,7 @@ inputs:
       - .crai
 
 outputs:
-  - id: idxstats
+  idxstats:
     type: stdout
 
 stdout: $(inputs.cram.basename).idxstats
