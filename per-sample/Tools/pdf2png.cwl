@@ -24,7 +24,7 @@ inputs:
 outputs:
   png:
     type: stdout
-    format: format_3603
+    format: edam:format_3603
 
 stdout: $(inputs.pdf.basename).png
 
