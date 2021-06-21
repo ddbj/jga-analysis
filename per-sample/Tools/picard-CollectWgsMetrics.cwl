@@ -3,7 +3,7 @@
 class: CommandLineTool
 id: picard-CollectWgsMetrics-2.10.6
 label: picard-CollectWgsMetrics-2.10.6
-cwlVersion: v1.0
+cwlVersion: v1.1
 
 $namespaces:
   edam: 'http://edamontology.org/'

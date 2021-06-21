@@ -3,7 +3,7 @@
 class: CommandLineTool
 id: samtools-idxstats-1.10
 label: samtools-idxstats-1.10
-cwlVersion: v1.0
+cwlVersion: v1.1
 
 $namespaces:
   edam: 'http://edamontology.org/'

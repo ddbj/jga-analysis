@@ -3,7 +3,7 @@
 class: CommandLineTool
 id: samtools-flagstat-1.6
 label: samtools-flagstat-1.6
-cwlVersion: v1.0
+cwlVersion: v1.1
 
 $namespaces:
   edam: 'http://edamontology.org/'

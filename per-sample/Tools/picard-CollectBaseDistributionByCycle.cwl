@@ -3,7 +3,7 @@
 class: CommandLineTool
 id: picard-CollectBaseDistributionByCycle-2.23.3
 label: picard-CollectBaseDistributionByCycle-2.23.3
-cwlVersion: v1.0
+cwlVersion: v1.1
 
 $namespaces:
   edam: 'http://edamontology.org/'
