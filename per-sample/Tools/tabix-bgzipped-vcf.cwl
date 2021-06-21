@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: tabix
-label: tabix
+id: tabix-bgzipped-vcf
+label: tabix-bgzipped-vcf
 cwlVersion: v1.1
 
 $namespaces:
@@ -23,11 +23,13 @@ inputs:
     format: edam:format_3016
 
 outputs:
-  tbi:
+  indexed_vcf_gz:
     type: File
-    format: edam:format_3616
+    format: edam:format_3016
     outputBinding:
-      glob: $(inputs.vcf_gz.basename).tbi
+      glob: $(inputs.vcf_gz.basename)
+    secondaryFiles:
+      - .tbi
   log:
     type: stderr
 

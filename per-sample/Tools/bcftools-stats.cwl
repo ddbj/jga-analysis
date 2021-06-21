@@ -24,5 +24,8 @@ inputs:
 outputs:
   bcftools_stats:
     type: stdout
+  log:
+    type: stderr
 
 stdout: $(inputs.vcf.basename).bcftools-stats
+stderr: $(inputs.vcf.basename).bcftools-stats.log
