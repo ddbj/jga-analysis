@@ -8,6 +8,9 @@ cwlVersion: v1.1
 $namespaces:
   edam: http://edamontology.org/
 
+requirements:
+  StepInputExpressionRequirement: {}
+
 inputs:
   reference:
     type: File
@@ -70,9 +73,7 @@ steps:
     run: ../Tools/gatk4-MarkDuplicates.cwl
     in:
       in_bams: bams
-      outprefix:
-        source: outprefix
-        valueFrom: $(inputs.outprefix).gatk4-MarkDuplicates
+      outprefix: outprefix
       java_options: gatk4_MarkDuplicates_java_options
     out:
       [markdup_bam, metrics, log]
