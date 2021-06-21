@@ -22,7 +22,7 @@ baseCommand: [ java, -Xmx12G, -jar, /usr/local/share/picard-2.23.3-0/picard.jar,
 inputs:
   cram:
     type: File
-    format: edam:format_2572
+    format: edam:format_3462
     inputBinding:
       prefix: "INPUT="
       position: 1
