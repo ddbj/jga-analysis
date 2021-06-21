@@ -40,9 +40,6 @@ inputs:
     type: File
     format: edam:format_1929
     doc: FastA file for reference genome
-    secondaryFiles:
-      - .fai
-      - ^.dict
   bam:
     type: File
     format: edam:format_2572
