@@ -158,7 +158,7 @@ outputs:
   cram:
     type: File
     format: edam:format_3462
-    outputSource: samtools-bam2cram/cram
+    outputSource: samtools-index/indexed_cram
   cram_log:
     type: File
     outputSource: samtools-bam2cram/log
