@@ -41,19 +41,19 @@ outputs:
   collect_base_dist_by_cycle:
     type: File
     outputBinding:
-      glob: $(inputs.in_cram.basename).collect_base_dist_by_cycle
+      glob: $(inputs.cram.basename).collect_base_dist_by_cycle
   chart:
     type: File
     format: format_3508
     outputBinding:
-      glob: $(inputs.in_cram.basename).collect_base_dist_by_cycle.chart.pdf
+      glob: $(inputs.cram.basename).collect_base_dist_by_cycle.chart.pdf
   log:
     type: stderr
 
-stderr: $(inputs.in_cram.basename).collect_base_dist_by_cycle.log
+stderr: $(inputs.cram.basename).collect_base_dist_by_cycle.log
 
 arguments:
   - position: 3
-    valueFrom: "OUTPUT=$(inputs.in_cram.basename).collect_base_dist_by_cycle"
+    valueFrom: "OUTPUT=$(inputs.cram.basename).collect_base_dist_by_cycle"
   - position: 4
-    valueFrom: "CHART=$(inputs.in_cram.basename).collect_base_dist_by_cycle.chart.pdf"
+    valueFrom: "CHART=$(inputs.cram.basename).collect_base_dist_by_cycle.chart.pdf"

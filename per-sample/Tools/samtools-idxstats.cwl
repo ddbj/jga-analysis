@@ -33,6 +33,6 @@ outputs:
   - id: idxstats
     type: stdout
 
-stdout: $(inputs.in_cram.basename).idxstats
+stdout: $(inputs.cram.basename).idxstats
 
 arguments: []

@@ -37,6 +37,6 @@ outputs:
   - id: flagstat
     type: stdout
 
-stdout: $(inputs.in_cram.basename).flagstat
+stdout: $(inputs.cram.basename).flagstat
 
 arguments: []
