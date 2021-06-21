@@ -26,7 +26,7 @@ outputs:
     type: stdout
     format: edam:format_3603
 
-stdout: $(inputs.pdf.basename).png
+stdout: $(inputs.pdf.nameroot).png
 
 arguments:
   - position: 2
