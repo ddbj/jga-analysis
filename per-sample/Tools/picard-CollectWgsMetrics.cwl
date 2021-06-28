@@ -26,8 +26,6 @@ inputs:
     inputBinding:
       prefix: "INPUT="
       position: 1
-    secondaryFiles:
-      - .fai
     doc: input CRAM alignment file
   - id: reference
     type: File
@@ -35,6 +33,8 @@ inputs:
     inputBinding:
       prefix: "REFERENCE_SEQUENCE="
       position: 3
+    secondaryFiles:
+      - .fai
     doc: FastA file for reference genome
   - id: interval_name
     type: string
