@@ -26,6 +26,8 @@ inputs:
     inputBinding:
       prefix: "INPUT="
       position: 1
+    secondaryFiles:
+      - .fai
     doc: input CRAM alignment file
   - id: reference
     type: File
