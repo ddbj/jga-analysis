@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: picard-CollectWgsMetrics-2.10.6
-label: picard-CollectWgsMetrics-2.10.6
+id: picard-CollectWgsMetrics-2.25.6
+label: picard-CollectWgsMetrics-2.25.6
 cwlVersion: v1.1
 
 $namespaces:
@@ -10,14 +10,14 @@ $namespaces:
 
 hints:
   - class: DockerRequirement
-    dockerPull: 'quay.io/biocontainers/picard:2.10.6--py27_0'
+    dockerPull: 'quay.io/biocontainers/picard:2.25.6--hdfd78af_0'
 
 requirements:
   - class: ShellCommandRequirement
   - class: ResourceRequirement
     ramMin: 20000
 
-baseCommand: [ java, -Xmx12G, -jar, /usr/local/share/picard-2.10.6-0/picard.jar, CollectWgsMetrics ]
+baseCommand: [ picard, CollectWgsMetrics ]
 
 inputs:
   - id: cram
