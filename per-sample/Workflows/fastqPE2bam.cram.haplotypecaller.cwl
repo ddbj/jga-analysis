@@ -12,6 +12,9 @@ requirements:
   SubworkflowFeatureRequirement: {}
   ScatterFeatureRequirement: {}
   StepInputExpressionRequirement: {}
+  ResourceRequirement:
+    outdirMin: 40960
+    ramMin: 40960
 
 inputs:
   reference:
@@ -120,7 +123,7 @@ inputs:
   samtools_num_threads:
     type: int
     default: 1
-  # haplotypecaller pattern1
+  # haplotypecaller common
   haplotypecaller_reference:
     type: File
     format: edam:format_1929
@@ -130,21 +133,55 @@ inputs:
       - ^.dict
   sample_name:
     type: string
-  interval_name:
-    type: string
-  interval_bed:
-    type: File
-    format: edam:format_3584
   gatk4_HaplotypeCaller_java_options:
     type: string?
   gatk4_HaplotypeCaller_num_threads:
     type: int
     default: 1
-  ploidy:
-    type: int
   bgzip_num_threads:
     type: int
     default: 1
+  # haplotypecaller interval=autosome-PAR, ploidy=2
+  haplotypecaller_autosome_PAR_ploidy_2_ploidy:
+    type: int
+    default: 2
+  haplotypecaller_autosome_PAR_ploidy_2_interval_name:
+    type: string
+    default: autosome-PAR-ploidy-2
+  haplotypecaller_autosome_PAR_ploidy_2_interval_bed:
+    type: File
+    format: edam:format_3584
+  # haplotypecaller interval=chrX-nonPAR, ploidy=2
+  haplotypecaller_chrX_nonPAR_ploidy_2_ploidy:
+    type: int
+    default: 2
+  haplotypecaller_chrX_nonPAR_ploidy_2_interval_name:
+    type: string
+    default: chrX-nonPAR-ploidy-2
+  haplotypecaller_chrX_nonPAR_ploidy_2_interval_bed:
+    type: File
+    format: edam:format_3584
+  # haplotypecaller interval=chrX-nonPAR, ploidy=1
+  haplotypecaller_chrX_nonPAR_ploidy_1_ploidy:
+    type: int
+    default: 1
+  haplotypecaller_chrX_nonPAR_ploidy_1_interval_name:
+    type: string
+    default: chrX-nonPAR-ploidy-1
+  haplotypecaller_chrX_nonPAR_ploidy_1_interval_bed:
+    type: File
+    format: edam:format_3584
+  # haplotypecaller interval=chrY-nonPAR, ploidy=1
+  haplotypecaller_chrY_nonPAR_ploidy_1_ploidy:
+    type: int
+    default: 1
+  haplotypecaller_chrY_nonPAR_ploidy_1_interval_name:
+    type: string
+    default: chrY-nonPAR-ploidy-1
+  haplotypecaller_chrY_nonPAR_ploidy_1_interval_bed:
+    type: File
+    format: edam:format_3584
+
 
 steps:
   fastqPE2bam:
@@ -206,17 +243,74 @@ steps:
       - picard-CollectBaseDistributionByCycle-collect_base_dist_by_cycle
       - picard-CollectBaseDistributionByCycle-chart-pdf
       - picard-CollectBaseDistributionByCycle-chart-png
-  haplotypecaller_patter1:
+  haplotypecaller_autosome_PAR_ploidy_2:
     run: ./haplotypecaller.cwl
     in:
       reference: haplotypecaller_reference
       cram: bams2cram/cram
       sample_name: sample_name
-      interval_name: interval_name
-      interval_bed: interval_bed
+      interval_name: haplotypecaller_autosome_PAR_ploidy_2_interval_name
+      interval_bed: haplotypecaller_autosome_PAR_ploidy_2_interval_bed
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
       gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
-      ploidy: ploidy
+      ploidy: haplotypecaller_autosome_PAR_ploidy_2_ploidy
+      bgzip_num_threads: bgzip_num_threads
+    out:
+      - vcf_gz
+      - haplotypecaller_log
+      - bgzip_log
+      - tabix_log
+      - bcftools_stats
+      - bcftools_stats_log
+  haplotypecaller_chrX_nonPAR_ploidy_2:
+    run: ./haplotypecaller.cwl
+    in:
+      reference: haplotypecaller_reference
+      cram: bams2cram/cram
+      sample_name: sample_name
+      interval_name: haplotypecaller_chrX_nonPAR_ploidy_2_interval_name
+      interval_bed: haplotypecaller_chrX_nonPAR_ploidy_2_interval_bed
+      gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
+      gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
+      ploidy: haplotypecaller_chrX_nonPAR_ploidy_2_ploidy
+      bgzip_num_threads: bgzip_num_threads
+    out:
+      - vcf_gz
+      - haplotypecaller_log
+      - bgzip_log
+      - tabix_log
+      - bcftools_stats
+      - bcftools_stats_log
+  haplotypecaller_chrX_nonPAR_ploidy_1:
+    run: ./haplotypecaller.cwl
+    in:
+      reference: haplotypecaller_reference
+      cram: bams2cram/cram
+      sample_name: sample_name
+      interval_name: haplotypecaller_chrX_nonPAR_ploidy_1_interval_name
+      interval_bed: haplotypecaller_chrX_nonPAR_ploidy_1_interval_bed
+      gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
+      gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
+      ploidy: haplotypecaller_chrX_nonPAR_ploidy_1_ploidy
+      bgzip_num_threads: bgzip_num_threads
+    out:
+      - vcf_gz
+      - haplotypecaller_log
+      - bgzip_log
+      - tabix_log
+      - bcftools_stats
+      - bcftools_stats_log
+  haplotypecaller_chrY_nonPAR_ploidy_1:
+    run: ./haplotypecaller.cwl
+    in:
+      reference: haplotypecaller_reference
+      cram: bams2cram/cram
+      sample_name: sample_name
+      interval_name: haplotypecaller_chrY_nonPAR_ploidy_1_interval_name
+      interval_bed: haplotypecaller_chrY_nonPAR_ploidy_1_interval_bed
+      gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
+      gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
+      ploidy: haplotypecaller_chrY_nonPAR_ploidy_1_ploidy
       bgzip_num_threads: bgzip_num_threads
     out:
       - vcf_gz
@@ -269,23 +363,80 @@ outputs:
   picard-CollectBaseDistributionByCycle-chart-png:
     type: File
     outputSource: bams2cram/picard-CollectBaseDistributionByCycle-chart-png
-  # haplotypecaller patter1
+  # haplotypecaller autosome-PAR, ploidy 2
   vcf_gz:
     type: File
-    outputSource: haplotypecaller_patter1/vcf_gz
+    outputSource: haplotypecaller_autosome_PAR_ploidy_2/vcf_gz
   haplotypecaller_log:
     type: File
-    outputSource: haplotypecaller_patter1/haplotypecaller_log
+    outputSource: haplotypecaller_autosome_PAR_ploidy_2/haplotypecaller_log
   bgzip_log:
     type: File
-    outputSource: haplotypecaller_patter1/bgzip_log
+    outputSource: haplotypecaller_autosome_PAR_ploidy_2/bgzip_log
   tabix_log:
     type: File
-    outputSource: haplotypecaller_patter1/tabix_log
+    outputSource: haplotypecaller_autosome_PAR_ploidy_2/tabix_log
   bcftools_stats:
     type: File
-    outputSource: haplotypecaller_patter1/bcftools_stats
+    outputSource: haplotypecaller_autosome_PAR_ploidy_2/bcftools_stats
   bcftools_stats_log:
     type: File
-    outputSource: haplotypecaller_patter1/bcftools_stats_log
+    outputSource: haplotypecaller_autosome_PAR_ploidy_2/bcftools_stats_log
+  # haplotypecaller chrX-nonPAR, ploidy 2
+  haplotypecaller_chrX_nonPAR_ploidy_2_vcf_gz:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/vcf_gz
+  haplotypecaller_chrX_nonPAR_ploidy_2_haplotypecaller_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/haplotypecaller_log
+  haplotypecaller_chrX_nonPAR_ploidy_2_bgzip_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/bgzip_log
+  haplotypecaller_chrX_nonPAR_ploidy_2_tabix_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/tabix_log
+  haplotypecaller_chrX_nonPAR_ploidy_2_bcftools_stats:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/bcftools_stats
+  haplotypecaller_chrX_nonPAR_ploidy_2_bcftools_stats_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/bcftools_stats_log
+  # haplotypecaller chrX-nonPAR, ploidy 1
+  haplotypecaller_chrX_nonPAR_ploidy_1_vcf_gz:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/vcf_gz
+  haplotypecaller_chrX_nonPAR_ploidy_1_haplotypecaller_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/haplotypecaller_log
+  haplotypecaller_chrX_nonPAR_ploidy_1_bgzip_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/bgzip_log
+  haplotypecaller_chrX_nonPAR_ploidy_1_tabix_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/tabix_log
+  haplotypecaller_chrX_nonPAR_ploidy_1_bcftools_stats:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/bcftools_stats
+  haplotypecaller_chrX_nonPAR_ploidy_1_bcftools_stats_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/bcftools_stats_log
+  # haplotypecaller chrY-nonPAR, ploidy 1
+  haplotypecaller_chrY_nonPAR_ploidy_1_vcf_gz:
+    type: File
+    outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/vcf_gz
+  haplotypecaller_chrY_nonPAR_ploidy_1_haplotypecaller_log:
+    type: File
+    outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/haplotypecaller_log
+  haplotypecaller_chrY_nonPAR_ploidy_1_bgzip_log:
+    type: File
+    outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/bgzip_log
+  haplotypecaller_chrY_nonPAR_ploidy_1_tabix_log:
+    type: File
+    outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/tabix_log
+  haplotypecaller_chrY_nonPAR_ploidy_1_bcftools_stats:
+    type: File
+    outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/bcftools_stats
+  haplotypecaller_chrY_nonPAR_ploidy_1_bcftools_stats_log:
+    type: File
+    outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/bcftools_stats_log
 
