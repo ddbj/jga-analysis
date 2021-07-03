@@ -1,0 +1,291 @@
+#!/usr/bin/env cwl-runner
+
+class: Workflow
+id: fastqPE2bamworkflow
+label: fastqPE2bamworkflow
+cwlVersion: v1.1
+
+$namespaces:
+  edam: http://edamontology.org/
+
+requirements:
+  SubworkflowFeatureRequirement: {}
+  ScatterFeatureRequirement: {}
+  StepInputExpressionRequirement: {}
+
+inputs:
+  reference:
+    type: File
+    format: edam:format_1929
+    doc: FastA file for reference genome
+    secondaryFiles:
+      - .amb
+      - .ann
+      - .bwt
+      - .pac
+      - .sa
+      - .alt
+  bwa_num_threads:
+    type: int
+    doc: number of cpu cores to be used
+    default: 1
+  bwa_bases_per_batch:
+    type: int
+    doc: bases in each batch
+    default: 10000000
+  sortsam_java_options:
+    type: string
+    default: -XX:-UseContainerSupport -Xmx30g
+  sortsam_max_records_in_ram:
+    type: int
+    default: 5000000
+  inputSamples:
+    type:
+      type: array
+      items:
+        - type: record
+          fields:
+            RG_ID:
+              type: string
+              doc: Read group identifier (ID) in RG line
+            RG_PL:
+              type: string
+              doc: Platform/technology used to produce the read (PL) in RG line
+            RG_PU:
+              type: string
+              doc: Platform Unit (PU) in RG line
+            RG_LB:
+              type: string
+              doc: DNA preparation library identifier (LB) in RG line
+            RG_SM:
+              type: string
+              doc: Sample (SM) identifier in RG line
+            fastq1:
+              type: File
+              format: edam:format_1930
+              doc: FastQ file from next-generation sequencers
+            fastq2:
+              type: File
+              format: edam:format_1930
+              doc: FastQ file from next-generation sequencers
+            outprefix:
+              type: string
+  # bams2cram
+  bams2cram_reference:
+    type: File
+    format: edam:format_1929
+    doc: FastA file for reference genome
+    secondaryFiles:
+      - .fai
+      - ^.dict
+
+  bams2cram_outprefix:
+    type: string
+  use_bqsr:
+    type: boolean
+  use_original_qualities:
+    type: string
+    doc: true or false
+    default: "false"
+  dbsnp:
+    type: File
+    format: edam:format_3016
+    secondaryFiles:
+      - .idx
+    doc: Homo_sapiens_assembly38.dbsnp138.vcf
+  mills:
+    type: File
+    format: edam:format_3016
+    secondaryFiles:
+      - .tbi
+    doc: Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+  known_indels:
+    type: File
+    format: edam:format_3016
+    secondaryFiles:
+      - .tbi
+    doc: Homo_sapiens_assembly38.known_indels.vcf.gz
+  gatk4_MarkDuplicates_java_options:
+    type: string?
+  gatk4_BaseRecalibrator_java_options:
+    type: string?
+  gatk4_ApplyBQSR_java_options:
+    type: string?
+  static_quantized_quals:
+    type:
+      type: array
+      items: int
+    default: [10, 20, 30]
+    doc: Use static quantized quality scores to a given number of levels (with -bqsr)
+  samtools_num_threads:
+    type: int
+    default: 1
+  # haplotypecaller pattern1
+  haplotypecaller_reference:
+    type: File
+    format: edam:format_1929
+    doc: FastA file for reference genome
+    secondaryFiles:
+      - .fai
+      - ^.dict
+  sample_name:
+    type: string
+  interval_name:
+    type: string
+  interval_bed:
+    type: File
+    format: edam:format_3584
+  gatk4_HaplotypeCaller_java_options:
+    type: string?
+  gatk4_HaplotypeCaller_num_threads:
+    type: int
+    default: 1
+  ploidy:
+    type: int
+  bgzip_num_threads:
+    type: int
+    default: 1
+
+steps:
+  fastqPE2bam:
+    run: ./fastqPE2bam-workflow.cwl
+    in:
+      reference: reference
+      bwa_num_threads: bwa_num_threads
+      bwa_bases_per_batch: bwa_bases_per_batch
+      sortsam_java_options: sortsam_java_options
+      sortsam_max_records_in_ram: sortsam_max_records_in_ram
+      inputSamples: inputSamples
+      RG_ID:
+        valueFrom: $(inputs.inputSamples.RG_ID)
+      RG_LB:
+        valueFrom: $(inputs.inputSamples.RG_LB)
+      RG_PL:
+        valueFrom: $(inputs.inputSamples.RG_PL)
+      RG_PU:
+        valueFrom: $(inputs.inputSamples.RG_PU)
+      RG_SM:
+        valueFrom: $(inputs.inputSamples.RG_SM)
+      fastq1:
+        valueFrom: $(inputs.inputSamples.fastq1)
+      fastq2:
+        valueFrom: $(inputs.inputSamples.fastq2)
+      outprefix:
+        valueFrom: $(inputs.inputSamples.outprefix)
+    scatter:
+      - inputSamples
+    scatterMethod: dotproduct
+    out:
+      - bam
+      - log
+  bams2cram:
+    run: ./bams2cram.cwl
+    in:
+      reference: bams2cram_reference
+      bams: fastqPE2bam/bam
+      use_bqsr: use_bqsr
+      use_original_qualities: use_original_qualities
+      dbsnp: dbsnp
+      mills: mills
+      known_indels: known_indels
+      outprefix: bams2cram_outprefix
+      gatk4_MarkDuplicates_java_options: gatk4_MarkDuplicates_java_options
+      gatk4_BaseRecalibrator_java_options: gatk4_BaseRecalibrator_java_options
+      gatk4_ApplyBQSR_java_options: gatk4_ApplyBQSR_java_options
+      static_quantized_quals: static_quantized_quals
+      samtools_num_threads: samtools_num_threads
+    out:
+      - markdup_metrics
+      - markdup_log
+      - cram
+      - cram_log
+      - crai_log
+      - bqsr_log
+      - samtools_idxstats_idxstats
+      - samtools_flagstat_flagstat
+      - picard-CollectBaseDistributionByCycle-collect_base_dist_by_cycle
+      - picard-CollectBaseDistributionByCycle-chart-pdf
+      - picard-CollectBaseDistributionByCycle-chart-png
+  haplotypecaller_patter1:
+    run: ./haplotypecaller.cwl
+    in:
+      reference: haplotypecaller_reference
+      cram: bams2cram/cram
+      sample_name: sample_name
+      interval_name: interval_name
+      interval_bed: interval_bed
+      gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
+      gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
+      ploidy: ploidy
+      bgzip_num_threads: bgzip_num_threads
+    out:
+      - vcf_gz
+      - haplotypecaller_log
+      - bgzip_log
+      - tabix_log
+      - bcftools_stats
+      - bcftools_stats_log
+
+
+outputs:
+  # fastqPE2bam
+  bam:
+    type: File[]
+    outputSource: fastqPE2bam/bam
+  log:
+    type: File[]
+    outputSource: fastqPE2bam/log
+  # bams2cram
+  markdup_metrics:
+    type: File
+    outputSource: bams2cram/markdup_metrics
+  markdup_log:
+    type: File
+    outputSource: bams2cram/markdup_log
+  cram:
+    type: File
+    outputSource: bams2cram/cram
+  cram_log:
+    type: File
+    outputSource: bams2cram/cram_log
+  crai_log:
+    type: File
+    outputSource: bams2cram/crai_log
+  bqsr_log:
+    type: File
+    outputSource: bams2cram/bqsr_log
+  samtools_idxstats_idxstats:
+    type: File
+    outputSource: bams2cram/samtools_idxstats_idxstats
+  samtools_flagstat_flagstat:
+    type: File
+    outputSource: bams2cram/samtools_flagstat_flagstat
+  picard-CollectBaseDistributionByCycle-collect_base_dist_by_cycle:
+    type: File
+    outputSource: bams2cram/picard-CollectBaseDistributionByCycle-collect_base_dist_by_cycle
+  picard-CollectBaseDistributionByCycle-chart-pdf:
+    type: File
+    outputSource: bams2cram/picard-CollectBaseDistributionByCycle-chart-pdf
+  picard-CollectBaseDistributionByCycle-chart-png:
+    type: File
+    outputSource: bams2cram/picard-CollectBaseDistributionByCycle-chart-png
+  # haplotypecaller patter1
+  vcf_gz:
+    type: File
+    outputSource: haplotypecaller_patter1/vcf_gz
+  haplotypecaller_log:
+    type: File
+    outputSource: haplotypecaller_patter1/haplotypecaller_log
+  bgzip_log:
+    type: File
+    outputSource: haplotypecaller_patter1/bgzip_log
+  tabix_log:
+    type: File
+    outputSource: haplotypecaller_patter1/tabix_log
+  bcftools_stats:
+    type: File
+    outputSource: haplotypecaller_patter1/bcftools_stats
+  bcftools_stats_log:
+    type: File
+    outputSource: haplotypecaller_patter1/bcftools_stats_log
+
