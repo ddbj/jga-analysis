@@ -28,6 +28,8 @@ inputs:
   interval_bed:
     type: File
     format: edam:format_3584
+  interval_list:
+    type: File
   gatk4_HaplotypeCaller_java_options:
     type: string?
   gatk4_HaplotypeCaller_num_threads:
@@ -40,6 +42,15 @@ inputs:
     default: 1
 
 steps:
+  picard-CollectWgsMetrics:
+    label: picard-CollectWgsMetrics
+    run: ../Tools/picard-CollectWgsMetrics.cwl
+    in:
+      cram: cram
+      reference: reference
+      interval_name: interval_name
+      interval_list: interval_list
+    out: [wgs_metrics, log]
   gatk4-HaplotypeCaller:
     label: gatk4-HaplotypeCaller
     run: ../Tools/gatk4-HaplotypeCaller.cwl
@@ -52,36 +63,38 @@ steps:
       java_options: gatk4_HaplotypeCaller_java_options
       num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy: ploidy
-    out:
-      [vcf, log]
+    out: [vcf, log]
   bgzip:
     label: bgzip
     run: ../Tools/bgzip.cwl
     in:
       vcf: gatk4-HaplotypeCaller/vcf
       num_threads: bgzip_num_threads
-    out:
-      [vcf_gz, log]
+    out: [vcf_gz, log]
   tabix:
     label: tabix
     run: ../Tools/tabix-bgzipped-vcf.cwl
     in:
       vcf_gz: bgzip/vcf_gz
-    out:
-      [indexed_vcf_gz, log]
+    out: [indexed_vcf_gz, log]
   bcftools-stats:
     label: bcftools-stats
     run: ../Tools/bcftools-stats.cwl
     in:
       vcf: tabix/indexed_vcf_gz
-    out:
-      [bcftools_stats, log]
+    out: [bcftools_stats, log]
 
 outputs:
   vcf_gz:
     type: File
     format: edam:format_3016
     outputSource: tabix/indexed_vcf_gz
+  wgs_metrics:
+    type: File
+    outputSource: picard-CollectWgsMetrics/wgs_metrics
+  wgs_metrics_log:
+    type: File
+    outputSource: picard-CollectWgsMetrics/log
   haplotypecaller_log:
     type: File
     outputSource: gatk4-HaplotypeCaller/log
