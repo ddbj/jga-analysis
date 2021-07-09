@@ -14,7 +14,9 @@ requirements:
   StepInputExpressionRequirement: {}
   ResourceRequirement:
     outdirMin: 40960
-    ramMin: 40960
+    ramMin: 48000
+    tmpdirMin: 65536
+    coresMin: 16
 
 inputs:
   reference:
@@ -42,7 +44,7 @@ inputs:
   sortsam_max_records_in_ram:
     type: int
     default: 5000000
-  inputSamples:
+  runlist_pe:
     type:
       type: array
       items:
@@ -192,25 +194,25 @@ steps:
       bwa_bases_per_batch: bwa_bases_per_batch
       sortsam_java_options: sortsam_java_options
       sortsam_max_records_in_ram: sortsam_max_records_in_ram
-      inputSamples: inputSamples
+      runlist_pe: runlist_pe
       RG_ID:
-        valueFrom: $(inputs.inputSamples.RG_ID)
+        valueFrom: $(inputs.runlist_pe.RG_ID)
       RG_LB:
-        valueFrom: $(inputs.inputSamples.RG_LB)
+        valueFrom: $(inputs.runlist_pe.RG_LB)
       RG_PL:
-        valueFrom: $(inputs.inputSamples.RG_PL)
+        valueFrom: $(inputs.runlist_pe.RG_PL)
       RG_PU:
-        valueFrom: $(inputs.inputSamples.RG_PU)
+        valueFrom: $(inputs.runlist_pe.RG_PU)
       RG_SM:
-        valueFrom: $(inputs.inputSamples.RG_SM)
+        valueFrom: $(inputs.runlist_pe.RG_SM)
       fastq1:
-        valueFrom: $(inputs.inputSamples.fastq1)
+        valueFrom: $(inputs.runlist_pe.fastq1)
       fastq2:
-        valueFrom: $(inputs.inputSamples.fastq2)
+        valueFrom: $(inputs.runlist_pe.fastq2)
       outprefix:
-        valueFrom: $(inputs.inputSamples.outprefix)
+        valueFrom: $(inputs.runlist_pe.outprefix)
     scatter:
-      - inputSamples
+      - runlist_pe
     scatterMethod: dotproduct
     out:
       - bam
