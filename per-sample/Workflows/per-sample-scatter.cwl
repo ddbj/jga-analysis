@@ -65,8 +65,6 @@ inputs:
     secondaryFiles:
       - .fai
       - ^.dict
-  sample_name:
-    type: string
   # haplotypecaller interval=autosome-PAR, ploidy=2
   haplotypecaller_autosome_PAR_ploidy_2_interval_bed:
     type: File
@@ -134,13 +132,14 @@ steps:
       known_indels: known_indels
       # haplotypecaller common
       haplotypecaller_reference: haplotypecaller_reference
-      sample_name: sample_name
       haplotypecaller_autosome_PAR_ploidy_2_interval_bed: haplotypecaller_autosome_PAR_ploidy_2_interval_bed
       haplotypecaller_chrX_nonPAR_ploidy_2_interval_bed: haplotypecaller_chrX_nonPAR_ploidy_2_interval_bed
       haplotypecaller_chrX_nonPAR_ploidy_1_interval_bed: haplotypecaller_chrX_nonPAR_ploidy_1_interval_bed
       haplotypecaller_chrY_nonPAR_ploidy_1_interval_bed: haplotypecaller_chrY_nonPAR_ploidy_1_interval_bed
       #
       inputSamples: inputSamples
+      sample_name:
+        valueFrom: $(inputs.inputSamples.sample_id)
       runlist_pe:
         valueFrom: $(inputs.inputSamples.runlist_pe)
     scatter:
