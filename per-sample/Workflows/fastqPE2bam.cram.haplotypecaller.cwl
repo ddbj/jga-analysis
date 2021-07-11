@@ -44,27 +44,20 @@ inputs:
   sortsam_max_records_in_ram:
     type: int
     default: 5000000
+  sample_id:
+    type: string
   runlist_pe:
     type:
       type: array
       items:
         - type: record
           fields:
-            RG_ID:
+            run_id:
               type: string
               doc: Read group identifier (ID) in RG line
-            RG_PL:
+            platform_name:
               type: string
               doc: Platform/technology used to produce the read (PL) in RG line
-            RG_PU:
-              type: string
-              doc: Platform Unit (PU) in RG line
-            RG_LB:
-              type: string
-              doc: DNA preparation library identifier (LB) in RG line
-            RG_SM:
-              type: string
-              doc: Sample (SM) identifier in RG line
             fastq1:
               type: File
               format: edam:format_1930
@@ -73,8 +66,6 @@ inputs:
               type: File
               format: edam:format_1930
               doc: FastQ file from next-generation sequencers
-            outprefix:
-              type: string
   # bams2cram
   bams2cram_reference:
     type: File
@@ -83,9 +74,6 @@ inputs:
     secondaryFiles:
       - .fai
       - ^.dict
-
-  bams2cram_outprefix:
-    type: string
   use_bqsr:
     type: boolean
   use_original_qualities:
@@ -133,8 +121,6 @@ inputs:
     secondaryFiles:
       - .fai
       - ^.dict
-  sample_name:
-    type: string
   gatk4_HaplotypeCaller_java_options:
     type: string?
   gatk4_HaplotypeCaller_num_threads:
@@ -196,21 +182,21 @@ steps:
       sortsam_max_records_in_ram: sortsam_max_records_in_ram
       runlist_pe: runlist_pe
       RG_ID:
-        valueFrom: $(inputs.runlist_pe.RG_ID)
+        valueFrom: $(inputs.runlist_pe.run_id)
       RG_LB:
-        valueFrom: $(inputs.runlist_pe.RG_LB)
+        valueFrom: $(inputs.runlist_pe.run_id)
       RG_PL:
-        valueFrom: $(inputs.runlist_pe.RG_PL)
+        valueFrom: $(inputs.runlist_pe.platform_name)
       RG_PU:
-        valueFrom: $(inputs.runlist_pe.RG_PU)
+        valueFrom: $(inputs.runlist_pe.run_id)
       RG_SM:
-        valueFrom: $(inputs.runlist_pe.RG_SM)
+        valueFrom: sample_id
       fastq1:
         valueFrom: $(inputs.runlist_pe.fastq1)
       fastq2:
         valueFrom: $(inputs.runlist_pe.fastq2)
       outprefix:
-        valueFrom: $(inputs.runlist_pe.outprefix)
+        valueFrom: $(inputs.runlist_pe.run_id)
     scatter:
       - runlist_pe
     scatterMethod: dotproduct
@@ -227,7 +213,8 @@ steps:
       dbsnp: dbsnp
       mills: mills
       known_indels: known_indels
-      outprefix: bams2cram_outprefix
+      outprefix: #bams2cram_outprefix
+        valueFrom: sample_id
       gatk4_MarkDuplicates_java_options: gatk4_MarkDuplicates_java_options
       gatk4_BaseRecalibrator_java_options: gatk4_BaseRecalibrator_java_options
       gatk4_ApplyBQSR_java_options: gatk4_ApplyBQSR_java_options
@@ -250,7 +237,7 @@ steps:
     in:
       reference: haplotypecaller_reference
       cram: bams2cram/cram
-      sample_name: sample_name
+      sample_name: sample_id
       interval_name: haplotypecaller_autosome_PAR_ploidy_2_interval_name
       interval_bed: haplotypecaller_autosome_PAR_ploidy_2_interval_bed
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
@@ -269,7 +256,7 @@ steps:
     in:
       reference: haplotypecaller_reference
       cram: bams2cram/cram
-      sample_name: sample_name
+      sample_name: sample_id
       interval_name: haplotypecaller_chrX_nonPAR_ploidy_2_interval_name
       interval_bed: haplotypecaller_chrX_nonPAR_ploidy_2_interval_bed
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
@@ -288,7 +275,7 @@ steps:
     in:
       reference: haplotypecaller_reference
       cram: bams2cram/cram
-      sample_name: sample_name
+      sample_name: sample_id
       interval_name: haplotypecaller_chrX_nonPAR_ploidy_1_interval_name
       interval_bed: haplotypecaller_chrX_nonPAR_ploidy_1_interval_bed
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
@@ -307,7 +294,7 @@ steps:
     in:
       reference: haplotypecaller_reference
       cram: bams2cram/cram
-      sample_name: sample_name
+      sample_name: sample_id
       interval_name: haplotypecaller_chrY_nonPAR_ploidy_1_interval_name
       interval_bed: haplotypecaller_chrY_nonPAR_ploidy_1_interval_bed
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options

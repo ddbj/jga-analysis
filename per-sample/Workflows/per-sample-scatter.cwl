@@ -35,8 +35,6 @@ inputs:
     secondaryFiles:
       - .fai
       - ^.dict
-  bams2cram_outprefix:
-    type: string
   use_bqsr:
     type: boolean
   dbsnp:
@@ -88,27 +86,20 @@ inputs:
         - type: record
           fields:
             # scatter
+            sample_id:
+              type: string
             runlist_pe:
               type:
                 type: array
                 items:
                   - type: record
                     fields:
-                      RG_ID:
+                      run_id:
                         type: string
                         doc: Read group identifier (ID) in RG line
-                      RG_PL:
+                      platform_name:
                         type: string
                         doc: Platform/technology used to produce the read (PL) in RG line
-                      RG_PU:
-                        type: string
-                        doc: Platform Unit (PU) in RG line
-                      RG_LB:
-                        type: string
-                        doc: DNA preparation library identifier (LB) in RG line
-                      RG_SM:
-                        type: string
-                        doc: Sample (SM) identifier in RG line
                       fastq1:
                         type: File
                         format: edam:format_1930
@@ -116,8 +107,6 @@ inputs:
                       fastq2:
                         type: File
                         doc: FastQ file from next-generation sequencers
-                      outprefix:
-                        type: string
 steps:
   persampleworkflow:
     run: ./fastqPE2bam.cram.haplotypecaller.cwl
@@ -125,7 +114,6 @@ steps:
       reference: reference
       # bams2cram
       bams2cram_reference: bams2cram_reference
-      bams2cram_outprefix: bams2cram_outprefix
       use_bqsr: use_bqsr
       dbsnp: dbsnp
       mills: mills
@@ -138,7 +126,7 @@ steps:
       haplotypecaller_chrY_nonPAR_ploidy_1_interval_bed: haplotypecaller_chrY_nonPAR_ploidy_1_interval_bed
       #
       inputSamples: inputSamples
-      sample_name:
+      sample_id:
         valueFrom: $(inputs.inputSamples.sample_id)
       runlist_pe:
         valueFrom: $(inputs.inputSamples.runlist_pe)
