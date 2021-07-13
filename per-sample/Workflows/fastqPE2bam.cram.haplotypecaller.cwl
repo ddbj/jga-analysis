@@ -31,6 +31,8 @@ inputs:
       - .pac
       - .sa
       - .alt
+      - .fai
+      - ^.dict
   bwa_num_threads:
     type: int
     doc: number of cpu cores to be used
@@ -67,14 +69,6 @@ inputs:
               type: File
               format: edam:format_1930
               doc: FastQ file from next-generation sequencers
-  # bams2cram
-  bams2cram_reference:
-    type: File
-    format: edam:format_1929
-    doc: FastA file for reference genome
-    secondaryFiles:
-      - .fai
-      - ^.dict
   use_bqsr:
     type: boolean
   use_original_qualities:
@@ -114,14 +108,6 @@ inputs:
   samtools_num_threads:
     type: int
     default: 1
-  # haplotypecaller common
-  haplotypecaller_reference:
-    type: File
-    format: edam:format_1929
-    doc: FastA file for reference genome
-    secondaryFiles:
-      - .fai
-      - ^.dict
   gatk4_HaplotypeCaller_java_options:
     type: string?
   gatk4_HaplotypeCaller_num_threads:
@@ -166,8 +152,7 @@ steps:
         valueFrom: $(inputs.runlist_pe.platform_name)
       RG_PU:
         valueFrom: $(inputs.runlist_pe.run_id)
-      RG_SM:
-        valueFrom: sample_id
+      RG_SM: sample_id
       fastq1:
         valueFrom: $(inputs.runlist_pe.fastq1)
       fastq2:
@@ -183,15 +168,14 @@ steps:
   bams2cram:
     run: ./bams2cram.cwl
     in:
-      reference: bams2cram_reference
+      reference: reference
       bams: fastqPE2bam/bam
       use_bqsr: use_bqsr
       use_original_qualities: use_original_qualities
       dbsnp: dbsnp
       mills: mills
       known_indels: known_indels
-      outprefix: #bams2cram_outprefix
-        valueFrom: sample_id
+      outprefix: sample_id #bams2cram_outprefix
       gatk4_MarkDuplicates_java_options: gatk4_MarkDuplicates_java_options
       gatk4_BaseRecalibrator_java_options: gatk4_BaseRecalibrator_java_options
       gatk4_ApplyBQSR_java_options: gatk4_ApplyBQSR_java_options
@@ -212,7 +196,7 @@ steps:
   haplotypecaller_autosome_PAR_ploidy_2:
     run: ./haplotypecaller.cwl
     in:
-      reference: haplotypecaller_reference
+      reference: reference
       cram: bams2cram/cram
       sample_name: sample_id
       interval_name:
@@ -233,7 +217,7 @@ steps:
   haplotypecaller_chrX_nonPAR_ploidy_2:
     run: ./haplotypecaller.cwl
     in:
-      reference: haplotypecaller_reference
+      reference: reference
       cram: bams2cram/cram
       sample_name: sample_id
       interval_name:
@@ -254,7 +238,7 @@ steps:
   haplotypecaller_chrX_nonPAR_ploidy_1:
     run: ./haplotypecaller.cwl
     in:
-      reference: haplotypecaller_reference
+      reference: reference
       cram: bams2cram/cram
       sample_name: sample_id
       interval_name:
@@ -275,7 +259,7 @@ steps:
   haplotypecaller_chrY_nonPAR_ploidy_1:
     run: ./haplotypecaller.cwl
     in:
-      reference: haplotypecaller_reference
+      reference: reference
       cram: bams2cram/cram
       sample_name: sample_id
       interval_name:

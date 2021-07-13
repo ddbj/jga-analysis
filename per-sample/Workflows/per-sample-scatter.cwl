@@ -27,14 +27,9 @@ inputs:
       - .pac
       - .sa
       - .alt
-  # bams2cram
-  bams2cram_reference:
-    type: File
-    format: edam:format_1929
-    doc: FastA file for reference genome
-    secondaryFiles:
       - .fai
       - ^.dict
+  # bams2cram
   use_bqsr:
     type: boolean
   dbsnp:
@@ -55,14 +50,6 @@ inputs:
     secondaryFiles:
       - .tbi
     doc: Homo_sapiens_assembly38.known_indels.vcf.gz
-  # haplotypecaller common
-  haplotypecaller_reference:
-    type: File
-    format: edam:format_1929
-    doc: FastA file for reference genome
-    secondaryFiles:
-      - .fai
-      - ^.dict
   # haplotypecaller interval=autosome-PAR, ploidy=2
   haplotypecaller_autosome_PAR_ploidy_2_interval_bed:
     type: File
@@ -113,13 +100,11 @@ steps:
     in:
       reference: reference
       # bams2cram
-      bams2cram_reference: bams2cram_reference
       use_bqsr: use_bqsr
       dbsnp: dbsnp
       mills: mills
       known_indels: known_indels
       # haplotypecaller common
-      haplotypecaller_reference: haplotypecaller_reference
       haplotypecaller_autosome_PAR_ploidy_2_interval_bed: haplotypecaller_autosome_PAR_ploidy_2_interval_bed
       haplotypecaller_chrX_nonPAR_ploidy_2_interval_bed: haplotypecaller_chrX_nonPAR_ploidy_2_interval_bed
       haplotypecaller_chrX_nonPAR_ploidy_1_interval_bed: haplotypecaller_chrX_nonPAR_ploidy_1_interval_bed
