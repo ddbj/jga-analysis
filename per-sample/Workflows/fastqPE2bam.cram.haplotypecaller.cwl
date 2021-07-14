@@ -69,6 +69,22 @@ inputs:
               type: File
               format: edam:format_1930
               doc: FastQ file from next-generation sequencers
+  runlist_se:
+    type:
+      type: array
+      items:
+        - type: record
+          fields:
+            run_id:
+              type: string
+              doc: Read group identifier (ID) in RG line
+            platform_name:
+              type: string
+              doc: Platform/technology used to produce the read (PL) in RG line
+            fastq1:
+              type: File
+              format: edam:format_1930
+              doc: FastQ file from next-generation sequencers
   use_bqsr:
     type: boolean
   use_original_qualities:
@@ -165,11 +181,41 @@ steps:
     out:
       - bam
       - log
+  fastqSE2bam:
+    run: ./fastqSE2bam-workflow.cwl
+    in:
+      reference: reference
+      bwa_num_threads: bwa_num_threads
+      bwa_bases_per_batch: bwa_bases_per_batch
+      sortsam_java_options: sortsam_java_options
+      sortsam_max_records_in_ram: sortsam_max_records_in_ram
+      runlist_se: runlist_se
+      RG_ID:
+        valueFrom: $(inputs.runlist_se.run_id)
+      RG_LB:
+        valueFrom: $(inputs.runlist_se.run_id)
+      RG_PL:
+        valueFrom: $(inputs.runlist_se.platform_name)
+      RG_PU:
+        valueFrom: $(inputs.runlist_se.run_id)
+      RG_SM: sample_id
+      fastq1:
+        valueFrom: $(inputs.runlist_se.fastq1)
+      outprefix:
+        valueFrom: $(inputs.runlist_se.run_id)
+    scatter:
+      - runlist_se
+    scatterMethod: dotproduct
+    out:
+      - bam
+      - log
   bams2cram:
     run: ./bams2cram.cwl
     in:
       reference: reference
-      bams: fastqPE2bam/bam
+      bams: #fastqPE2bam/bam
+        source: [fastqPE2bam/bam, fastqSE2bam/bam]
+        linkMerge: merge_flattened
       use_bqsr: use_bqsr
       use_original_qualities: use_original_qualities
       dbsnp: dbsnp
@@ -281,12 +327,19 @@ steps:
 
 outputs:
   # fastqPE2bam
-  bam:
+  pe_bam:
     type: File[]
     outputSource: fastqPE2bam/bam
-  log:
+  pe_log:
     type: File[]
     outputSource: fastqPE2bam/log
+  # fastqSE2bam
+  se_bam:
+    type: File[]
+    outputSource: fastqSE2bam/bam
+  se_log:
+    type: File[]
+    outputSource: fastqSE2bam/log
   # bams2cram
   markdup_metrics:
     type: File
