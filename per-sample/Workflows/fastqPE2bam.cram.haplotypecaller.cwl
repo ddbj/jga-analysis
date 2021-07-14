@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: Workflow
-id: fastqPE2bamworkflow
-label: fastqPE2bamworkflow
+id: persample
+label: persample
 cwlVersion: v1.1
 
 $namespaces:
