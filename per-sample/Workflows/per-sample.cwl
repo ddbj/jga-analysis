@@ -9,6 +9,7 @@ $namespaces:
   edam: http://edamontology.org/
 
 requirements:
+  MultipleInputFeatureRequirement: {}
   InlineJavascriptRequirement: {}
   SubworkflowFeatureRequirement: {}
   ScatterFeatureRequirement: {}
