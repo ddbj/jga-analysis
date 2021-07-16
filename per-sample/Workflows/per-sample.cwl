@@ -137,12 +137,8 @@ inputs:
   haplotypecaller_autosome_PAR_ploidy_2_interval_bed:
     type: File
     format: edam:format_3584
-  # haplotypecaller interval=chrX-nonPAR, ploidy=2
-  haplotypecaller_chrX_nonPAR_ploidy_2_interval_bed:
-    type: File
-    format: edam:format_3584
-  # haplotypecaller interval=chrX-nonPAR, ploidy=1
-  haplotypecaller_chrX_nonPAR_ploidy_1_interval_bed:
+  # haplotypecaller interval=chrX-nonPAR, ploidy=2 and ploidy=1
+  haplotypecaller_chrX_interval_bed:
     type: File
     format: edam:format_3584
   # haplotypecaller interval=chrY-nonPAR, ploidy=1
@@ -269,7 +265,7 @@ steps:
       sample_name: sample_id
       interval_name:
         valueFrom: "chrX_nonPAR_ploidy_2"
-      interval_bed: haplotypecaller_chrX_nonPAR_ploidy_2_interval_bed
+      interval_bed: haplotypecaller_chrX_interval_bed
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
       gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy:
@@ -290,7 +286,7 @@ steps:
       sample_name: sample_id
       interval_name:
         valueFrom: "chrX_nonPAR_ploidy_1"
-      interval_bed: haplotypecaller_chrX_nonPAR_ploidy_1_interval_bed
+      interval_bed: haplotypecaller_chrX_interval_bed
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
       gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy:
