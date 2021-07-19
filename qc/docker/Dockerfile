@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get install -y \
     r-base r-cran-ggplot2 r-cran-readr
 
-RUN git clone https://github.com/tafujino/jga-analysis-qc.git
+RUN git clone https://github.com/biosciencedbc/jga-analysis-qc.git
 WORKDIR jga-analysis-qc
 RUN bundle config set without development
 RUN bundle install
