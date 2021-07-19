@@ -13,7 +13,6 @@ RUN git clone https://github.com/biosciencedbc/jga-analysis-qc.git
 WORKDIR jga-analysis-qc
 RUN bundle config set without development
 RUN bundle install
-RUN rake build
-RUN gem install --local pkg/*.gem
+RUN rake install
 
 CMD ["/bin/bash"]
