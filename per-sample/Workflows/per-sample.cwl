@@ -372,7 +372,7 @@ outputs:
     type: File
     outputSource: bams2cram/picard-CollectBaseDistributionByCycle-chart-png
   # haplotypecaller autosome-PAR, ploidy 2
-  vcf_gz:
+  haplotypecaller_autosome_PAR_ploidy_2_vcf_gz:
     type: File
     outputSource: haplotypecaller_autosome_PAR_ploidy_2/vcf_gz
   haplotypecaller_log:
