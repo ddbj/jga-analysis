@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/gridss:latest
+    dockerPull: ghcr.io/biosciencedbc/jga-analysis/gridss:1.0.0
   EnvVarRequirement:
     envDef:
       BAM: $(inputs.bam.path)
