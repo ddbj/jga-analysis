@@ -137,14 +137,20 @@ inputs:
   haplotypecaller_autosome_PAR_interval_bed:
     type: File
     format: edam:format_3584
+  haplotypecaller_autosome_PAR_interval_list:
+    type: File
   # haplotypecaller interval=chrX-nonPAR, ploidy=2 and ploidy=1
   haplotypecaller_chrX_nonPAR_interval_bed:
     type: File
     format: edam:format_3584
+  haplotypecaller_chrX_nonPAR_interval_list:
+    type: File
   # haplotypecaller interval=chrY-nonPAR, ploidy=1
   haplotypecaller_chrY_nonPAR_interval_bed:
     type: File
     format: edam:format_3584
+  haplotypecaller_chrY_nonPAR_interval_list:
+    type: File
 
 
 steps:
@@ -245,6 +251,7 @@ steps:
       interval_name:
         valueFrom: "autosome_PAR_ploidy_2"
       interval_bed: haplotypecaller_autosome_PAR_interval_bed
+      interval_list: haplotypecaller_autosome_PAR_interval_list
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
       gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy:
@@ -252,6 +259,8 @@ steps:
       bgzip_num_threads: bgzip_num_threads
     out:
       - vcf_gz
+      - wgs_metrics
+      - wgs_metrics_log
       - haplotypecaller_log
       - bgzip_log
       - tabix_log
@@ -266,6 +275,7 @@ steps:
       interval_name:
         valueFrom: "chrX_nonPAR_ploidy_2"
       interval_bed: haplotypecaller_chrX_nonPAR_interval_bed
+      interval_list: haplotypecaller_chrX_nonPAR_interval_list
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
       gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy:
@@ -273,6 +283,8 @@ steps:
       bgzip_num_threads: bgzip_num_threads
     out:
       - vcf_gz
+      - wgs_metrics
+      - wgs_metrics_log
       - haplotypecaller_log
       - bgzip_log
       - tabix_log
@@ -287,6 +299,7 @@ steps:
       interval_name:
         valueFrom: "chrX_nonPAR_ploidy_1"
       interval_bed: haplotypecaller_chrX_nonPAR_interval_bed
+      interval_list: haplotypecaller_chrX_nonPAR_interval_list
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
       gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy:
@@ -294,6 +307,8 @@ steps:
       bgzip_num_threads: bgzip_num_threads
     out:
       - vcf_gz
+      - wgs_metrics
+      - wgs_metrics_log
       - haplotypecaller_log
       - bgzip_log
       - tabix_log
@@ -308,6 +323,7 @@ steps:
       interval_name:
         valueFrom: "chrY_nonPAR_ploidy_1"
       interval_bed: haplotypecaller_chrY_nonPAR_interval_bed
+      interval_list: haplotypecaller_chrY_nonPAR_interval_list
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
       gatk4_HaplotypeCaller_num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy:
@@ -315,6 +331,8 @@ steps:
       bgzip_num_threads: bgzip_num_threads
     out:
       - vcf_gz
+      - wgs_metrics
+      - wgs_metrics_log
       - haplotypecaller_log
       - bgzip_log
       - tabix_log
@@ -375,6 +393,12 @@ outputs:
   haplotypecaller_autosome_PAR_ploidy_2_vcf_gz:
     type: File
     outputSource: haplotypecaller_autosome_PAR_ploidy_2/vcf_gz
+  haplotypecaller_autosome_PAR_ploidy_2_wgs_metrics:
+    type: File
+    outputSource: haplotypecaller_autosome_PAR_ploidy_2/wgs_metrics
+  haplotypecaller_autosome_PAR_ploidy_2_wgs_metrics_log:
+    type: File
+    outputSource: haplotypecaller_autosome_PAR_ploidy_2/wgs_metrics_log
   haplotypecaller_log:
     type: File
     outputSource: haplotypecaller_autosome_PAR_ploidy_2/haplotypecaller_log
@@ -394,6 +418,12 @@ outputs:
   haplotypecaller_chrX_nonPAR_ploidy_2_vcf_gz:
     type: File
     outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/vcf_gz
+  haplotypecaller_chrX_nonPAR_ploidy_2_wgs_metrics:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/wgs_metrics
+  haplotypecaller_chrX_nonPAR_ploidy_2_wgs_metrics_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/wgs_metrics_log
   haplotypecaller_chrX_nonPAR_ploidy_2_haplotypecaller_log:
     type: File
     outputSource: haplotypecaller_chrX_nonPAR_ploidy_2/haplotypecaller_log
@@ -413,6 +443,12 @@ outputs:
   haplotypecaller_chrX_nonPAR_ploidy_1_vcf_gz:
     type: File
     outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/vcf_gz
+  haplotypecaller_chrX_nonPAR_ploidy_1_wgs_metrics:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/wgs_metrics
+  haplotypecaller_chrX_nonPAR_ploidy_1_wgs_metrics_log:
+    type: File
+    outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/wgs_metrics_log
   haplotypecaller_chrX_nonPAR_ploidy_1_haplotypecaller_log:
     type: File
     outputSource: haplotypecaller_chrX_nonPAR_ploidy_1/haplotypecaller_log
@@ -432,6 +468,12 @@ outputs:
   haplotypecaller_chrY_nonPAR_ploidy_1_vcf_gz:
     type: File
     outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/vcf_gz
+  haplotypecaller_chrY_nonPAR_ploidy_1_wgs_metrics:
+    type: File
+    outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/wgs_metrics
+  haplotypecaller_chrY_nonPAR_ploidy_1_wgs_metrics_log:
+    type: File
+    outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/wgs_metrics_log
   haplotypecaller_chrY_nonPAR_ploidy_1_haplotypecaller_log:
     type: File
     outputSource: haplotypecaller_chrY_nonPAR_ploidy_1/haplotypecaller_log
