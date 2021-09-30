@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   DockerRequirement:
-    dockerPull: ghcr.io/tafujino/jga-analysis/fastq2cram-bqsr-haplotypecaller:latest
+    dockerPull: ghcr.io/biosciencedbc/jga-analysis/fastq2cram-bqsr-haplotypecaller:1.0.0
   InitialWorkDirRequirement:
     listing: [ $(inputs.cram) ]
 
