@@ -155,7 +155,7 @@ inputs:
 
 steps:
   fastqPE2bam:
-    run: ./fastqPE2bam-workflow.cwl
+    run: ../Tools/fastqPE2bam.cwl
     in:
       reference: reference
       bwa_num_threads: bwa_num_threads
@@ -185,7 +185,7 @@ steps:
       - bam
       - log
   fastqSE2bam:
-    run: ./fastqSE2bam-workflow.cwl
+    run: ../Tools/fastqSE2bam.cwl
     in:
       reference: reference
       bwa_num_threads: bwa_num_threads
@@ -202,7 +202,7 @@ steps:
       RG_PU:
         valueFrom: $(inputs.runlist_se.run_id)
       RG_SM: sample_id
-      fastq1:
+      fastq:
         valueFrom: $(inputs.runlist_se.fastq1)
       outprefix:
         valueFrom: $(inputs.runlist_se.run_id)
