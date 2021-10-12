@@ -14,8 +14,6 @@ hints:
 
 requirements:
   - class: ShellCommandRequirement
-  - class: ResourceRequirement
-    ramMin: 4000
 
 baseCommand: [ samtools, idxstats ]
 
