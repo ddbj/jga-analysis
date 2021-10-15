@@ -11,6 +11,7 @@ RUN apt-get update && \
 
 RUN git clone https://github.com/biosciencedbc/jga-analysis-qc.git
 WORKDIR jga-analysis-qc
+RUN git submodule update --init
 RUN bundle config set without development
 RUN bundle install
 RUN rake install
