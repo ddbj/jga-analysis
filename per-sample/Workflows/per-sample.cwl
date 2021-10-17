@@ -18,7 +18,7 @@ requirements:
     outdirMin: 40960
     ramMin: 48000
     tmpdirMin: 65536
-    coresMin: $(inputs.cores)
+    coresMin: 16
 
 inputs:
   reference:
