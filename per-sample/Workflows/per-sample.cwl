@@ -245,7 +245,7 @@ steps:
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
       gatk4_HaplotypeCaller_num_threads: cores
       ploidy:
-        valueFrom: $(1)
+        valueFrom: $(2)
       bgzip_num_threads: cores
     out:
       - vcf_gz
