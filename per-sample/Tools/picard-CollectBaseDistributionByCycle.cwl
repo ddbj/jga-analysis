@@ -14,8 +14,6 @@ hints:
 
 requirements:
   - class: ShellCommandRequirement
-  - class: ResourceRequirement
-    ramMin: 20000
 
 baseCommand: [ java, -Xmx12G, -jar, /usr/local/share/picard-2.23.3-0/picard.jar, CollectBaseDistributionByCycle ]
 

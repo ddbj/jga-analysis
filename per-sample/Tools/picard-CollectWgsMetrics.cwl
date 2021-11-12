@@ -14,8 +14,6 @@ hints:
 
 requirements:
   - class: ShellCommandRequirement
-  - class: ResourceRequirement
-    ramMin: 20000
 
 baseCommand: [ picard, CollectWgsMetrics ]
 
