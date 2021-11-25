@@ -25,7 +25,7 @@ requirements:
       SORTSAM_JAVA_OPTIONS: $(inputs.sortsam_java_options)
       SORTSAM_MAX_RECORDS_IN_RAM: $(inputs.sortsam_max_records_in_ram)
   DockerRequirement:
-    dockerPull: ghcr.io/biosciencedbc/jga-analysis/fastq2cram-bqsr-haplotypecaller:1.0.0
+    dockerPull: ghcr.io/biosciencedbc/jga-analysis/fastq2cram-bqsr-haplotypecaller:1.1.1
 
 baseCommand: [ bash, /tools/fastq2bam.sh ]
 

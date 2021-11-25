@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   DockerRequirement:
-    dockerPull: ghcr.io/biosciencedbc/jga-analysis/fastq2cram-bqsr-haplotypecaller:1.0.0
+    dockerPull: ghcr.io/biosciencedbc/jga-analysis/fastq2cram-bqsr-haplotypecaller:1.1.1
   EnvVarRequirement:
     envDef:
       REFERENCE: $(inputs.reference.path)
