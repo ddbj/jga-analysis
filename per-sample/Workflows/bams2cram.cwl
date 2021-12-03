@@ -133,7 +133,7 @@ steps:
   picard-CollectBaseDistributionByCycle:
     label: picard-CollectBaseDistributionByCycle
     doc: Collect base distribution by cycle using Picard
-    run: ../Tools/picard-CollectBaseDistributionByCycle.cwl
+    run: ../Tools/picard-CollectBaseDistributionByCycle_gatk4.cwl
     in:
       cram: samtools-index/indexed_cram
       reference: reference

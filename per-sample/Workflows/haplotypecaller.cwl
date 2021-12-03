@@ -44,7 +44,7 @@ inputs:
 steps:
   picard-CollectWgsMetrics:
     label: picard-CollectWgsMetrics
-    run: ../Tools/picard-CollectWgsMetrics.cwl
+    run: ../Tools/picard-CollectWgsMetrics_gatk4.cwl
     in:
       cram: cram
       reference: reference
