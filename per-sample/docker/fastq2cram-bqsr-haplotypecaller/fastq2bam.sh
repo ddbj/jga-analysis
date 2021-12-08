@@ -51,9 +51,9 @@ fi
     -O=$BAM \
     --SORT_ORDER=coordinate
 
-if ${FASTQ1CONVERT} -eq 1; then
+if [ ${FASTQ1CONVERT} -eq 1 ]; then
   rm ${FASTQ1FILE}
 fi
-if ${FASTQ2CONVERT} -eq 1; then
+if [ ${FASTQ2CONVERT} -eq 1 ]; then
   rm ${FASTQ2FILE}
 fi
