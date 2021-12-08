@@ -24,6 +24,7 @@ inputs:
     inputBinding:
       prefix: "I="
       position: 1
+      separate: false
     doc: input CRAM alignment file
   reference:
     type: File
@@ -31,8 +32,9 @@ inputs:
     secondaryFiles:
       - .fai
     inputBinding:
-      prefix: "--REFERENCE_SEQUENCE="
+      prefix: "R="
       position: 2
+      separate: false
     doc: FastA file for reference genome
 
 outputs:
@@ -52,6 +54,6 @@ stderr: $(inputs.cram.basename).collect_base_dist_by_cycle.log
 
 arguments:
   - position: 3
-    valueFrom: "O=$(inputs.cram.basename).collect_base_dist_by_cycle"
+    valueFrom: "OUTPUT=$(inputs.cram.basename).collect_base_dist_by_cycle"
   - position: 4
-    valueFrom: "--CHART_OUTPUT=$(inputs.cram.basename).collect_base_dist_by_cycle.chart.pdf"
+    valueFrom: "CHART_OUTPUT=$(inputs.cram.basename).collect_base_dist_by_cycle.chart.pdf"
