@@ -331,20 +331,6 @@ steps:
 
 
 outputs:
-  # fastqPE2bam
-  pe_bam:
-    type: File[]
-    outputSource: fastqPE2bam/bam
-  pe_log:
-    type: File[]
-    outputSource: fastqPE2bam/log
-  # fastqSE2bam
-  se_bam:
-    type: File[]
-    outputSource: fastqSE2bam/bam
-  se_log:
-    type: File[]
-    outputSource: fastqSE2bam/log
   # bams2cram
   markdup_metrics:
     type: File
