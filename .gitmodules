@@ -1,3 +1,6 @@
 [submodule "qc/jga-analysis-qc"]
 	path = qc/jga-analysis-qc
 	url = https://github.com/biosciencedbc/jga-analysis-qc.git
+[submodule "jga-analysis-qc"]
+	path = jga-analysis-qc
+	url = https://github.com/biosciencedbc/jga-analysis-qc.git
