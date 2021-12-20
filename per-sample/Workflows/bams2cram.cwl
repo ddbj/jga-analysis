@@ -10,9 +10,6 @@ $namespaces:
 
 requirements:
   StepInputExpressionRequirement: {}
-  ResourceRequirement:
-    ramMin: $(inputs.bams2cram_ram_min)
-    coresMin: $(inputs.samtools_num_threads)
 
 inputs:
   reference:
@@ -110,6 +107,7 @@ steps:
       bam: gatk4-optional-bqsr/out_bam
       reference: reference
       num_threads: samtools_num_threads
+      ram_min: bams2cram_ram_min
     out:
       [cram, log]
   samtools-index:
@@ -119,6 +117,7 @@ steps:
     in:
       cram: samtools-bam2cram/cram
       num_threads: samtools_num_threads
+      ram_min: bams2cram_ram_min
     out:
       [indexed_cram, log]
   samtools-idxstats:

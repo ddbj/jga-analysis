@@ -7,10 +7,6 @@ cwlVersion: v1.1
 
 $namespaces:
   edam: http://edamontology.org/
-requirements:
-  ResourceRequirement:
-    ramMin: $(inputs.haplotypecaller_ram_min)
-    coresMin: $(inputs.gatk4_HaplotypeCaller_num_threads)
 
 inputs:
   reference:
@@ -71,6 +67,7 @@ steps:
       java_options: gatk4_HaplotypeCaller_java_options
       num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy: ploidy
+      ram_min: haplotypecaller_ram_min
     out: [vcf, log]
   bgzip:
     label: bgzip
