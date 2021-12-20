@@ -7,6 +7,10 @@ cwlVersion: v1.1
 
 $namespaces:
   edam: http://edamontology.org/
+requirements:
+  ResourceRequirement:
+    ramMin: $(inputs.haplotypecaller_ram_min)
+    coresMin: $(inputs.gatk4_HaplotypeCaller_num_threads)
 
 inputs:
   reference:
@@ -40,6 +44,10 @@ inputs:
   bgzip_num_threads:
     type: int
     default: 1
+  haplotypecaller_ram_min:
+    type: int
+    doc: size of RAM (in MB) to be specified in 
+    default: 48000
 
 steps:
   picard-CollectWgsMetrics:

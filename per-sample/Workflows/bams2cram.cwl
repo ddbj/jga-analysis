@@ -10,6 +10,9 @@ $namespaces:
 
 requirements:
   StepInputExpressionRequirement: {}
+  ResourceRequirement:
+    ramMin: $(inputs.bams2cram_ram_min)
+    coresMin: $(inputs.samtools_num_threads)
 
 inputs:
   reference:
@@ -65,6 +68,10 @@ inputs:
   samtools_num_threads:
     type: int
     default: 1
+  bams2cram_ram_min:
+    type: int
+    doc: size of RAM (in MB) to be specified in [
+    default: 48000
 
 steps:
   gatk4-MarkDuplicates:
