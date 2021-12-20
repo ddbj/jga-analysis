@@ -17,6 +17,8 @@ requirements:
   ResourceRequirement:
     outdirMin: 40960
     tmpdirMin: 65536
+    ramMin: 48000
+    coresMin: 1
 
 inputs:
   reference:
