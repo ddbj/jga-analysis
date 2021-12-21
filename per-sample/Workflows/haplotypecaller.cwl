@@ -75,6 +75,7 @@ steps:
     in:
       vcf: gatk4-HaplotypeCaller/vcf
       num_threads: bgzip_num_threads
+      ram_min: haplotypecaller_ram_min
     out: [vcf_gz, log]
   tabix:
     label: tabix
