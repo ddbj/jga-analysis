@@ -13,6 +13,9 @@ requirements:
     dockerPull: ghcr.io/biosciencedbc/jga-analysis/fastq2cram-bqsr-haplotypecaller:1.0.0
   InitialWorkDirRequirement:
     listing: [ $(inputs.cram) ]
+  ResourceRequirement:
+    coresMin: $(inputs.num_threads)
+    ramMin: $(inputs.ram_min)
 
 baseCommand: [ samtools, index ]
 
@@ -28,7 +31,9 @@ inputs:
     inputBinding:
       prefix: -@
       position: 2
-
+  ram_min:
+    type: int
+    default: 48000
 outputs:
   indexed_cram:
     type: File

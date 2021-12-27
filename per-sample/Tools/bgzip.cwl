@@ -15,6 +15,9 @@ requirements:
     envDef:
       VCF: $(inputs.vcf.path)
       NUM_THREADS: $(inputs.num_threads)
+  ResourceRequirement:
+    ramMin: $(inputs.ram_min)
+    coresMin: $(inputs.num_threads)
 
 baseCommand: [ bash, /tools/bgzip.sh ]
 
@@ -25,6 +28,9 @@ inputs:
   num_threads:
     type: int
     default: 1
+  ram_min:
+    type: int
+    default: 48000
 
 outputs:
   vcf_gz:

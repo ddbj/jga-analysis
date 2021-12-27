@@ -12,6 +12,9 @@ requirements:
   DockerRequirement:
     dockerPull: ghcr.io/biosciencedbc/jga-analysis/fastq2cram-bqsr-haplotypecaller:1.0.0
   ShellCommandRequirement: {}
+  ResourceRequirement:
+    coresMin: $(inputs.num_threads)
+    ramMin: $(inputs.ram_min)
 
 baseCommand: /usr/bin/java
 
@@ -66,6 +69,9 @@ inputs:
       prefix: --sample-ploidy=
       separate: false
       position: 10
+  ram_min:
+    type: int
+    default: 48000
 
 outputs:
   vcf:

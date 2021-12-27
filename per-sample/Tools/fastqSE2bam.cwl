@@ -26,6 +26,9 @@ requirements:
       SORTSAM_MAX_RECORDS_IN_RAM: $(inputs.sortsam_max_records_in_ram)
   DockerRequirement:
     dockerPull: ghcr.io/biosciencedbc/jga-analysis/fastq2cram-bqsr-haplotypecaller:1.1.3
+  ResourceRequirement:
+    ramMin: $(inputs.fastq2bam_ram_min)
+    coresMin: $(inputs.bwa_num_threads)
 
 baseCommand: [ bash, /tools/fastq2bam.sh ]
 
@@ -62,6 +65,10 @@ inputs:
     doc: FastQ file from next-generation sequencers
   outprefix:
     type: string
+  fastq2bam_ram_min:
+    type: int
+    doc: size of RAM (in MB) to be specified in 
+    default: 48000
   bwa_num_threads:
     type: int
     doc: number of cpu cores to be used

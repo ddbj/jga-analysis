@@ -26,6 +26,9 @@ requirements:
       BWA_NUM_THREADS: $(inputs.bwa_num_threads)
       SORTSAM_JAVA_OPTIONS: $(inputs.sortsam_java_options)
       SORTSAM_MAX_RECORDS_IN_RAM: $(inputs.sortsam_max_records_in_ram)
+  ResourceRequirement:
+    ramMin: $(inputs.fastq2bam_ram_min)
+    coresMin: $(inputs.bwa_num_threads)
 
 baseCommand: [ bash, /tools/fastq2bam.sh ]
 
@@ -66,6 +69,10 @@ inputs:
     doc: FastQ file from next-generation sequencers
   outprefix:
     type: string
+  fastq2bam_ram_min:
+    type: int
+    doc: size of RAM (in MB) to be specified in 
+    default: 48000
   bwa_num_threads:
     type: int
     doc: number of cpu cores to be used

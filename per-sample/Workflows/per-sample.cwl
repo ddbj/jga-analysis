@@ -16,9 +16,9 @@ requirements:
   StepInputExpressionRequirement: {}
   ResourceRequirement:
     outdirMin: 40960
-    ramMin: 48000
     tmpdirMin: 65536
-    coresMin: 16
+    ramMin: 48000
+    coresMin: 1
 
 inputs:
   reference:
@@ -34,9 +34,6 @@ inputs:
       - .alt
       - .fai
       - ^.dict
-  cores:
-    type: int
-    doc: nubmer of cores
   bwa_bases_per_batch:
     type: int
     doc: bases in each batch
@@ -141,14 +138,36 @@ inputs:
     format: edam:format_3584
   haplotypecaller_chrY_nonPAR_interval_list:
     type: File
-
+  # for ResourceRequirement for each step
+  fastq2bam_ram_min:
+    type: int
+    default: 48000
+  fastq2bam_cores_min:
+    type: int
+    default: 16
+    doc: cores for each fastq2bam step
+  bams2cram_ram_min:
+    type: int
+    default: 48000
+  bams2cram_cores_min:
+    type: int
+    default: 16
+    doc: cores for each bams2cram step
+  haplotypecaller_ram_min:
+    type: int
+    default: 48000
+  haplotypecaller_cores_min:
+    type: int
+    default: 16
+    doc: cores for each haplotypecaller step
 
 steps:
   fastqPE2bam:
     run: ../Tools/fastqPE2bam.cwl
     in:
       reference: reference
-      bwa_num_threads: cores
+      bwa_num_threads: fastq2bam_cores_min
+      fastq2bam_ram_min: fastq2bam_ram_min
       bwa_bases_per_batch: bwa_bases_per_batch
       sortsam_java_options: sortsam_java_options
       sortsam_max_records_in_ram: sortsam_max_records_in_ram
@@ -178,7 +197,8 @@ steps:
     run: ../Tools/fastqSE2bam.cwl
     in:
       reference: reference
-      bwa_num_threads: cores
+      bwa_num_threads: fastq2bam_cores_min
+      fastq2bam_ram_min: fastq2bam_ram_min
       bwa_bases_per_batch: bwa_bases_per_batch
       sortsam_java_options: sortsam_java_options
       sortsam_max_records_in_ram: sortsam_max_records_in_ram
@@ -219,7 +239,8 @@ steps:
       gatk4_BaseRecalibrator_java_options: gatk4_BaseRecalibrator_java_options
       gatk4_ApplyBQSR_java_options: gatk4_ApplyBQSR_java_options
       static_quantized_quals: static_quantized_quals
-      samtools_num_threads: cores
+      samtools_num_threads: bams2cram_cores_min
+      bams2cram_ram_min: bams2cram_ram_min
     out:
       - markdup_metrics
       - markdup_log
@@ -243,10 +264,11 @@ steps:
       interval_bed: haplotypecaller_autosome_PAR_interval_bed
       interval_list: haplotypecaller_autosome_PAR_interval_list
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
-      gatk4_HaplotypeCaller_num_threads: cores
+      gatk4_HaplotypeCaller_num_threads: haplotypecaller_cores_min
+      haplotypecaller_ram_min: haplotypecaller_ram_min
       ploidy:
         valueFrom: $(2)
-      bgzip_num_threads: cores
+      bgzip_num_threads: haplotypecaller_cores_min
     out:
       - vcf_gz
       - wgs_metrics
@@ -267,10 +289,11 @@ steps:
       interval_bed: haplotypecaller_chrX_nonPAR_interval_bed
       interval_list: haplotypecaller_chrX_nonPAR_interval_list
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
-      gatk4_HaplotypeCaller_num_threads: cores
+      gatk4_HaplotypeCaller_num_threads: haplotypecaller_cores_min
+      haplotypecaller_ram_min: haplotypecaller_ram_min
       ploidy:
         valueFrom: $(2) 
-      bgzip_num_threads: cores
+      bgzip_num_threads: haplotypecaller_cores_min
     out:
       - vcf_gz
       - wgs_metrics
@@ -291,10 +314,11 @@ steps:
       interval_bed: haplotypecaller_chrX_nonPAR_interval_bed
       interval_list: haplotypecaller_chrX_nonPAR_interval_list
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
-      gatk4_HaplotypeCaller_num_threads: cores
+      gatk4_HaplotypeCaller_num_threads: haplotypecaller_cores_min
+      haplotypecaller_ram_min: haplotypecaller_ram_min
       ploidy:
         valueFrom: $(1) 
-      bgzip_num_threads: cores
+      bgzip_num_threads: haplotypecaller_cores_min
     out:
       - vcf_gz
       - wgs_metrics
@@ -315,10 +339,11 @@ steps:
       interval_bed: haplotypecaller_chrY_nonPAR_interval_bed
       interval_list: haplotypecaller_chrY_nonPAR_interval_list
       gatk4_HaplotypeCaller_java_options: gatk4_HaplotypeCaller_java_options
-      gatk4_HaplotypeCaller_num_threads: cores
+      gatk4_HaplotypeCaller_num_threads: haplotypecaller_cores_min
+      haplotypecaller_ram_min: haplotypecaller_ram_min
       ploidy:
         valueFrom: $(1) 
-      bgzip_num_threads: cores
+      bgzip_num_threads: haplotypecaller_cores_min
     out:
       - vcf_gz
       - wgs_metrics

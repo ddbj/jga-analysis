@@ -40,6 +40,10 @@ inputs:
   bgzip_num_threads:
     type: int
     default: 1
+  haplotypecaller_ram_min:
+    type: int
+    doc: size of RAM (in MB) to be specified in 
+    default: 48000
 
 steps:
   picard-CollectWgsMetrics:
@@ -63,6 +67,7 @@ steps:
       java_options: gatk4_HaplotypeCaller_java_options
       num_threads: gatk4_HaplotypeCaller_num_threads
       ploidy: ploidy
+      ram_min: haplotypecaller_ram_min
     out: [vcf, log]
   bgzip:
     label: bgzip
@@ -70,6 +75,7 @@ steps:
     in:
       vcf: gatk4-HaplotypeCaller/vcf
       num_threads: bgzip_num_threads
+      ram_min: haplotypecaller_ram_min
     out: [vcf_gz, log]
   tabix:
     label: tabix
