@@ -24,14 +24,20 @@ inputs:
     doc: FastQ file from next-generation sequencers
     inputBinding:
       position: 1
+  num_threads:
+    type: int
+    default: 1
+    inputBinding:
+      prefix: -t
+      position: 2
 
 outputs:
   html:
     type: File
     outputBinding:
-      glob: $(inputs.fastq.nameroot)_fastqc.html
+      glob: '*_fastqc.html'
     format: edam:format_2331
   log:
     type: stderr
 
-stderr: $(inputs.fastq.nameroot)_fastqc.log
+stderr: $(inputs.fastq.nameroot).fastqc.log
