@@ -255,20 +255,20 @@ steps:
 
   bgzip:
     label: bgzip
-    run: ../../per-sample/Tools/bgzip.cwl
+    run: ../Tools/bgzip.cwl
     in:
       vcf: gatk4-ApplyVQSR-SNP/vqsr_vcf
       num_threads: bgzip_num_threads
     out:
       [vcf_gz, log]
 
-  tabix:
-    label: tabix
-    run: ../../per-sample/Tools/tabix.cwl
+  bcftools-index:
+    label: bcftools-index
+    run: ../Tools/bcftools-index-t.cwl
     in:
-      vcf_gz: bgzip/vcf_gz
+      vcf: bgzip/vcf_gz
     out:
-      [tbi, log]
+      [tbi]
       
   gatk4-MakeSitesOnlyVcf:
     label: gatk4-MakeSitesOnlyVcf
@@ -285,20 +285,20 @@ steps:
 
   bgzip-sites-only:
     label: bgzip
-    run: ../../per-sample/Tools/bgzip.cwl
+    run: ../Tools/bgzip.cwl
     in:
       vcf: gatk4-MakeSitesOnlyVcf/sites_only_vcf
       num_threads: bgzip_num_threads
     out:
       [vcf_gz, log]
 
-  tabix-sites-only:
-    label: tabix
-    run: ../../per-sample/Tools/tabix.cwl
+  bcftools-index-sites-only:
+    label: bcftools-index
+    run: ../Tools/bcftools-index-t.cwl
     in:
-      vcf_gz: bgzip-sites-only/vcf_gz
+      vcf: bgzip-sites-only/vcf_gz
     out:
-      [tbi, log]
+      [tbi]
       
 outputs:
   gather-vcfs_log:
@@ -324,7 +324,7 @@ outputs:
 
   final_tbi:
     type: File
-    outputSource: tabix/tbi
+    outputSource: bcftools-index/tbi
 
   sites_only_vcf:
     type: File
@@ -333,7 +333,7 @@ outputs:
 
   sites_only_tbi:
     type: File
-    outputSource: tabix-sites-only/tbi
+    outputSource: bcftools-index-sites-only/tbi
     
   summary_metrics:
     type: File
@@ -367,10 +367,6 @@ outputs:
     type: File
     outputSource: bgzip/log
     
-  tabix_log:
-    type: File
-    outputSource: tabix/log
-
   sites-only_log:
     type: File
     outputSource: gatk4-MakeSitesOnlyVcf/log
@@ -379,7 +375,3 @@ outputs:
     type: File
     outputSource: bgzip-sites-only/log
 
-  tabix-sites-only_log:
-    type: File
-    outputSource: tabix-sites-only/log
-    
