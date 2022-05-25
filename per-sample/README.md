@@ -133,7 +133,6 @@ haplotypecaller_chrY_nonPAR_interval_bed:
 haplotypecaller_chrY_nonPAR_interval_list:
   class: File
   path: TOPDIR/chrY-nonPAR.interval_list
-sample_id: JGAN000247847
 sample_id: NA19023
 runlist_pe:
   - run_id: ERR1347662
