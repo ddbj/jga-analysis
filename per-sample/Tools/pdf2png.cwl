@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   DockerRequirement:
-    dockerPull: minidocks/poppler:0.56
+    dockerPull: suecharo/poppler:20.09.0-3.1
 
 baseCommand: [ pdftoppm ]
 
