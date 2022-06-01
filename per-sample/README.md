@@ -72,14 +72,34 @@ Then, the SAM file is sorted and converted into BAM file using picard SortSam co
 
 haplotype caller ?
 
+
+
 ### Workflows/per-sample.cwl
 
 - Usage example
 
 TODO: write cwltool sample
 
+```console
+cwltool --outdir output/ --singularity per-sample/Workflows/per-sample.cwl job-file.yaml
+```
+
+If temporary directory is specified(`/data/usr/temp`) and singularity does not mount it by default, use following.
+
+```console
+SINGULARITY_BIND=/data/usr/temp cwltool --outdir output/ --singularity per-sample/Workflows/per-sample.cwl job-file.yaml
+```
+
+
 - Job file example
 
+Sample job file `job-file.yaml`
+
+Replace
+
+- TOPDIR is replaced with referece data top directory.
+- PERSAMPLEDIR is replaced with temporary directory.
+  - if you do not specified temporary directory, remove `-Djava.io.tmpdir=PERSAMPLEDIR`
 
 ```yaml
 reference:
@@ -99,7 +119,7 @@ bams2cram_cores_min: 6
 haplotypecaller_ram_min: 48000
 haplotypecaller_cores_min: 6
 bwa_bases_per_batch: 10000000
-use_bqsr: true
+use_bqsr: false
 dbsnp:
   class: File
   path: TOPDIR/Homo_sapiens_assembly38.dbsnp138.vcf
@@ -158,3 +178,53 @@ TODO: tool name and version
 
 - Output files
 
+```
+NA19023.autosome_PAR_ploidy_2.g.vcf.gz
+NA19023.autosome_PAR_ploidy_2.g.vcf.gz.bcftools-stats
+NA19023.autosome_PAR_ploidy_2.g.vcf.gz.bcftools-stats.log
+NA19023.autosome_PAR_ploidy_2.g.vcf.gz.log
+NA19023.autosome_PAR_ploidy_2.g.vcf.gz.tbi
+NA19023.autosome_PAR_ploidy_2.g.vcf.gz.tbi.log
+NA19023.autosome_PAR_ploidy_2.g.vcf.log
+NA19023.bam.log
+NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz
+NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.bcftools-stats
+NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.bcftools-stats.log
+NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.log
+NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.tbi
+NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.tbi.log
+NA19023.chrX_nonPAR_ploidy_1.g.vcf.log
+NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz
+NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.bcftools-stats
+NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.bcftools-stats.log
+NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.log
+NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.tbi
+NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.tbi.log
+NA19023.chrX_nonPAR_ploidy_2.g.vcf.log
+NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz
+NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.bcftools-stats
+NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.bcftools-stats.log
+NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.log
+NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.tbi
+NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.tbi.log
+NA19023.chrY_nonPAR_ploidy_1.g.vcf.log
+NA19023.cram
+NA19023.cram.autosome_PAR_ploidy_2.wgs_metrics
+NA19023.cram.autosome_PAR_ploidy_2.wgs_metrics.log
+NA19023.cram.chrX_nonPAR_ploidy_1.wgs_metrics
+NA19023.cram.chrX_nonPAR_ploidy_1.wgs_metrics.log
+NA19023.cram.chrX_nonPAR_ploidy_2.wgs_metrics
+NA19023.cram.chrX_nonPAR_ploidy_2.wgs_metrics.log
+NA19023.cram.chrY_nonPAR_ploidy_1.wgs_metrics
+NA19023.cram.chrY_nonPAR_ploidy_1.wgs_metrics.log
+NA19023.cram.collect_base_dist_by_cycle
+NA19023.cram.collect_base_dist_by_cycle.chart.pdf
+NA19023.cram.collect_base_dist_by_cycle.chart.png
+NA19023.cram.crai
+NA19023.cram.crai.log
+NA19023.cram.flagstat
+NA19023.cram.idxstats
+NA19023.cram.log
+NA19023.log
+NA19023.metrics.txt
+```
