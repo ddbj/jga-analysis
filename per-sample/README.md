@@ -32,9 +32,7 @@ galaxy-tool-util==21.9.2
 
 ### Data required to run workflows
 
-TODO: write FTP address
-
-FILE list
+- Reference genome data and index files ... The following files can be downloaded from [DDBJ FTP site](ftp://ftp.ddbj.nig.ac.jp/ddbjshare-pg/jga-analysis) (It is also available from [DDBJ HTTPS site](https://ddbj.nig.ac.jp/public/ddbjshare-pg/jga-analysis))
 
 ### Small open data for testing
 

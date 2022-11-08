@@ -18,6 +18,8 @@ Reference Data which is used by workflow can be downloaded from following sites.
 
 [HTTPS](https://ddbj.nig.ac.jp/public/ddbjshare-pg/jga-analysis/)
 
+Detail is please read [Per sample](./per-sample/)
+
 ## Job Manager
 
 Job Manager execute toil per samples.
