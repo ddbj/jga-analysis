@@ -32,4 +32,4 @@ Job Manager source code is [ddbj/jga-analysis-jobmanager](https://github.com/ddb
 
 ## QCreport
 
-QCreport source code is [biosciencedbc/jga-analysis-qc](https://github.com/ddbj/jga-analysis-qc)
+QCreport source code is [ddbj/jga-analysis-qc](https://github.com/ddbj/jga-analysis-qc)
