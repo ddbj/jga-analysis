@@ -14,7 +14,7 @@ CWL multi-samples workflow is [here](./multi-samples/)
 
 Reference Data which is used by workflow can be downloaded from following sites.
 
-[FTP](ftp://ftp.ddbj.nig.ac.jp/ddbjshare-pg/jga-analysis/)
+[FTP](ftp://ftp.ddbj.nig.ac.jp/ddbjshare-pg/jga-analysis/) ftp://ftp.ddbj.nig.ac.jp/ddbjshare-pg/jga-analysis/
 
 [HTTPS](https://ddbj.nig.ac.jp/public/ddbjshare-pg/jga-analysis/)
 
