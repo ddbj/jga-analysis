@@ -67,6 +67,7 @@ inputs:
     type: int?
   Mutect2_extra_args:
     type: string?
+    default: --downsampling-stride 20 --max-reads-per-alignment-start 6 --max-suspicious-reads-per-alignment-start 6
   GetPileupSummaries_java_options:
     type: string?
   GetPileupSummaries_extra_args:
