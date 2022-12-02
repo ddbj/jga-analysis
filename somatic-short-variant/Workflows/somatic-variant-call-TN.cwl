@@ -114,7 +114,7 @@ inputs:
   Funcotator_filter_funcotations:
     doc: ignore/drop variants that have been filtered in the input
     type: boolean
-    default: false
+    default: true
   Funcotator_extra_args:
     type: string?
   outprefix:
