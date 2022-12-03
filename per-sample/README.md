@@ -1,25 +1,33 @@
-# per-sample workflow
+# JGA analysis per-sample workflow
 
-TODO: write about license if needed (GATK)
+This workflow takes FASTQ files as input, aligns them to the reference genome (GRCh38), and performs variant call per sample. The alignment results (CRAM), variant call results per sample (gVCF), and quality control metrics (CRAM-level and gVCF-level metrics) used in later steps are output.
 
-## Preparation for running workflows
+This workflow consists of the following steps:
+- Alignment (FASTQ to SAM): bwa mem (version 0.7.15)
+- SAM to BAM: GATK SortSam (version 4.1.0.0)
+- MarkDuplicates: GATK MarkDuplicates (version 4.1.0.0)
+- BQSR (optional): GATK BaseRecalibrator (version 4.1.0.0), GATK ApplyBQSR (version 4.1.0.0)
+- BAM to CRAM: samtools view -C (version 1.9), samtools index (version 1.9)
+- Calculate cram-level metrics: samtools idxstats (version 1.9), samtools flagstat (version 1.9), GATK CollectBaseDistributionByCycle (version 4.2.0.0), GATK CollectWgsMetrics (version 4.2.0.0)
+- Variant call: GATK HaplotypeCaller -ERC GVCF (version 4.1.0.0), bgzip (version 1.9), tabix (version 1.9)
+- Calculate gVCF-level metrics: bcftools stats (version 1.9)
 
-### Server recommendations
 
+## Recommendations
 - Memory >= 64GB
 - Threads >= 16
 - Disk space >= 100GB per sample
 
-### Install software
+## Set up execution environments
 
-- Install CWL execution engine on your Server
-  - cwltool 3.1.20210816212154
-    - execution on single machine
-    - This is also needed for toil
-  - toil git+https://github.com/DataBiosphere/toil.git@aa50bbfdef66bd9a861fb889325e476405fe25b6
-    - execution via jobscheduler
-  - galaxy-tool-util  21.9.2
-    - This is needed for toil
+Install CWL execution engine on your Server
+- cwltool 3.1.20210816212154
+  - execution on single machine
+  - This is also needed for toil
+- toil git+https://github.com/DataBiosphere/toil.git@aa50bbfdef66bd9a861fb889325e476405fe25b6
+  - execution via jobscheduler
+- galaxy-tool-util  21.9.2
+  - This is needed for toil
 
 `requirements.txt` is following
 
@@ -29,54 +37,12 @@ cwltool==3.1.20210816212154
 galaxy-tool-util==21.9.2
 ```
 
+## Data required to run workflows
+Reference genome data and index files can be downloaded from DDBJ FTP site (ftp://ftp.ddbj.nig.ac.jp/ddbjshare-pg/jga-analysis) or [DDBJ HTTPS site](https://ddbj.nig.ac.jp/public/ddbjshare-pg/jga-analysis))
 
-### Data required to run workflows
+## Execute the per-sample workflow
 
-- Reference genome data and index files ... The following files can be downloaded from [DDBJ FTP site](ftp://ftp.ddbj.nig.ac.jp/ddbjshare-pg/jga-analysis) (It is also available from [DDBJ HTTPS site](https://ddbj.nig.ac.jp/public/ddbjshare-pg/jga-analysis))
-
-### Small open data for testing
-
-TODO: small samples on ftp site
-
-## From FastQ file(s) to a BAM file
-
-### Tools/fastqPE2bam.cwl
-
-This workflow takes as input paired-end (PE) fastq files and outputs a BAM file.
-PE fastq files are mapped onto a human reference genome using BWA MEM (version TODO: version), which outputs a SAM file.
-Then, the SAM file is sorted and converted into BAM file using picard SortSam command (version TODO: version).
-
-- Usage example
-- Job file example
-- Input parameters specified in job file
-- Steps in this workflow
-- Output files
-
-### Tools/fastqSE2bam.cwl
-
-This workflow takes as input a single-end (SE) fastq file and outputs a BAM file.
-SE fastq file is mapped onto a human reference genome using BWA MEM (TODO: version ), which outputs a SAM file.
-Then, the SAM file is sorted and converted into BAM file using picard SortSam command (TODO: version).
-
-- Usage example
-- Job file example
-- Input parameters specified in job file
-- Steps in this workflow
-- Output files
-
-## From BAM file(s) to a genomic VCF file
-
-### TODO: Workflows/bams2gvcf.***
-
-haplotype caller ?
-
-
-
-### Workflows/per-sample.cwl
-
-- Usage example
-
-TODO: write cwltool sample
+### Usage
 
 ```console
 cwltool --outdir output/ --singularity per-sample/Workflows/per-sample.cwl job-file.yaml
@@ -88,16 +54,12 @@ If temporary directory is specified(`/data/usr/temp`) and singularity does not m
 SINGULARITY_BIND=/data/usr/temp cwltool --outdir output/ --singularity per-sample/Workflows/per-sample.cwl job-file.yaml
 ```
 
+### Job file
 
-- Job file example
+Let a sample job file be `job-file.yaml`. 
 
-Sample job file `job-file.yaml`
-
-Replace
-
-- TOPDIR is replaced with referece data top directory.
-- PERSAMPLEDIR is replaced with temporary directory.
-  - if you do not specified temporary directory, remove `-Djava.io.tmpdir=PERSAMPLEDIR`
+- Please specify TOPDIR to be a referece data top directory.
+- Please specify PERSAMPLEDIR to be a temporary directory (if you do not specified temporary directory, remove `-Djava.io.tmpdir=PERSAMPLEDIR`)
 
 ```yaml
 reference:
@@ -166,63 +128,3 @@ runlist_pe:
 runlist_se: []
 ```
 
-- Input parameters specified in job file
-
-TODO: Input parameters specified in job file
-
-- Steps in this workflow
-
-TODO: tool name and version
-
-- Output files
-
-```
-NA19023.autosome_PAR_ploidy_2.g.vcf.gz
-NA19023.autosome_PAR_ploidy_2.g.vcf.gz.bcftools-stats
-NA19023.autosome_PAR_ploidy_2.g.vcf.gz.bcftools-stats.log
-NA19023.autosome_PAR_ploidy_2.g.vcf.gz.log
-NA19023.autosome_PAR_ploidy_2.g.vcf.gz.tbi
-NA19023.autosome_PAR_ploidy_2.g.vcf.gz.tbi.log
-NA19023.autosome_PAR_ploidy_2.g.vcf.log
-NA19023.bam.log
-NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz
-NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.bcftools-stats
-NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.bcftools-stats.log
-NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.log
-NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.tbi
-NA19023.chrX_nonPAR_ploidy_1.g.vcf.gz.tbi.log
-NA19023.chrX_nonPAR_ploidy_1.g.vcf.log
-NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz
-NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.bcftools-stats
-NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.bcftools-stats.log
-NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.log
-NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.tbi
-NA19023.chrX_nonPAR_ploidy_2.g.vcf.gz.tbi.log
-NA19023.chrX_nonPAR_ploidy_2.g.vcf.log
-NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz
-NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.bcftools-stats
-NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.bcftools-stats.log
-NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.log
-NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.tbi
-NA19023.chrY_nonPAR_ploidy_1.g.vcf.gz.tbi.log
-NA19023.chrY_nonPAR_ploidy_1.g.vcf.log
-NA19023.cram
-NA19023.cram.autosome_PAR_ploidy_2.wgs_metrics
-NA19023.cram.autosome_PAR_ploidy_2.wgs_metrics.log
-NA19023.cram.chrX_nonPAR_ploidy_1.wgs_metrics
-NA19023.cram.chrX_nonPAR_ploidy_1.wgs_metrics.log
-NA19023.cram.chrX_nonPAR_ploidy_2.wgs_metrics
-NA19023.cram.chrX_nonPAR_ploidy_2.wgs_metrics.log
-NA19023.cram.chrY_nonPAR_ploidy_1.wgs_metrics
-NA19023.cram.chrY_nonPAR_ploidy_1.wgs_metrics.log
-NA19023.cram.collect_base_dist_by_cycle
-NA19023.cram.collect_base_dist_by_cycle.chart.pdf
-NA19023.cram.collect_base_dist_by_cycle.chart.png
-NA19023.cram.crai
-NA19023.cram.crai.log
-NA19023.cram.flagstat
-NA19023.cram.idxstats
-NA19023.cram.log
-NA19023.log
-NA19023.metrics.txt
-```
