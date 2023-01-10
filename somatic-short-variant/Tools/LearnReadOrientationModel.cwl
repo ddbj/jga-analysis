@@ -10,7 +10,7 @@ $namespaces:
 
 hints:
   - class: DockerRequirement
-    dockerPull: broadinstitute/gatk:4.2.6.1
+    dockerPull: broadinstitute/gatk:4.2.4.0
 
 baseCommand: [ gatk ]
 

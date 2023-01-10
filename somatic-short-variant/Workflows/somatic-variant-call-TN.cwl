@@ -9,9 +9,6 @@ $namespaces:
   edam: http://edamontology.org/
 
 requirements:
-  MultipleInputFeatureRequirement: {}
-  # The above is required to pass Mutect2/f1r2_tar_gz (a single file) to LearnReadOrientationModel,
-  # which should take an array of files as an input
   StepInputExpressionRequirement: {}
   # The above is required to use "valueFrom" in a workflow step
   InlineJavascriptRequirement: {}
@@ -75,13 +72,12 @@ inputs:
     type: int?
   Mutect2_extra_args:
     type: string?
+    default: --downsampling-stride 20 --max-reads-per-alignment-start 6 --max-suspicious-reads-per-alignment-start 6
   GetPileupSummaries_java_options:
     type: string?
   GetPileupSummaries_extra_args:
     type: string?
   CalculateContamination_java_options:
-    type: string?
-  LearnReadOrientationModel_java_options:
     type: string?
   FilterMutectCalls_java_options:
     type: string?
@@ -113,7 +109,7 @@ inputs:
   Funcotator_filter_funcotations:
     doc: ignore/drop variants that have been filtered in the input
     type: boolean
-    default: false
+    default: true
   Funcotator_extra_args:
     type: string?
   outprefix:
@@ -173,16 +169,6 @@ steps:
       normal_pileups: GetPileupSummaries_normal/pileups
       outprefix: outprefix
     out: [contamination_table, tumor_segmentation, log]
-  LearnReadOrientationModel:
-    label: LearnReadOrientationModel
-    run: ../Tools/LearnReadOrientationModel.cwl
-    in:
-      java_options: LearnReadOrientationModel_java_options
-      f1r2_tar_gz:
-        source: [Mutect2/f1r2_tar_gz]
-        linkMerge: merge_flattened
-      outprefix: outprefix
-    out: [artifact_priors, log]
   FilterMutectCalls:
     label: FilterMutectCalls
     run: ../Tools/FilterMutectCalls.cwl
@@ -192,7 +178,6 @@ steps:
       in_vcf_gz: Mutect2/vcf_gz
       contamination_table: CalculateContamination/contamination_table
       tumor_segmentation: CalculateContamination/tumor_segmentation
-      orientation_bias_artifact_priors: LearnReadOrientationModel/artifact_priors
       stats: Mutect2/stats
       extra_args: FilterMutectCalls_extra_args
       outprefix: outprefix
@@ -237,9 +222,6 @@ outputs:
   tumor_segmentation:
     type: File
     outputSource: CalculateContamination/tumor_segmentation
-  read_orientation_model_params:
-    type: File
-    outputSource: LearnReadOrientationModel/artifact_priors
   funcotated_maf:
     type: File
     outputSource: Funcotator/maf
@@ -255,9 +237,6 @@ outputs:
   CalculateContamination_log:
     type: File
     outputSource: CalculateContamination/log
-  LearnReadOrientationModel_log:
-    type: File
-    outputSource: LearnReadOrientationModel/log
   FilterMutectCalls_log:
     type: File
     outputSource: FilterMutectCalls/log
