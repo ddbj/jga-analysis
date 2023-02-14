@@ -239,7 +239,7 @@ inputs:
     default: 1
 steps:
   joint-variant-calling:
-    run: ./multi-samples5.cwl
+    run: .//joint-variant-calling-and-gathervcfs.cwl
     scatter: interval_bed_list
     in:
       sample_set: sample_set
