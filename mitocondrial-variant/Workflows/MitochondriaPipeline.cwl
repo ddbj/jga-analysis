@@ -187,7 +187,9 @@ steps:
       non_control_region_interval_list: non_control_region_interval_list
       mt_reference: mt_reference
       mt_shifted_reference: mt_shifted_reference
-      outprefix: outprefix
+      outprefix:
+        source: outprefix
+        valueFrom: $(self).chrM
     out:
       - per_base_coverage
       - CollectHsMetricsNonControlRegion_log
