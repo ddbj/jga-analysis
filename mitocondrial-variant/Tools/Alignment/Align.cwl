@@ -60,4 +60,4 @@ outputs:
     doc: the entire standard error
     type: stderr
 
-stderr: $(inputs.outprefix).Align.log
+stderr: $(inputs.outprefix).align.log

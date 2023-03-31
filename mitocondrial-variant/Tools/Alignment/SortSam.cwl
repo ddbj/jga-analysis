@@ -45,7 +45,7 @@ outputs:
   log:
     type: stderr
 
-stderr: $(inputs.outprefix).SortSam.log
+stderr: $(inputs.outprefix).sortSam.log
 
 arguments:
   - position: 2
