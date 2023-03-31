@@ -4,13 +4,17 @@ set -o pipefail
 set -e
 
 BWA_COMMANDLINE="bwa mem -K 100000000 -p -v 3 -t 2 -Y ${REFERENCE}"
+
+mkfifo fastq
+
 java -Xms5000m -jar /usr/gitc/picard.jar \
   SamToFastq \
   INPUT=${UNMAPPED_BAM} \
-  FASTQ=/dev/stdout \
+  FASTQ=fastq \
   INTERLEAVE=true \
-  NON_PF=true | \
-/usr/gitc/${BWA_COMMANDLINE} /dev/stdin - 2> >(tee ${OUTPUT_BAM_BASENAME}.bwa.log >&2) | \
+  NON_PF=true &
+
+/usr/gitc/${BWA_COMMANDLINE} fastq - 2> >(tee ${OUTPUT_BAM_BASENAME}.bwa.log >&2) | \
 java -Xms3000m -jar /usr/gitc/picard.jar \
   MergeBamAlignment \
   VALIDATION_STRINGENCY=SILENT \
