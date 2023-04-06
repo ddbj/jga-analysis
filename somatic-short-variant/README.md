@@ -24,7 +24,7 @@ If a tumor sample and a matched normal sample are provided, run `somatic-short-v
 $ cwltool --outdir output/ --singularity somatic-short-variant/Workflows/somatic-variant-call-TN.cwl job-file-TN.yaml
 ```
 
-If only tumor sample is provided, run `somatic-short-variant/Workflows/somatic-variant-call-T.cwl`.
+If only a tumor sample is provided, run `somatic-short-variant/Workflows/somatic-variant-call-T.cwl`.
 
 ```
 $ cwltool --outdir output/ --singularity somatic-short-variant/Workflows/somatic-variant-call-T.cwl job-file-T.yaml
@@ -90,18 +90,18 @@ For the input to the workflow, the sample BAMs were converted to CRAMs. The cont
 
 The following input parameters were configured.
 
-* The workflow verison was set to [4.1.8.1](https://github.com/broadinstitute/gatk/tree/4.1.8.1/scripts/mutect2_wdl)
-* `gatk_docker` was set to `broadinstitute/gatk:4.2.4.0`
+* The workflow verison = [4.1.8.1](https://github.com/broadinstitute/gatk/tree/4.1.8.1/scripts/mutect2_wdl)
+* `gatk_docker` = `broadinstitute/gatk:4.2.4.0`
 * The reference was changed to hg38 (The original Terra workspace uses hg19 as the reference).
-* `tumor_reads` was `hcc1143_T_clean.bam`
-* `normal_reads` was set to `hcc1143_N_clean.bam`
-* `funco_data_sources_tar_gz` was set to `funcotator_dataSources.v1.6.20190124s.tar.gz`
-* `funco_reference_version` was set to `hg38`.
-* `funco_transcript_selection_list` was set to `transcriptList.exact_uniprot_matches.AKT1_CRLF2_FGFR1.txt`
-* `gnomad` was set to `af-only-gnomad.hg38.vcf.gz`
-* `m2_extra_args` was set to `--downsampling-stride 20 --max-reads-per-alignment-start 6 --max-suspicious-reads-per-alignment-start 6`.
-* `pon` was set to `1000g_pon.hg38.vcf.gz`
-* `variants_for_contamination` was set to `small_exac_common_3.hg38.vcf.gz`
+* `tumor_reads` = `hcc1143_T_clean.bam`
+* `normal_reads` = `hcc1143_N_clean.bam`
+* `funco_data_sources_tar_gz` = `funcotator_dataSources.v1.6.20190124s.tar.gz`
+* `funco_reference_version` = `hg38`.
+* `funco_transcript_selection_list` = `transcriptList.exact_uniprot_matches.AKT1_CRLF2_FGFR1.txt`
+* `gnomad` = `af-only-gnomad.hg38.vcf.gz`
+* `m2_extra_args` = `--downsampling-stride 20 --max-reads-per-alignment-start 6 --max-suspicious-reads-per-alignment-start 6`.
+* `pon` = `1000g_pon.hg38.vcf.gz`
+* `variants_for_contamination` = `small_exac_common_3.hg38.vcf.gz`
 
 ### Results
 
