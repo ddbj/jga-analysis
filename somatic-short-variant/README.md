@@ -90,7 +90,7 @@ For the input to the workflow, the sample BAMs were converted to CRAMs. The cont
 
 The following input parameters were configured.
 
-* The workflow verison = [4.1.8.1](https://github.com/broadinstitute/gatk/tree/4.1.8.1/scripts/mutect2_wdl)
+* The workflow verison was set to [4.1.8.1](https://github.com/broadinstitute/gatk/tree/4.1.8.1/scripts/mutect2_wdl)
 * `gatk_docker` = `broadinstitute/gatk:4.2.4.0`
 * The reference was changed to hg38 (The original Terra workspace uses hg19 as the reference).
 * `tumor_reads` = `hcc1143_T_clean.bam`
