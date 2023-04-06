@@ -36,11 +36,11 @@ We compared our workflow (tumor/normal pair) with [2-Mutect2-GATK4](https://anvi
 
 ### Inputs
 
-The input data for variant call are retrieved from [here](https://console.cloud.google.com/storage/browser/gatk-best-practices/somatic-hg38;tab=objects?pageState=(%22StorageObjectListTable%22:(%22f%22:%22%255B%255D%22))&authuser=0&prefix=&forceOnObjectsSortingFiltering=false).
+The input data for variant call were retrieved from [here](https://console.cloud.google.com/storage/browser/gatk-best-practices/somatic-hg38;tab=objects?pageState=(%22StorageObjectListTable%22:(%22f%22:%22%255B%255D%22))&authuser=0&prefix=&forceOnObjectsSortingFiltering=false).
 
-Funcotator data sources are retrieved from [here](https://console.cloud.google.com/storage/browser/broad-public-datasets/funcotator;tab=objects?authuser=0&prefix=&forceOnObjectsSortingFiltering=false).
+Funcotator data sources were retrieved from [here](https://console.cloud.google.com/storage/browser/broad-public-datasets/funcotator;tab=objects?authuser=0&prefix=&forceOnObjectsSortingFiltering=false).
 
-We used HCC1143 (tumor and normal) aligned to hg38 for the target of variant identification.
+We used HCC1143 (tumor and normal) aligned to hg38 as the target of variant identification.
 
 ### Settings in our workflow
 
@@ -90,7 +90,7 @@ For the input to the workflow, the sample BAMs were converted to CRAMs. The cont
 
 The following input parameters were configured.
 
-* The workflow verison was set to [4.1.8.1](https://github.com/broadinstitute/gatk/tree/4.1.8.1/scripts/mutect2_wdl)
+* The workflow verison was set to [4.1.8.1](https://github.com/broadinstitute/gatk/tree/4.1.8.1/scripts/mutect2_wdl).
 * `gatk_docker` = `broadinstitute/gatk:4.2.4.0`
 * The reference was changed to hg38 (The original Terra workspace uses hg19 as the reference).
 * `tumor_reads` = `hcc1143_T_clean.bam`
