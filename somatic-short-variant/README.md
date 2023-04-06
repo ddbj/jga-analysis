@@ -96,10 +96,10 @@ The following input parameters were configured.
 * `tumor_reads` = `hcc1143_T_clean.bam`
 * `normal_reads` = `hcc1143_N_clean.bam`
 * `funco_data_sources_tar_gz` = `funcotator_dataSources.v1.6.20190124s.tar.gz`
-* `funco_reference_version` = `hg38`.
+* `funco_reference_version` = `hg38`
 * `funco_transcript_selection_list` = `transcriptList.exact_uniprot_matches.AKT1_CRLF2_FGFR1.txt`
 * `gnomad` = `af-only-gnomad.hg38.vcf.gz`
-* `m2_extra_args` = `--downsampling-stride 20 --max-reads-per-alignment-start 6 --max-suspicious-reads-per-alignment-start 6`.
+* `m2_extra_args` = `--downsampling-stride 20 --max-reads-per-alignment-start 6 --max-suspicious-reads-per-alignment-start 6`
 * `pon` = `1000g_pon.hg38.vcf.gz`
 * `variants_for_contamination` = `small_exac_common_3.hg38.vcf.gz`
 
