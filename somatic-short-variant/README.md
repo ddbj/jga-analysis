@@ -2,7 +2,7 @@
 
 This workflow detects somatic short variants from the sequencing data of a tumor sample (optionally combined with the sequencing data of a matched normal sample).
 
-The calculation is performed according to the protocol proposed by [GATK Best Practice](https://gatk.broadinstitute.org/hc/en-us/articles/360035894731-Somatic-short-variant-discovery-SNVs-Indels-) and is composed of the following steps.
+The calculation is performed according to [the methods proposed in GATK Best Practices](https://gatk.broadinstitute.org/hc/en-us/articles/360035894731-Somatic-short-variant-discovery-SNVs-Indels-) and is composed of the following steps.
 
 * Mutect2 4.2.4.0
 * GetPileupSummaries 4.2.4.0
@@ -18,7 +18,7 @@ The calculation is performed according to the protocol proposed by [GATK Best Pr
 
 ## Usage
 
-If a tumor sample and a matched normal sample are provided, run `somatic-short-variant/Workflows/somatic-variant-call-TN.cwl`.
+If both a tumor sample and a matched normal sample are provided, run `somatic-short-variant/Workflows/somatic-variant-call-TN.cwl`.
 
 ```
 $ cwltool --outdir output/ --singularity somatic-short-variant/Workflows/somatic-variant-call-TN.cwl job-file-TN.yaml
@@ -32,7 +32,9 @@ $ cwltool --outdir output/ --singularity somatic-short-variant/Workflows/somatic
 
 ## Compatibility test
 
-We compared our workflow (tumor/normal pair) with [2-Mutect2-GATK4](https://anvil.terra.bio/#workspaces/help-gatk/Somatic-SNVs-Indels-GATK4/workflows/help-gatk/2-Mutect2-GATK4) workflow of Somatic-SNVs-Indels-GATK4 workspace in Terra platform.
+In Terra platform, [Somatic-SNVs-Indels-GATK4](https://anvil.terra.bio/#workspaces/help-gatk/Somatic-SNVs-Indels-GATK4) provides an example of a somatic variant call workflow (`2-Mutect2-GATK4`) based on GATK Best Practices.
+
+We compared it with our workflow using a tumor and a matched normal pair.
 
 ### Inputs
 
@@ -105,4 +107,4 @@ The following input parameters were configured.
 
 ### Results
 
-The identified variants and their annotations were identical between two workflows.
+The detected variants and their annotations were identical between two workflows.
