@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   DockerRequirement:
-    dockerPull: ghcr.io/biosciencedbc/jga-analysis/manta:1.0.0
+    dockerPull: ghcr.io/ddbj/jga-analysis/manta:1.0.0
   ShellCommandRequirement: {}
   EnvVarRequirement:
     envDef:
