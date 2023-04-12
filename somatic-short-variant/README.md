@@ -107,9 +107,9 @@ The following input parameters were configured.
 
 ### Results
 
-The result VCFs and MAFs from two workflows are available from [here](https://zenodo.org/record/7821043#.ZDZ2GxXP2oc).
+The VCFs and MAFs from two workflows are available from [here](https://zenodo.org/record/7821043#.ZDZ2GxXP2oc).
 
-The detected variants and their annotations were identical between two workflows. It is confirmed by the following commands:
+The detected variants and their annotations were identical between two workflows. It was confirmed by the following commands:
 
 ```
 $ diff <(gunzip -c HCC1143.somatic.filter.vcf.gz | grep -vE "^#") <(grep -vE "^#" submissions_4e62b5bb-6f9c-431f-9327-378c68e6e4af
