@@ -10,11 +10,11 @@ The calculation is performed according to [the methods proposed in GATK Best Pra
 * FilterMutectCalls 4.2.4.0
 * Funcotator 4.2.4.0
 
-(NOTE: Although LearnReadOrientationModel step is described run in GATK Best Practice workflow, our workflow does not include this step.)
+(NOTE: Although LearnReadOrientationModel step is described in GATK Best Practice workflow, our workflow does not include this step.)
 
 ## Requirements
 
-* [cwltool](https://github.com/common-workflow-language/cwltool)
+* [cwltool](https://github.com/common-workflow-language/cwltool) (tested with version 3.0.20210319143721)
 
 ## Usage
 
@@ -32,9 +32,9 @@ $ cwltool --outdir output/ --singularity somatic-short-variant/Workflows/somatic
 
 ## Compatibility test
 
-In Terra platform, [Somatic-SNVs-Indels-GATK4](https://anvil.terra.bio/#workspaces/help-gatk/Somatic-SNVs-Indels-GATK4) provides an example of a somatic variant call workflow (`2-Mutect2-GATK4`) based on GATK Best Practices.
+In Terra platform, [Somatic-SNVs-Indels-GATK4](https://anvil.terra.bio/#workspaces/help-gatk/Somatic-SNVs-Indels-GATK4) workspace provides an example of a somatic variant call workflow (`2-Mutect2-GATK4`) based on GATK Best Practices.
 
-We compared it with our workflow using a tumor and a matched normal pair.
+We compared it with our workflow using a tumor and a matched normal sample.
 
 ### Inputs
 
@@ -107,4 +107,15 @@ The following input parameters were configured.
 
 ### Results
 
-The detected variants and their annotations were identical between two workflows.
+The result VCFs and MAFs from two workflows are available from [here](https://zenodo.org/record/7821043#.ZDZ2GxXP2oc).
+
+The detected variants and their annotations were identical between two workflows. It is confirmed by the following commands:
+
+```
+$ diff <(gunzip -c HCC1143.somatic.filter.vcf.gz | grep -vE "^#") <(grep -vE "^#" submissions_4e62b5bb-6f9c-431f-9327-378c68e6e4af
+_Mutect2_e4638ec4-1ce5-4da8-852d-3d17893751e4_call-Filter_hcc1143_T_clean-filtered.vcf)
+```
+
+```
+$ diff <(grep -vE '^#' HCC1143.somatic.filter.annotated.maf) <(grep -vE '^#' submissions_4e62b5bb-6f9c-431f-9327-378c68e6e4af_Mutect2_e4638ec4-1ce5-4da8-852d-3d17893751e4_call-Funcotate_hcc1143_T_clean-filtered.annotated.maf)
+```
