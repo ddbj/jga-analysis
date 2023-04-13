@@ -1,8 +1,8 @@
 # JGA analysis mitochondrial short variant discovery workflow
 
-This workflow detects mitochondrial short variants from the WGS data.
+This workflow detects mitochondrial short variants from WGS data.
 
-The calculation is basically performed according to [the methods proposed in GATK Best Practices](https://gatk.broadinstitute.org/hc/en-us/articles/4403870837275-Mitochondrial-short-variant-discovery-SNVs-Indels-). The reference implementation of the workflow is [GATK mitochondria WDL pipeline 4.1.8.0](https://github.com/broadinstitute/gatk/blob/4.1.8.0/scripts/mitochondria_m2_wdl/MitochondriaPipeline.wdl).
+The calculation is basically performed according to [the methods proposed in GATK Best Practices](https://gatk.broadinstitute.org/hc/en-us/articles/4403870837275-Mitochondrial-short-variant-discovery-SNVs-Indels-) and [its reference implementation](https://github.com/broadinstitute/gatk/blob/4.1.8.0/scripts/mitochondria_m2_wdl/MitochondriaPipeline.wdl).
 
 The workflow is composed of the following steps.
 
