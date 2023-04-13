@@ -211,7 +211,7 @@ steps:
       - major_level
       - log
   FilterContamination:
-    label: InitialFilter
+    label: FilterContamination
     run: ../Workflows/Filter.cwl
     in:
       reference: mt_reference
