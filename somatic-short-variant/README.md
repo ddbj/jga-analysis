@@ -4,11 +4,11 @@ This workflow detects somatic short variants from the sequencing data of a tumor
 
 The calculation is performed according to [the methods proposed in GATK Best Practices](https://gatk.broadinstitute.org/hc/en-us/articles/360035894731-Somatic-short-variant-discovery-SNVs-Indels-) and is composed of the following steps.
 
-* Mutect2 4.2.4.0
-* GetPileupSummaries 4.2.4.0
-* CalculateContamination 4.2.4.0
-* FilterMutectCalls 4.2.4.0
-* Funcotator 4.2.4.0
+* GATK Mutect2 4.2.4.0
+* GATK GetPileupSummaries 4.2.4.0
+* GATK CalculateContamination 4.2.4.0
+* GATK FilterMutectCalls 4.2.4.0
+* GATK Funcotator 4.2.4.0
 
 (NOTE: Although LearnReadOrientationModel step is described in GATK Best Practice workflow, our workflow does not include this step.)
 
