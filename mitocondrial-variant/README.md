@@ -40,7 +40,7 @@ We compared it with our workflow using NA12878 sample.
 
 ### Inputs
 
-WGS CRAM of NA12878 were retrieved from [here](https://console.cloud.google.com/storage/browser/broad-public-datasets/NA12878;tab=objects?authuser=0&prefix=&forceOnObjectsSortingFiltering=false).
+WGS CRAM of NA12878 was retrieved from [here](https://console.cloud.google.com/storage/browser/broad-public-datasets/NA12878;tab=objects?authuser=0&prefix=&forceOnObjectsSortingFiltering=false).
 
 The mitochondrial references and other resources were retrieved from [here](https://console.cloud.google.com/storage/browser/gcp-public-data--broad-references/hg38/v0/chrM;tab=objects?authuser=0&prefix=&forceOnObjectsSortingFiltering=false).
 
