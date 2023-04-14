@@ -92,7 +92,7 @@ The following input parameters were configured.
 
 ### Results
 
-The VCFs from two workflows are available from [here](https://zenodo.org/record/7827923).
+The VCFs (mutiallelic/biallelic representation) from two workflows are available from [here](https://zenodo.org/record/7827923).
 
 The detected variants were identical between two workflows. It was confirmed by the following commands.
 
