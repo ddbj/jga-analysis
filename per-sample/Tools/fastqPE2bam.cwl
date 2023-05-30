@@ -3,29 +3,14 @@
 class: CommandLineTool
 id: fastqPE2bam
 label: fastqPE2bam
-cwlVersion: v1.1
+cwlVersion: v1.2
 
 $namespaces:
   edam: http://edamontology.org/
 
 requirements:
   DockerRequirement:
-    dockerPull: ghcr.io/ddbj/jga-analysis/fastq2cram-bqsr-haplotypecaller:1.1.3
-  EnvVarRequirement:
-    envDef:
-      REFERENCE: $(inputs.reference.path)
-      FASTQ1: $(inputs.fastq1.path)
-      FASTQ2: $(inputs.fastq2.path)
-      RG_ID: $(inputs.RG_ID)
-      RG_PL: $(inputs.RG_PL)
-      RG_PU: $(inputs.RG_PU)
-      RG_LB: $(inputs.RG_LB)
-      RG_SM: $(inputs.RG_SM)
-      BAM: $(inputs.outprefix).bam
-      BWA_BASES_PER_BATCH: $(inputs.bwa_bases_per_batch)
-      BWA_NUM_THREADS: $(inputs.bwa_num_threads)
-      SORTSAM_JAVA_OPTIONS: $(inputs.sortsam_java_options)
-      SORTSAM_MAX_RECORDS_IN_RAM: $(inputs.sortsam_max_records_in_ram)
+    dockerPull: ghcr.io/manabuishii/jga-analysis/fastq2cram-bqsr-haplotypecaller:dev-manabuishii.1.1.4
   ResourceRequirement:
     ramMin: $(inputs.fastq2bam_ram_min)
     coresMin: $(inputs.bwa_num_threads)
@@ -44,31 +29,52 @@ inputs:
       - .pac
       - .sa
       - .alt
+    inputBinding:
+      position: 31
   RG_ID:
     type: string
     doc: Read group identifier (ID) in RG line
+    inputBinding:
+      position: 11
   RG_PL:
     type: string
     doc: Platform/technology used to produce the read (PL) in RG line
+    inputBinding:
+      position: 12
   RG_PU:
     type: string
     doc: Platform Unit (PU) in RG line
+    inputBinding:
+      position: 13
   RG_LB:
     type: string
     doc: DNA preparation library identifier (LB) in RG line
+    inputBinding:
+      position: 14
   RG_SM:
     type: string
     doc: Sample (SM) identifier in RG line
+    inputBinding:
+      position: 15
   fastq1:
     type: File
     format: edam:format_1930
     doc: FastQ file from next-generation sequencers
+    inputBinding:
+      position: 16
   fastq2:
     type: File
     format: edam:format_1930
     doc: FastQ file from next-generation sequencers
+    inputBinding:
+      position: 17
   outprefix:
     type: string
+  # bam:
+  #   type: string
+    inputBinding:
+      valueFrom: $(self).bam
+      position: 32
   fastq2bam_ram_min:
     type: int
     doc: size of RAM (in MB) to be specified in 
@@ -77,16 +83,24 @@ inputs:
     type: int
     doc: number of cpu cores to be used
     default: 1
+    inputBinding:
+      position: 18
   bwa_bases_per_batch:
     type: int
     doc: bases in each batch
     default: 10000000
+    inputBinding:
+      position: 19
   sortsam_java_options:
     type: string
     default: -XX:-UseContainerSupport -Xmx30g
+    inputBinding:
+      position: 20
   sortsam_max_records_in_ram:
     type: int
     default: 5000000
+    inputBinding:
+      position: 21
 
 outputs:
   bam:

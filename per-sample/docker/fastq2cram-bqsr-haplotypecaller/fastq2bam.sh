@@ -1,5 +1,18 @@
 #!/bin/bash
 
+RG_ID=$1
+RG_PL=$2
+RG_PU=$3
+RG_LB=$4
+RG_SM=$5
+FASTQ1=$6
+FASTQ2=$7
+BWA_NUM_THREADS=$8
+BWA_BASES_PER_BATCH=$9
+SORTSAM_JAVA_OPTIONS=${10}
+SORTSAM_MAX_RECORDS_IN_RAM=${11}
+REFERENCE=${12}
+BAM=${13}
 READ_GROUP=@RG\\tID:${RG_ID}\\tPL:${RG_PL}\\tPU:${RG_PU}\\tLB:${RG_LB}\\tSM:${RG_SM}
 
 # if FASTQ1 - FASTQ2 or both are bz2. convert to gz on /tmp
@@ -39,7 +52,7 @@ fi
     -K $BWA_BASES_PER_BATCH \
     -T 0 \
     -Y \
-    -R $READ_GROUP \
+    -R "$READ_GROUP" \
     $REFERENCE \
     $FASTQ1FILE $FASTQ2FILE \
 | /usr/bin/java \
