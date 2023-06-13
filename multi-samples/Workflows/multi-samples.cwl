@@ -282,6 +282,7 @@ steps:
       - vcf
       - sites_only_vcf
       - genomics-db_log
+      - joint-call_vcf
       - joint-call_log
       - filter-ExcessHet_log
       - sites-only_log
@@ -364,6 +365,29 @@ outputs:
 #    type: File[]
 #    outputSource: joint-variant-calling/genomics-db_log
 #
+  joint-call_vcf:
+    type:
+      type: array
+      items:
+        type: array
+        items: File
+    format: edam:format_3016
+    secondaryFiles:
+      - .idx
+    outputSource: joint-variant-calling/joint-call_vcf
+#  joint-call_vcf:
+#    type: File[][]
+#    format: edam:format_3016
+#    secondaryFiles:
+#      - .idx
+#    outputSource: joint-variant-calling/joint-call_vcf
+#  joint-call_log:
+#    type:
+#      type: array
+#      items:
+#        type: array
+#        items: File
+#    outputSource: joint-variant-calling/joint-call_log
 #  joint-call_log:
 #    type: File[]
 #    outputSource: joint-variant-calling/joint-call_log

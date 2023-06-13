@@ -148,6 +148,13 @@ outputs:
     type: File
     outputSource: gatk4-GenomicsDBImport/log
 
+  joint-call_vcf:
+    type: File
+    format: edam:format_3016
+    secondaryFiles:
+      - .idx
+    outputSource: gatk4-GenotypeGVCFs/vcf
+
   joint-call_log:
     type: File
     outputSource: gatk4-GenotypeGVCFs/log
