@@ -13,10 +13,7 @@ requirements:
     ramMin: $(inputs.ramGB)
     coresMin: $(inputs.ncpus)
   DockerRequirement:
-    dockerPull: docker://encodedcc/rna-seq-pipeline:1.2.4 
-# hints:
-#   DockerRequirement:
-#     dockerPull:
+    dockerPull: docker://yamaken37/align_cwl:20230814 
 baseCommand: [python3, align.py]
 
 inputs:
