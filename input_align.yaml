@@ -4,18 +4,15 @@ index:  # type "File"
     class: File
     path: "/lustre8/home/yamaken-gaj-pg/Projects/rna-seq-pipeline/test_data/ENCFF742NER.tar.gz" #https://github.com/ENCODE-DCC/rna-seq-pipeline/issues/31
 fastqs_R2:  # array of type "File"
-  - fastqs_R2_file:
-          class: File
-          path: "/lustre8/home/yamaken-gaj-pg/Projects/rna-seq-pipeline/test_data/ENCSR653DFZ_rep1_chr19_10000reads_R2.fastq.gz"
-  - fastqs_R2_file:
-          class: File
-          path: "/lustre8/home/yamaken-gaj-pg/Projects/rna-seq-pipeline/test_data/ENCSR653DFZ_rep2_chr19_10000reads_R2.fastq.gz"
+  - class: File
+    path: "/lustre8/home/yamaken-gaj-pg/Projects/rna-seq-pipeline/test_data/ENCSR653DFZ_rep1_chr19_10000reads_R2.fastq.gz"
+  - class: File
+    path: "/lustre8/home/yamaken-gaj-pg/Projects/rna-seq-pipeline/test_data/ENCSR653DFZ_rep2_chr19_10000reads_R2.fastq.gz"
 fastqs_R1:  # array of type "File"
-  - fastqs_R1_file:
-          class: File
-          path: "/lustre8/home/yamaken-gaj-pg/Projects/rna-seq-pipeline/test_data/ENCSR653DFZ_rep1_chr19_10000reads_R1.fastq.gz"
-  - fastqs_R1_file:
-          class: File
-          path: "/lustre8/home/yamaken-gaj-pg/Projects/rna-seq-pipeline/test_data/ENCSR653DFZ_rep2_chr19_10000reads_R1.fastq.gz"
+  - class: File
+    path: "/lustre8/home/yamaken-gaj-pg/Projects/rna-seq-pipeline/test_data/ENCSR653DFZ_rep1_chr19_10000reads_R1.fastq.gz"
+  - class: File
+    path: "/lustre8/home/yamaken-gaj-pg/Projects/rna-seq-pipeline/test_data/ENCSR653DFZ_rep2_chr19_10000reads_R1.fastq.gz"
+
 endedness: "paired"  # type "string"
 bamroot: "align_PE"  # type "string"

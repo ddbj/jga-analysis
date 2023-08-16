@@ -14,7 +14,7 @@ requirements:
     coresMin: $(inputs.ncpus)
   DockerRequirement:
     dockerPull: docker://yamaken37/align_cwl:20230814 
-baseCommand: [python3, align.py]
+baseCommand: [python3, /software/align.py] #align.py is in docker container(yamaken37/align_cwl:20230814)
 
 inputs:
   fastqs_R1:
