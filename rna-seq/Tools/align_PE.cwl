@@ -1,17 +1,19 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: align
+id: rnaseq_align_PE
 label: align
-cwlVersion: v1.1
+cwlVersion: v1.2
 
-$namespaces:
-  edam: http://edamontology.org/
+# $namespaces:
+#   edam: http://edamontology.org/
 
 requirements:
   ResourceRequirement:
-    ramMin: $(inputs.ramGB)
-    coresMin: $(inputs.ncpus)
+    # ramMin: $(inputs.ramGB)
+    # coresMin: $(inputs.ncpus)
+    ramMin: 64
+    coresMin: 16
   DockerRequirement:
     dockerPull: docker://yamaken37/align_cwl:20230814 
 baseCommand: [python3, /software/align.py] #align.py is in docker container(yamaken37/align_cwl:20230814)
