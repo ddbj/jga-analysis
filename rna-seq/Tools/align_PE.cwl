@@ -15,8 +15,10 @@ requirements:
     ramMin: 64
     coresMin: 16
   DockerRequirement:
-    dockerPull: docker://yamaken37/align_cwl:20230814 
-baseCommand: [python3, /software/align.py] #align.py is in docker container(yamaken37/align_cwl:20230814)
+    # dockerPull: docker://yamaken37/align_cwl:20230814
+    dockerPull: docker://encodedcc/rna-seq-pipeline:1.2.4
+# baseCommand: [python3, /software/align.py] #align.py is in docker container(yamaken37/align_cwl:20230814)
+baseCommand: [python3, /software/rna-seq-pipeline/src/align.py] #align.py is in docker container(yamaken37/align_cwl:20230814)
 
 inputs:
   fastqs_R1:
