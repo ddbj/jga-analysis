@@ -1,0 +1,20 @@
+ramGB: 4  # type "int"
+ncpus: 2  # type "int"
+index:  # type "File"
+    class: File
+    path: "TOPDIR/ENCFF742NER.tar.gz" #https://github.com/ENCODE-DCC/rna-seq-pipeline/issues/31
+
+fastqs_R1:  # array of type "File"
+  - class: File
+    path: "TOPDIR/ENCSR653DFZ_rep1_chr19_10000reads_R1.fastq.gz"
+  - class: File
+    path: "TOPDIR/ENCSR653DFZ_rep2_chr19_10000reads_R1.fastq.gz"
+
+# fastqs_R2:  # array of type "File"
+#   - class: File
+#     path: "TOPDIR/ENCSR653DFZ_rep1_chr19_10000reads_R2.fastq.gz"
+#   - class: File
+#     path: "TOPDIR/ENCSR653DFZ_rep2_chr19_10000reads_R2.fastq.gz"
+
+endedness: "single"  # type "string"
+bamroot: "align_SE"  # type "string"

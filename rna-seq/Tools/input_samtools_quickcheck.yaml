@@ -1,0 +1,6 @@
+genomebam:  # type "File"
+  class: File
+  path: "TOPDIR/TASK_NAME_genome.bam"
+ncpus: 1 # type "int"
+ramGB: 2  # type "int"
+disks: "local-disk 20 SSD" # type "string"
