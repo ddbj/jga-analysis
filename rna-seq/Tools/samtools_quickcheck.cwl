@@ -15,7 +15,7 @@ requirements:
 baseCommand: [samtools, quickcheck]
 
 inputs:
-  genomebam:
+  bam:
     type: File
     inputBinding:
       position: 1
