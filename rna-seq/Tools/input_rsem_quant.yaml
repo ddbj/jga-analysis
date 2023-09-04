@@ -1,0 +1,12 @@
+rsem_index:  # type "File"
+    class: File
+    path: "TOPDIR/GRCh38_v24_ERCC_phiX_rsemIndex_chr19only.tgz"
+rnd_seed: 12345  # type "int"
+read_strand: "reverse"  # type "string"
+ramGB: 4  # type "int"
+ncpus: 2  # type "int"
+endedness: "paired"  # type "string"
+disks: "local-disk 20 HDD"  # type "string" (optional)
+anno_bam:  # type "File"
+    class: File
+    path: "TOPDIR/align_PE_anno.bam"
