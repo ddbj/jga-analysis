@@ -2,7 +2,7 @@ ramGB: 4  # type "int"
 ncpus: 2  # type "int"
 index:  # type "File"
     class: File
-    path: "TOPDIR/ENCFF742NER.tar.gz" #https://github.com/ENCODE-DCC/rna-seq-pipeline/issues/31
+    path: "TOPDIR/GRCh38_v24_ERCC_phiX_starIndex_chr19only.tgz" # https://github.com/hacchy1983/rna-seq-pipeline/blob/a7cd9a5fe623bcf90b6a2c89335dc5acd9f7c96d/.circleci/config.yml#L31C5-L31C180
 
 fastqs_R1:  # array of type "File"
   - class: File

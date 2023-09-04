@@ -1,6 +1,6 @@
 rsem_index:  # type "File"
     class: File
-    path: "TOPDIR/GRCh38_v24_ERCC_phiX_rsemIndex_chr19only.tgz"
+    path: "TOPDIR/GRCh38_v24_ERCC_phiX_rsemIndex_chr19only.tgz" #https://github.com/hacchy1983/rna-seq-pipeline/blob/a7cd9a5fe623bcf90b6a2c89335dc5acd9f7c96d/test_data/GRCh38_v24_ERCC_phiX_rsemIndex_chr19only.tgz
 rnd_seed: 12345  # type "int"
 read_strand: "reverse"  # type "string"
 ramGB: 4  # type "int"
