@@ -11,6 +11,7 @@ requirements:
     coresMin: 16
   DockerRequirement:
     dockerPull: docker://encodedcc/rna-seq-pipeline:1.2.4
+  InlineJavascriptRequirement: {}
 
 baseCommand: [python3, /software/rna-seq-pipeline/src/bam_to_signals.py]
 
@@ -119,3 +120,5 @@ outputs:
         }
   python_log:
     type: File
+    outputBinding:
+      glob: "*.log"
