@@ -8,5 +8,6 @@ disks: "local-disk 20 HDD"  # type "string" (optional)
 chrom_sizes:  # type "File"
     class: File
     path: "TOPDIR/GRCh38_EBV.chrom.sizes"
-bamroot: "align_PE"  # type "string"
+# bamroot: "align_PE"  # type "string"
+bamroot: "align_PE_genome"  # type "string" bamroot + _genome
 
