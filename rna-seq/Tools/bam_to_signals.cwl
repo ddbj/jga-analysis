@@ -35,7 +35,7 @@ inputs:
     inputBinding:
       position: 4
       prefix: "--bamroot"
-      valueFrom: "${self}_genome"
+      # valueFrom: "${self}_genome"
   ncpus:
     type: int
   ramGB:
@@ -78,13 +78,15 @@ outputs:
   unique_minus:
     type: File?
     outputBinding:
-      glob: "$(if (inputs.strandedness == 'stranded') then '*.genome_minusUniq.bw' else '')"
+      glob: "*_genome_minusUniq.bw"
       outputEval: |
-        '$(if (self.length > 0) {
-          return self[0];
-        } else {
-          return null;
-        })'
+        ${
+          if (inputs.strandedness === "stranded" && self[0]) {
+            return self[0];
+          } else {
+            return null;
+          }
+        }
 
   all_plus:
     type: File?
