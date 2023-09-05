@@ -47,38 +47,31 @@ outputs:
   unique_unstranded:
     type: File?
     outputBinding:
-      glob: "$(if (inputs.strandedness == 'unstranded') then '*.genome_uniq.bw' else '')"
+      glob: "*.genome_uniq.bw"
       outputEval: |
-        '$(if (self.length > 0) {
-          return self[0];
-        } else {
-          return null;
-        })'
-
+        ${
+          if (inputs.strandedness === "unstranded" && self[0]) {
+            return self[0];
+          } else {
+            return null;
+          }
+        }
   all_unstranded:
     type: File?
     outputBinding:
-      glob: "$(if (inputs.strandedness == 'unstranded') then '*.genome_all.bw' else '')"
+      glob: "*.genome_all.bw"
       outputEval: |
-        '$(if (self.length > 0) {
-          return self[0];
-        } else {
-          return null;
-        })'
+        ${
+          if (inputs.strandedness === "unstranded" && self[0]) {
+            return self[0];
+          } else {
+            return null;
+          }
+        }
   unique_plus:
     type: File?
     outputBinding:
-      glob: "$(if (inputs.strandedness == 'stranded') then '*.genome_plusUniq.bw' else '')"
-      outputEval: |
-        '$(if (self.length > 0) {
-          return self[0];
-        } else {
-          return null;
-        })'
-  unique_minus:
-    type: File?
-    outputBinding:
-      glob: "*_genome_minusUniq.bw"
+      glob: "*.genome_plusUniq.bw"
       outputEval: |
         ${
           if (inputs.strandedness === "stranded" && self[0]) {
@@ -87,27 +80,42 @@ outputs:
             return null;
           }
         }
+  unique_minus:
+      type: File?
+      outputBinding:
+        glob: "*_genome_minusUniq.bw"
+        outputEval: |
+          ${
+            if (inputs.strandedness === "stranded" && self[0]) {
+              return self[0];
+            } else {
+              return null;
+            }
+          }
 
   all_plus:
     type: File?
     outputBinding:
-      glob: "$(if (inputs.strandedness == 'stranded') then '*.genome_plusAll.bw' else '')"
+      glob: "*.genome_plusAll.bw"
       outputEval: |
-        '$(if (self.length > 0) {
-          return self[0];
-        } else {
-          return null;
-        })'
-
+        ${
+          if (inputs.strandedness === "stranded" && self[0]) {
+            return self[0];
+          } else {
+            return null;
+          }
+        }
   all_minus:
     type: File?
     outputBinding:
-      glob: "$(if (inputs.strandedness == 'stranded') then '*.genome_minusAll.bw' else '')"
+      glob: "*.genome_minusAll.bw"
       outputEval: |
-        '$(if (self.length > 0) {
-          return self[0];
-        } else {
-          return null;
-        })'
+        ${
+          if (inputs.strandedness === "stranded" && self[0]) {
+            return self[0];
+          } else {
+            return null;
+          }
+        }
   python_log:
     type: File
