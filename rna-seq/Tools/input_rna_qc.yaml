@@ -1,6 +1,6 @@
 tr_id_to_gene_type_tsv:  # type "File"
     class: File
-    path: "TOPDIR/gencodeV24pri-tRNAs-ERCC-phiX.transcript_id_to_genes.tsv" #https://github.com/hacchy1983/rna-seq-pipeline/blob/v1.0.3/transcript_id_to_gene_type_mappings/gencodeV24pri-tRNAs-ERCC-phiX.transcript_id_to_genes.tsv
+    path: "TOPDIR/gencodeV29pri-UCSC-tRNAs-ERCC-phiX.transcript_id_to_genes.tsv" # https://anvil.terra.bio/#workspaces/GenomeAnalyticsJapanInc/GAJ-RNA-Seq/workflows/GenomeAnalyticsJapanInc/rna-seq-pipeline-per-sample
 output_filename: "PE_stranded_qc.json"  # type "string" bamroot+"_qc.json"
 input_bam:  # type "File" align.annobam
     class: File

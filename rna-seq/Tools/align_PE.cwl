@@ -5,9 +5,6 @@ id: rnaseq_align_PE
 label: align
 cwlVersion: v1.2
 
-# $namespaces:
-#   edam: http://edamontology.org/
-
 requirements:
   ResourceRequirement:
     # ramMin: $(inputs.ramGB)
