@@ -20,7 +20,18 @@ inputs:
     type: int
   ramGB:
     type: int
-
+  chrom_sizes:
+    type: File
+  strandedness: 
+    type: string
+  bamroot_bts:
+    type: string    
+  rsem_index:
+    type: File
+  read_strand:
+    type: string
+  rnd_seed:
+    type: int
 # endednessの値がpairedか、singleかでstepsのrunで実行するcwlファイルを変えたい
 
 steps:
@@ -60,6 +71,40 @@ steps:
       ramGB: { default: 2 }
       disks: { default: "local-disk 20 SSD" }
     out: []
+  bam_to_signals:
+    run: ../Tools/bam_to_signals.cwl
+    in:
+      input_bam: align/genomebam
+      chrom_sizes: chrom_sizes
+      strandedness: strandedness
+      bamroot: bamroot_bts
+      ncpus: ncpus
+      ramGB: ramGB
+      disks: { default: "local-disk 20 HDD" }
+    out:
+      - unique_unstranded
+      - all_unstranded
+      - unique_plus
+      - unique_minus
+      - all_plus
+      - all_minus
+      - python_log
+  rsem_quant:
+    run: ../Tools/rsem_quant.cwl
+    in:
+      rsem_index: rsem_index
+      anno_bam: align/annobam
+      endedness: endedness
+      read_strand: read_strand
+      rnd_seed: rnd_seed
+      ncpus: ncpus
+      ramGB: ramGB
+      disks: { default: "local-disk 20 HDD" }
+    out:
+      - genes_results
+      - isoforms_results
+      - number_of_genes
+      - python_log
 
 outputs:
   genomebam:
@@ -89,3 +134,36 @@ outputs:
   python_log:
     type: File
     outputSource: align/python_log
+  unique_unstranded:
+    type: File?
+    outputSource: bam_to_signals/unique_unstranded
+  all_unstranded:
+    type: File?
+    outputSource: bam_to_signals/all_unstranded
+  unique_plus:
+    type: File?
+    outputSource: bam_to_signals/unique_plus
+  unique_minus:
+    type: File?
+    outputSource: bam_to_signals/unique_minus
+  all_plus:
+    type: File?
+    outputSource: bam_to_signals/all_plus
+  all_minus:
+    type: File?
+    outputSource: bam_to_signals/all_minus
+  python_log_bts:
+    type: File
+    outputSource: bam_to_signals/python_log
+  genes_results:
+    type: File
+    outputSource: rsem_quant/genes_results
+  isoforms_results:
+    type: File
+    outputSource: rsem_quant/isoforms_results
+  number_of_genes:
+    type: File
+    outputSource: rsem_quant/number_of_genes
+  python_log_rsem:
+    type: File
+    outputSource: rsem_quant/python_log
