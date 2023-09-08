@@ -44,6 +44,22 @@ steps:
       - anno_flagstat_json
       - log_json
       - python_log
+  samtools_quickcheck_genome:
+    run: ../Tools/samtools_quickcheck.cwl
+    in:
+      bam: align/genomebam
+      ncpus: { default: 1 }
+      ramGB: { default: 2 }
+      disks: { default: "local-disk 20 SSD" }
+    out: []
+  samtools_quickcheck_anno:
+    run: ../Tools/samtools_quickcheck.cwl
+    in:
+      bam: align/annobam
+      ncpus: { default: 1 }
+      ramGB: { default: 2 }
+      disks: { default: "local-disk 20 SSD" }
+    out: []
 
 outputs:
   genomebam:
