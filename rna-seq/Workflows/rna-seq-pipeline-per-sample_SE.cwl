@@ -1,15 +1,15 @@
 #!/usr/bin/env cwl-runner
 
 class: Workflow
-id: rna-seq-pipeline-per-sample_PE
-label: rna-per-sample_PE
+id: rna-seq-pipeline-per-sample_SE
+label: rna-per-sample_SE
 cwlVersion: v1.2
 
 inputs:
   fastqs_R1:
     type: File[]
-  fastqs_R2:
-    type: File[]
+  # fastqs_R2:
+  #   type: File[]
   endedness:
     type: string
   index:
@@ -40,10 +40,10 @@ inputs:
 
 steps:
   align:
-    run: ../Tools/align_PE.cwl
+    run: ../Tools/align_SE.cwl
     in:
       fastqs_R1: fastqs_R1
-      fastqs_R2: fastqs_R2
+      # fastqs_R2: fastqs_R2
       endedness: endedness
       index: index
       bamroot: bamroot
