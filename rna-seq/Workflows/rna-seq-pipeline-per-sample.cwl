@@ -114,7 +114,7 @@ steps:
   rna_qc:
     run: ../Tools/rna_qc.cwl
     in:
-      input_bam: input_bam
+      input_bam: align/annobam
       tr_id_to_gene_type_tsv: tr_id_to_gene_type_tsv
       output_filename: output_filename
       disks: { default: "local-disk 20 HDD" }

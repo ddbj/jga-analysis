@@ -121,4 +121,4 @@ outputs:
   python_log:
     type: File
     outputBinding:
-      glob: "*.log"
+      glob: "bam_to_signals.log"
