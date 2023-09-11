@@ -1,0 +1,30 @@
+endedness: "paired"  # type "string"
+bamroot: "align_PE"  # type "string"
+index:  # type "File"
+    class: File
+    path: "TOPDIR/ENCFF598IDH.tar.gz" # https://anvil.terra.bio/#workspaces/GenomeAnalyticsJapanInc/GAJ-RNA-Seq/workflows/GenomeAnalyticsJapanInc/rna-seq-pipeline-per-sample
+fastqs_R1:  # array of type "File"
+  - class: File
+    path: "TOPDIR/ENCSR653DFZ_rep1_chr19_10000reads_R1.fastq.gz" # https://github.com/hacchy1983/rna-seq-pipeline/tree/dev
+  - class: File
+    path: "TOPDIR/ENCSR653DFZ_rep2_chr19_10000reads_R1.fastq.gz"
+fastqs_R2:  # array of type "File"
+  - class: File
+    path: "TOPDIR/ENCSR653DFZ_rep1_chr19_10000reads_R2.fastq.gz" 
+  - class: File
+    path: "TOPDIR/ENCSR653DFZ_rep2_chr19_10000reads_R2.fastq.gz"
+ramGB: 4  # type "int"
+ncpus: 2  # type "int"
+chrom_sizes:  # type "File"
+    class: File
+    path: "TOPDIR/GRCh38_EBV.chrom.sizes.tsv" # https://anvil.terra.bio/#workspaces/GenomeAnalyticsJapanInc/GAJ-RNA-Seq/workflows/GenomeAnalyticsJapanInc/rna-seq-pipeline-per-sample
+strandedness: "stranded"  # type "string"
+bamroot_bts: "align_PE_genome"  # type "string" bamroot + _genome
+rsem_index:  # type "File"
+    class: File
+    path: "TOPDIR/ENCFF285DRD.tar.gz" # https://anvil.terra.bio/#workspaces/GenomeAnalyticsJapanInc/GAJ-RNA-Seq/workflows/GenomeAnalyticsJapanInc/rna-seq-pipeline-per-sample
+rnd_seed: 12345  # type "int"
+read_strand: "reverse"  # type "string"
+anno_bam:  # type "File"
+    class: File
+    path: "TOPDIR/output/align_PE/align_PE_anno.bam"

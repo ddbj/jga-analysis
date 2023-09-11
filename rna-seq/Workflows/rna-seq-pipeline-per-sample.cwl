@@ -32,6 +32,12 @@ inputs:
     type: string
   rnd_seed:
     type: int
+  input_bam:
+    type: File
+  tr_id_to_gene_type_tsv:
+    type: File
+  output_filename:
+    type: string
 # endednessの値がpairedか、singleかでstepsのrunで実行するcwlファイルを変えたい
 
 steps:
@@ -105,7 +111,16 @@ steps:
       - isoforms_results
       - number_of_genes
       - python_log
-
+  rna_qc:
+    run: ../Tools/rna_qc.cwl
+    in:
+      input_bam: input_bam
+      tr_id_to_gene_type_tsv: tr_id_to_gene_type_tsv
+      output_filename: output_filename
+      disks: { default: "local-disk 20 HDD" }
+    out:
+      - rnaQC
+      - python_log
 outputs:
   genomebam:
     type: File
@@ -167,3 +182,9 @@ outputs:
   python_log_rsem:
     type: File
     outputSource: rsem_quant/python_log
+  rnaQC:
+    type: File
+    outputSource: rna_qc/rnaQC
+  python_log_rna_qc:
+    type: File
+    outputSource: rna_qc/python_log
