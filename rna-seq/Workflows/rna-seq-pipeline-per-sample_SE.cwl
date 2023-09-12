@@ -11,8 +11,6 @@ requirements:
 inputs:
   fastqs_R1:
     type: File[]
-  # fastqs_R2:
-  #   type: File[]
   endedness:
     type: string
   index:
@@ -35,7 +33,6 @@ inputs:
     type: int
   tr_id_to_gene_type_tsv:
     type: File
-# endednessの値がpairedか、singleかでstepsのrunで実行するcwlファイルを変えたい
 
 steps:
   align:
