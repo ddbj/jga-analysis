@@ -26,9 +26,7 @@ inputs:
   chrom_sizes:
     type: File
   strandedness: 
-    type: string
-  # bamroot_bts:
-  #   type: string    
+    type: string 
   rsem_index:
     type: File
   read_strand:
@@ -37,8 +35,6 @@ inputs:
     type: int
   tr_id_to_gene_type_tsv:
     type: File
-  # output_filename:
-  #   type: string
 # endednessの値がpairedか、singleかでstepsのrunで実行するcwlファイルを変えたい
 
 steps:

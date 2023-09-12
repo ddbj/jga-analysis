@@ -5,6 +5,9 @@ id: rna-seq-pipeline-per-sample_SE
 label: rna-per-sample_SE
 cwlVersion: v1.2
 
+requirements:
+  StepInputExpressionRequirement: {}
+
 inputs:
   fastqs_R1:
     type: File[]
@@ -24,8 +27,6 @@ inputs:
     type: File
   strandedness: 
     type: string
-  bamroot_bts:
-    type: string    
   rsem_index:
     type: File
   read_strand:
@@ -34,8 +35,6 @@ inputs:
     type: int
   tr_id_to_gene_type_tsv:
     type: File
-  output_filename:
-    type: string
 # endednessの値がpairedか、singleかでstepsのrunで実行するcwlファイルを変えたい
 
 steps:
@@ -81,7 +80,9 @@ steps:
       input_bam: align/genomebam
       chrom_sizes: chrom_sizes
       strandedness: strandedness
-      bamroot: bamroot_bts
+      bamroot:
+        source: bamroot
+        valueFrom: $(self)_genome
       ncpus: ncpus
       ramGB: ramGB
       disks: { default: "local-disk 20 HDD" }
@@ -114,7 +115,9 @@ steps:
     in:
       input_bam: align/annobam
       tr_id_to_gene_type_tsv: tr_id_to_gene_type_tsv
-      output_filename: output_filename
+      output_filename: 
+        source: bamroot
+        valueFrom: $(self)_qc.json
       disks: { default: "local-disk 20 HDD" }
     out:
       - rnaQC
