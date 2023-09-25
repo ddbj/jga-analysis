@@ -1,6 +1,0 @@
-bam:  # type "File"
-  class: File
-  path: "TOPDIR/TASKNAME_BAMNAME.bam" #genomebam or annobam
-ncpus: 1 # type "int"
-ramGB: 2  # type "int"
-disks: "local-disk 20 SSD" # type "string"

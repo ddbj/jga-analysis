@@ -12,4 +12,3 @@ In Japanese Genotype-phenotype Archive (JGA), most of the whole-genome sequencin
 The JGA analysis per-sample workflow can be executed with the **[JGA analysis job manager](./jga-analysis-jobmanager/)**. 
 
 
-

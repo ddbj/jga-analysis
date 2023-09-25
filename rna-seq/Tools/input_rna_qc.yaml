@@ -1,8 +1,0 @@
-tr_id_to_gene_type_tsv:  # type "File"
-    class: File
-    path: "TOPDIR/gencodeV29pri-UCSC-tRNAs-ERCC-phiX.transcript_id_to_genes.tsv" # https://anvil.terra.bio/#workspaces/GenomeAnalyticsJapanInc/GAJ-RNA-Seq/workflows/GenomeAnalyticsJapanInc/rna-seq-pipeline-per-sample
-output_filename: "PE_stranded_qc.json"  # type "string" bamroot+"_qc.json"
-input_bam:  # type "File" align.annobam
-    class: File
-    path: "TOPDIR/align_PE_anno.bam"
-disks: "local-disk 20 HDD"  # type "string" (optional)
