@@ -19,7 +19,7 @@ inputs:
     inputBinding:
       position: 1
       prefix: "--rsem_index"
-  anno_bam: # align.annobam
+  anno_bam:
     type: File
     inputBinding:
       position: 2
@@ -56,7 +56,6 @@ outputs:
     genes_results:
       type: File
       outputBinding:
-        # glob: "*.genes.results" # 元のwdl File genes_results = glob("*.genes.results")[0]
         glob: '*.genes.results'
     isoforms_results:
       type: File

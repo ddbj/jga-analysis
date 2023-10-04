@@ -28,22 +28,3 @@ inputs:
     default: "local-disk 100 SSD"
 
 outputs: []
-  # `samtools quickcheck`は主にエラーを返すか正常終了するかのみを行うため、具体的なファイル出力は定義しません。
-
-# outputs:
-#   output:
-#     type: stdout
-
-# stdout: samtools_quickcheck.log
-# stdout: "stdout.log"
-# stderr: "stderr.log"
-
-# outputs:
-#   tool_stdout:
-#     type: File
-#     outputBinding:
-#       glob: "stdout.log"
-#   tool_stderr:
-#     type: File
-#     outputBinding:
-#       glob: "stderr.log"

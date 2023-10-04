@@ -1,7 +1,4 @@
-# JGA analysis per-sample workflow
-
-This is the ENCODE-DCC RNA-sequencing pipeline. The scope of the pipeline is to align reads, generate signal tracks, and quantify genes and isoforms.This repository is a CWL language conversion of [rna-seq-pipeline/rna-seq-pipeline-per-sample.wdl](https://github.com/hacchy1983/rna-seq-pipeline/blob/dev/rna-seq-pipeline-per-sample.wdl). Inputs and tools are summarized in the [REFERENCE](https://github.com/hacchy1983/rna-seq-pipeline/blob/dev/docs/reference.md)
-
+# JGA analysis rna-seq workflow
 This workflow consists of the following steps:
 - Alignment (FASTQ to BAM): STAR (version [2.5.1b](https://github.com/alexdobin/STAR/releases/tag/2.5.1b))
 - STATS(Samtools flagstat): samtools flagstat (version [1.9](https://github.com/samtools/samtools/releases/tag/1.9))
@@ -9,17 +6,6 @@ This workflow consists of the following steps:
 - Convert（aligned BAM to bigwig）: STAR (version [2.5.1b](https://github.com/alexdobin/STAR/releases/tag/2.5.1b))
 - Quantification: RSEM (version [v1.2.31](https://github.com/deweylab/RSEM/releases/tag/v1.2.31))
 - RNA QC: qc-utils (version [19.8.1](https://qc-utils.readthedocs.io/en/latest/))
-
-## Recommendations
-- Memory >= 64GB
-- Threads >= 16
-- Disk space >= 100GB per sample
-
-## Set up execution environments
-
-Install CWL execution engine on your Server
-- cwltool 3.1.20210816212154
-  - execution on single machine
 
 ## Data required to run workflows
 - Reference Data Download Methods
@@ -41,7 +27,6 @@ Install CWL execution engine on your Server
     ```
 
 ## Execute the per-sample workflow
-
 ### Usage
 - paired（PE）
   ```console

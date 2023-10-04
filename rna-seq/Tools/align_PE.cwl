@@ -7,8 +7,6 @@ cwlVersion: v1.2
 
 requirements:
   ResourceRequirement:
-    # ramMin: $(inputs.ramGB)
-    # coresMin: $(inputs.ncpus)
     ramMin: 64
     coresMin: 16
   DockerRequirement:

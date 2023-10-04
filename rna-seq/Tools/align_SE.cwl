@@ -19,11 +19,6 @@ inputs:
     inputBinding:
       position: 1
       prefix: "--fastqs_R1"
-  # fastqs_R2:
-  #   type: File[]
-  #   inputBinding:
-      # position: 2
-      # prefix: "--fastqs_R2"
   endedness:
     type: string
     inputBinding:

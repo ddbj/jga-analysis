@@ -36,7 +36,6 @@ inputs:
     inputBinding:
       position: 4
       prefix: "--bamroot"
-      # valueFrom: "${self}_genome"
   ncpus:
     type: int
   ramGB:

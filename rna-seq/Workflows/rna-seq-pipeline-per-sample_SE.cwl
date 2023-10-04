@@ -39,7 +39,6 @@ steps:
     run: ../Tools/align_SE.cwl
     in:
       fastqs_R1: fastqs_R1
-      # fastqs_R2: fastqs_R2
       endedness: endedness
       index: index
       bamroot: bamroot
