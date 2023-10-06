@@ -15,57 +15,37 @@ requirements:
 baseCommand: [bash, rsem_aggregate_results.sh]
 
 inputs:
-  # fastqs_R1:
-  #   type: File[]
-  #   inputBinding:
-  #     position: 1
-  #     prefix: "--fastqs_R1"
   rsem_isoforms:
-    type: File
+    type: File[]
     inputBinding:
       position: 1
-  prefix:
+  prefix_rsem:
     type: string
     inputBinding:
       position: 2
   rsem_genes:
-    type: File
+    type: File[]
     inputBinding:
       position: 3
+
 outputs:
-    genomebam:
+    transcripts_tpm:
       type: File
       outputBinding:
-        glob: "$(inputs.bamroot)_genome.bam"
-    annobam:
+        glob: "$(inputs.prefix_rsem).rsem_transcripts_tpm.txt.gz"
+    transcripts_isopct:
       type: File
       outputBinding:
-        glob: "$(inputs.bamroot)_anno.bam"
-    genome_flagstat:
+        glob: "$(inputs.prefix_rsem).rsem_transcripts_isopct.txt.gz"
+    transcripts_expected_count:
       type: File
       outputBinding:
-        glob: "$(inputs.bamroot)_genome_flagstat.txt"
-    anno_flagstat:
+        glob: "$(inputs.prefix_rsem).rsem_transcripts_expected_count.txt.gz"
+    genes_tpm:
       type: File
       outputBinding:
-        glob: "$(inputs.bamroot)_anno_flagstat.txt"
-    log:
+        glob: "$(inputs.prefix_rsem).rsem_genes_tpm.txt.gz"
+    genes_expected_count:
       type: File
       outputBinding:
-        glob: "$(inputs.bamroot)_Log.final.out"
-    genome_flagstat_json:
-      type: File
-      outputBinding:
-        glob: "$(inputs.bamroot)_genome_flagstat.json"
-    anno_flagstat_json:
-      type: File
-      outputBinding:
-        glob: "$(inputs.bamroot)_anno_flagstat.json"
-    log_json:
-      type: File
-      outputBinding:
-        glob: "$(inputs.bamroot)_Log.final.json"
-    python_log:
-      type: File
-      outputBinding:
-        glob: "align.log"
+        glob: "$(inputs.prefix_rsem).rsem_genes_expected_count.txt.gz"
