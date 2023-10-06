@@ -15,42 +15,23 @@ requirements:
 baseCommand: [bash, rsem_aggregate_results.sh]
 
 inputs:
-  fastqs_R1:
-    type: File[]
-    inputBinding:
-      position: 1
-      prefix: "--fastqs_R1"
-  fastqs_R2:
-    type: File[]
-    inputBinding:
-      position: 2
-      prefix: "--fastqs_R2"
-  endedness:
-    type: string
-    inputBinding:
-      position: 3
-      prefix: "--endedness"
-  index:
+  # fastqs_R1:
+  #   type: File[]
+  #   inputBinding:
+  #     position: 1
+  #     prefix: "--fastqs_R1"
+  rsem_isoforms:
     type: File
     inputBinding:
-      position: 4
-      prefix: "--index"
-  bamroot:
+      position: 1
+  prefix:
     type: string
     inputBinding:
-      position: 5
-      prefix: "--bamroot"
-  ncpus:
-    type: int
+      position: 2
+  rsem_genes:
+    type: File
     inputBinding:
-      position: 6
-      prefix: "--ncpus"
-  ramGB:
-    type: int
-    inputBinding:
-      position: 7
-      prefix: "--ramGB"   
-
+      position: 3
 outputs:
     genomebam:
       type: File
