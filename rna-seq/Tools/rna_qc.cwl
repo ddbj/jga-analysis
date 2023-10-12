@@ -10,7 +10,7 @@ requirements:
     ramMin: 64
     coresMin: 16
   DockerRequirement:
-    dockerPull: docker://encodedcc/rna-seq-pipeline:1.2.4
+    dockerPull: docker://yamaken37/rsem_aggr:20231010
 
 baseCommand: [python3, /software/rna-seq-pipeline/src/rna_qc.py]
 

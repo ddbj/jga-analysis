@@ -10,23 +10,31 @@ requirements:
     ramMin: 64
     coresMin: 16
   DockerRequirement:
-    dockerPull: us-docker.pkg.dev/depmap-omics/public/ccle-rnaseq:latest
+    # dockerPull: us-docker.pkg.dev/depmap-omics/public/ccle-rnaseq:latest
+    dockerPull: docker://yamaken37/rsem_aggr:20231010
 
-baseCommand: [bash, rsem_aggregate_results.sh]
+# baseCommand: [bash, ../Tools/rsem_aggregate_results.sh]
+# baseCommand: [bash, /lustre8/home/yamaken-gaj-pg/Projects/RSEM-AGGR/jga-analysis/rna-seq/Tools/rsem_aggregate_results.sh]
+# baseCommand: [bash, rsem_aggregate_results.sh]
+baseCommand: [bash]
 
 inputs:
-  rsem_isoforms:
-    type: File[]
+  sh_rsem:
+    type: File
     inputBinding:
       position: 1
+  rsem_isoforms:
+    type: File
+    inputBinding:
+      position: 2
   prefix_rsem:
     type: string
     inputBinding:
-      position: 2
-  rsem_genes:
-    type: File[]
-    inputBinding:
       position: 3
+  rsem_genes:
+    type: File
+    inputBinding:
+      position: 4
 
 outputs:
     transcripts_tpm:
