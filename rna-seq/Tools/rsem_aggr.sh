@@ -1,10 +1,19 @@
 #!/bin/bash
-#!/bin/bash
+
+# ====STEP1=====
+# 変数の読み込み rsem_isoforms:の配列
+# .txtへ変換 rsem_isoforms
+# 変数の読み込み rsem_genes:の配列
+# .txtへ変換 rsem_genes:の配列
+# 変数の読み込み prefix_rsem
+# 作成した.txt、prefix_rsemをecho -> testのみの機能なのでのちに削除
 
 # Initialize variables
 ISOFORMS=()
 GENES=()
 PREFIX=""
+ISOFORMS_OUTFILE="isoforms_output.txt"
+GENES_OUTFILE="genes_output.txt"
 
 # Parse arguments
 while [[ "$#" -gt 0 ]]; do
@@ -35,20 +44,27 @@ while [[ "$#" -gt 0 ]]; do
     esac
 done
 
+# Write ISOFORMS to file
+> $ISOFORMS_OUTFILE
+for iso in "${ISOFORMS[@]}"; do
+    echo "$iso" >> $ISOFORMS_OUTFILE
+done
+
+# Write GENES to file
+> $GENES_OUTFILE
+for gene in "${GENES[@]}"; do
+    echo "$gene" >> $GENES_OUTFILE
+done
+
 # Echo results
-echo "-i: ${ISOFORMS[@]}"
-echo "-g: ${GENES[@]}"
+echo "-i contents:"
+cat $ISOFORMS_OUTFILE
+
+echo "-g contents:"
+cat $GENES_OUTFILE
+
 echo "-p: $PREFIX"
 
-
-
-# ====STEP1=====
-# 変数の読み込み rsem_isoforms:の配列
-# .txtへ変換 rsem_isoforms
-# 変数の読み込み rsem_genes:の配列
-# .txtへ変換 rsem_genes:の配列
-# 変数の読み込み prefix_rsem
-# 作成した.txt、prefix_rsemをecho
 
 # ======STEP2=======
 # $なんちゃらをシェル内の変数に変更
