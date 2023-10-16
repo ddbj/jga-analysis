@@ -23,35 +23,53 @@ inputs:
     type: File[]
     inputBinding:
       position: 2
-      prefix: "-rsem_isoforms"
+      prefix: "-i"
   rsem_genes:
     type: File[]
     inputBinding:
       position: 3
-      prefix: "-rsem_genes"
+      prefix: "-g"
   prefix_rsem:
     type: string
     inputBinding:
       position: 4
+      prefix: "-p"
 
 outputs:
-    transcripts_tpm:
-      type: File
-      outputBinding:
-        glob: "$(inputs.prefix_rsem).rsem_transcripts_tpm.txt.gz"
-    transcripts_isopct:
-      type: File
-      outputBinding:
-        glob: "$(inputs.prefix_rsem).rsem_transcripts_isopct.txt.gz"
-    transcripts_expected_count:
-      type: File
-      outputBinding:
-        glob: "$(inputs.prefix_rsem).rsem_transcripts_expected_count.txt.gz"
-    genes_tpm:
-      type: File
-      outputBinding:
-        glob: "$(inputs.prefix_rsem).rsem_genes_tpm.txt.gz"
-    genes_expected_count:
-      type: File
-      outputBinding:
-        glob: "$(inputs.prefix_rsem).rsem_genes_expected_count.txt.gz"
+  transcripts_tpm:
+    type: File
+    outputBinding:
+      glob: "$(inputs.prefix_rsem).rsem_transcripts_tpm.txt.gz"
+  transcripts_isopct:
+    type: File
+    outputBinding:
+      glob: "$(inputs.prefix_rsem).rsem_transcripts_isopct.txt.gz"
+  transcripts_expected_count:
+    type: File
+    outputBinding:
+      glob: "$(inputs.prefix_rsem).rsem_transcripts_expected_count.txt.gz"
+  genes_tpm:
+    type: File
+    outputBinding:
+      glob: "$(inputs.prefix_rsem).rsem_genes_tpm.txt.gz"
+  genes_expected_count:
+    type: File
+    outputBinding:
+      glob: "$(inputs.prefix_rsem).rsem_genes_expected_count.txt.gz"
+  ISOFORMS_OUTFILE :
+    type: File
+    outputBinding:
+      glob: isoforms_output.txt
+  GENES_OUTFILE :
+    type: File
+    outputBinding:
+      glob: genes_output.txt
+# outputs:
+#   ISOFORMS_OUTFILE :
+#     type: File
+#     outputBinding:
+#       glob: isoforms_output.txt
+#   GENES_OUTFILE :
+#     type: File
+#     outputBinding:
+#       glob: genes_output.txt

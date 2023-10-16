@@ -56,19 +56,18 @@ for gene in "${GENES[@]}"; do
     echo "$gene" >> $GENES_OUTFILE
 done
 
-# Echo results
-echo "-i contents:"
-cat $ISOFORMS_OUTFILE
+# # Echo results
+# echo "-i contents:"
+# cat $ISOFORMS_OUTFILE
 
-echo "-g contents:"
-cat $GENES_OUTFILE
+# echo "-g contents:"
+# cat $GENES_OUTFILE
 
-echo "-p: $PREFIX"
+# echo "-p: $PREFIX"
 
 
 # ======STEP2=======
-# $なんちゃらをシェル内の変数に変更
-# echo $(date +"[%b %d %H:%M:%S] Combining transcript-level output")
-# python3 /TSCA/ccle_processing/RNA_pipeline/aggregate_rsem_results.py $1 TPM IsoPct expected_count $2
-# echo $(date +"[%b %d %H:%M:%S] Combining gene-level output")
-# python3 /TSCA/ccle_processing/RNA_pipeline/aggregate_rsem_results.py $3 TPM expected_count $2
+echo $(date +"[%b %d %H:%M:%S] Combining transcript-level output")
+python3 /TSCA/ccle_processing/RNA_pipeline/aggregate_rsem_results.py $ISOFORMS_OUTFILE TPM IsoPct expected_count $PREFIX
+echo $(date +"[%b %d %H:%M:%S] Combining gene-level output")
+python3 /TSCA/ccle_processing/RNA_pipeline/aggregate_rsem_results.py $GENES_OUTFILE TPM expected_count $PREFIX
