@@ -15,7 +15,7 @@
      type: File[]
    rsem_genes:
      type: File[]
-   prefix_rsem: #prefixのままだとややこしいので変更
+   prefix_rsem:
      type: string
  
  steps:
@@ -36,16 +36,16 @@
  outputs:
    transcripts_tpm:
      type: File
-     outputSource: rsem_aggregate_results/transcripts_tpm
+     outputSource: rsem_aggr/transcripts_tpm
    transcripts_isopct:
      type: File
-     outputSource: rsem_aggregate_results/transcripts_isopct
+     outputSource: rsem_aggr/transcripts_isopct
    transcripts_expected_count:
      type: File
-     outputSource: rsem_aggregate_results/transcripts_expected_count
+     outputSource: rsem_aggr/transcripts_expected_count
    genes_tpm:
      type: File
-     outputSource: rsem_aggregate_results/genes_tpm
+     outputSource: rsem_aggr/genes_tpm
    genes_expected_count:
      type: File
-     outputSource: rsem_aggregate_results/genes_expected_count
+     outputSource: rsem_aggr/genes_expected_count

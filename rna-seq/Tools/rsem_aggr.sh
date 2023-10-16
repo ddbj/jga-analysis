@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# ====STEP1=====
-# 変数の読み込み rsem_isoforms:の配列
-# .txtへ変換 rsem_isoforms
-# 変数の読み込み rsem_genes:の配列
-# .txtへ変換 rsem_genes:の配列
-# 変数の読み込み prefix_rsem
-# 作成した.txt、prefix_rsemをecho -> testのみの機能なのでのちに削除
-
 # Initialize variables
 ISOFORMS=()
 GENES=()
@@ -56,17 +48,7 @@ for gene in "${GENES[@]}"; do
     echo "$gene" >> $GENES_OUTFILE
 done
 
-# # Echo results
-# echo "-i contents:"
-# cat $ISOFORMS_OUTFILE
-
-# echo "-g contents:"
-# cat $GENES_OUTFILE
-
-# echo "-p: $PREFIX"
-
-
-# ======STEP2=======
+# col merge
 echo $(date +"[%b %d %H:%M:%S] Combining transcript-level output")
 python3 /TSCA/ccle_processing/RNA_pipeline/aggregate_rsem_results.py $ISOFORMS_OUTFILE TPM IsoPct expected_count $PREFIX
 echo $(date +"[%b %d %H:%M:%S] Combining gene-level output")
