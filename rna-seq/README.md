@@ -7,6 +7,8 @@ This workflow consists of the following steps:
 - Quantification: RSEM (version [v1.2.31](https://github.com/deweylab/RSEM/releases/tag/v1.2.31))
 - RNA QC: qc-utils (version [19.8.1](https://qc-utils.readthedocs.io/en/latest/))
 
+This workflow was converted to CWL code by referring to  [rna-seq-pipeline-per-sample.wdl](https://github.com/hacchy1983/rna-seq-pipeline/blob/dev/rna-seq-pipeline-per-sample.wdl)
+
 ## Data required to run workflows
 - Reference Data Download Methods
   - align_index
@@ -54,7 +56,7 @@ This workflow consists of the following steps:
 
 ```yaml
 endedness: "paired"
-bamroot: "PE_stranded"
+bamroot: "sample_id"
 index:
     class: File
     path: "TOPDIR/ENCFF598IDH.tar.gz"
@@ -91,7 +93,7 @@ tr_id_to_gene_type_tsv:
 
 ```yaml
 endedness: "single"
-bamroot: "SE_stranded"
+bamroot: "sample_id"
 index:
     class: File
     path: "TOPDIR/ENCFF598IDH.tar.gz"
@@ -114,5 +116,38 @@ read_strand: "reverse"
 tr_id_to_gene_type_tsv:
     class: File
     path: "TOPDIR/gencodeV29pri-UCSC-tRNAs-ERCC-phiX.transcript_id_to_genes.tsv"
+
+```
+# JGA analysis RSEM_aggregate workflow
+This workflow consists of the following steps:
+- Merge rna-seq workflow results : [aggregate_rsem_results.py](https://github.com/hacchy1983/depmap_omics_RSEM_aggregate/blob/master/RNA_pipeline/aggregate_rsem_results.py)
+
+This workflow was converted to CWL code by referring to [rsem_aggregate_results.wdl](https://github.com/hacchy1983/depmap_omics_RSEM_aggregate/blob/master/RNA_pipeline/rsem_aggregate_results.wdl)
+## Execute the RSEM_aggregate workflow
+### Usage
+  ```console
+  cwltool --singularity jga-analysis/rna-seq/Workflows/rsem_aggr_wf.cwl input.yaml
+  ```
+
+### Job file
+- Let a sample job file be input.yaml 
+- The rsem_isoforms and rsem_genes are the results of running the "rna-seq workflow" on different samples.
+- Please specify TOPDIR to be a referece data top directory.
+
+```yaml
+sh_rsem:
+    class: File
+    path: "TOPDIR/jga-analysis/rna-seq/Tools/rsem_aggr.sh"
+rsem_isoforms:
+  - class: File
+    path: "TOPDIR/sample_1_anno_rsem.isoforms.results"
+  - class: File
+    path: "TOPDIR/sample_2_anno_rsem.isoforms.results"
+rsem_genes:
+  - class: File
+    path: "TOPDIR/sample_1_anno_rsem.genes.results"
+  - class: File
+    path: "TOPDIR/sample_2_anno_rsem.genes.results"
+prefix_rsem: "sample_set_id"
 
 ```
