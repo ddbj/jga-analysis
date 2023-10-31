@@ -40,7 +40,7 @@ inputs:
       items:
         - type: record
           fields:
-            sample_id
+            sample_id:
               type: string
             fastqs_R1:
               type: File[]
@@ -125,23 +125,17 @@ outputs:
     type: File[]
     outputSource: per-sample/python_log
   unique_unstranded:
-    type: File?[] # File?の配列
-    outputSource: per-sample/unique_unstranded
+    type: File[]? # ref. https://cwl.discourse.group/t/workflow-step-with-file-array-for-input-and-output/740
   all_unstranded:
-    type: File?[]
-    outputSource: per-sample/all_unstranded
+    type: File[]?
   unique_plus:
-    type: File?[]
-    outputSource: per-sample/unique_plus
+    type: File[]?
   unique_minus:
-    type: File?[]
-    outputSource: per-sample/unique_minus
+    type: File[]?
   all_plus:
-    type: File?[]
-    outputSource: per-sample/all_plus
+    type: File[]?
   all_minus:
-    type: File?[]
-    outputSource: per-sample/all_minus
+    type: File[]?
   python_log_bts:
     type: File[]
     outputSource: per-sample/python_log
