@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: Workflow
-id: rna-seq-pipeline-per-sample_SE_scatter
-label: rna-seq_SE_scatter
+id: rna-seq_wf_scatter_SE
+label: rna-seq_wf_scatter
 cwlVersion: v1.2
 
 requirements:
@@ -12,12 +12,16 @@ requirements:
   StepInputExpressionRequirement: {}
 
 inputs:
+  sh_rsem:
+    type: File
+  prefix_rsem:
+    type: string  
   endedness:
     type: string
   index:
     type: File
-  bamroot:
-    type: string
+  # bamroot:
+  #   type: string
   ncpus:
     type: int
   ramGB:
@@ -40,10 +44,12 @@ inputs:
       items:
         - type: record
           fields:
-            sample_id:
+            bamroot:
               type: string
             fastqs_R1:
               type: File[]
+            # fastqs_R2:
+            #   type: File[]
 
 steps:
   per-sample:
@@ -52,7 +58,6 @@ steps:
     in:
       endedness: endedness
       index: index
-      bamroot: bamroot
       ncpus: ncpus
       ramGB: ramGB
       chrom_sizes: chrom_sizes
@@ -62,8 +67,13 @@ steps:
       rnd_seed: rnd_seed
       tr_id_to_gene_type_tsv: tr_id_to_gene_type_tsv
       sample_list: sample_list
+      # bamroot: bamroot
+      bamroot: 
+        valueFrom: $(inputs.sample_list.bamroot)
       fastqs_R1: 
         valueFrom: $(inputs.sample_list.fastqs_R1)
+      # fastqs_R2: 
+      #   valueFrom: $(inputs.sample_list.fastqs_R2)
     scatter:
       - sample_list
     scatterMethod: dotproduct
@@ -91,8 +101,37 @@ steps:
       - rnaQC
       - python_log_rna_qc
     # out: [genomebam, annobam, genome_flagstat, anno_flagstat, log, genome_flagstat_json, anno_flagstat_json, log_json, python_log]
+  rsem_aggr:
+    label: rsem_aggregate_scatter
+    run: ../Tools/rsem_aggr.cwl
+    in:
+      sh_rsem: sh_rsem
+      rsem_isoforms: per-sample/isoforms_results
+      rsem_genes: per-sample/genes_results
+      prefix_rsem: prefix_rsem
+    out:
+      - transcripts_tpm
+      - transcripts_isopct
+      - transcripts_expected_count
+      - genes_tpm
+      - genes_expected_count
 
 outputs:
+  transcripts_tpm:
+    type: File
+    outputSource: rsem_aggr/transcripts_tpm
+  transcripts_isopct:
+    type: File
+    outputSource: rsem_aggr/transcripts_isopct
+  transcripts_expected_count:
+    type: File
+    outputSource: rsem_aggr/transcripts_expected_count
+  genes_tpm:
+    type: File
+    outputSource: rsem_aggr/genes_tpm
+  genes_expected_count:
+    type: File
+    outputSource: rsem_aggr/genes_expected_count
   genomebam:
     type: File[]
     outputSource: per-sample/genomebam
