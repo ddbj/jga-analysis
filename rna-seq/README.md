@@ -151,3 +151,102 @@ rsem_genes:
 prefix_rsem: "sample_set_id"
 
 ```
+
+# JGA analysis the per-sample and the RSEM_aggregate
+This workflow consists of the following steps:
+- the per-sample workflow
+- the RSEM_aggregate workflow
+
+## Execute the per-sample and the RSEM_aggregate
+### Usage
+- paired（PE）
+  ```console
+  cwltool --singularity rna-seq/Workflows/rna-seq_wf_PE.cwl PE.yaml
+  ```
+- single（SE）
+  ```console
+  cwltool --singularity rna-seq/Workflows/rna-seq_wf_SE.cwl SE.yaml
+  ```
+#### paired（PE）
+- Let a sample job file be `PE.yaml` in pair-end case. 
+- Please specify TOPDIR to be a referece data top directory.
+
+```yaml
+prefix_rsem: "PE_wf_samples"
+endedness: "paired"
+ramGB: 16
+ncpus: 8
+sh_rsem:
+    class: File
+    path: "TOPDIR/jga-analysis/rna-seq/Tools/rsem_aggr.sh"
+index:
+    class: File
+    path: "TOPDIR/ENCFF598IDH.tar.gz"
+chrom_sizes:
+    class: File
+    path: "TOPDIR/GRCh38_EBV.chrom.sizes.tsv"
+strandedness: "stranded"
+rsem_index:
+    class: File
+    path: "TOPDIR/ENCFF285DRD.tar.gz"
+rnd_seed: 12345
+read_strand: "reverse"
+tr_id_to_gene_type_tsv:
+    class: File
+    path: "TOPDIR/gencodeV29pri-UCSC-tRNAs-ERCC-phiX.transcript_id_to_genes.tsv"
+sample_list:
+  - bamroot: "PE_xxx"
+    fastqs_R1:
+      - class: File
+        path: "TOPDIR/xxx_1.fastq.gz"
+    fastqs_R2:
+      - class: File
+        path: "TOPDIR/xxx_2.fastq.gz"
+  - bamroot: "PE_yyy"
+    fastqs_R1:
+      - class: File
+        path: "TOPDIR/yyy_1.fastq.gz"
+    fastqs_R2:
+      - class: File
+        path: "TOPDIR/yyy_2.fastq.gz"
+
+```
+
+#### single（SE）
+- Let a sample job file be `SE.yaml` in single-end case. 
+- Please specify TOPDIR to be a referece data top directory.
+
+```yaml
+prefix_rsem: "SE_wf_samples"
+endedness: "single"
+ramGB: 16
+ncpus: 8
+sh_rsem:
+    class: File
+    path: "TOPDIR/jga-analysis/rna-seq/Tools/rsem_aggr.sh"
+index:
+    class: File
+    path: "TOPDIR/ENCFF598IDH.tar.gz"
+chrom_sizes:
+    class: File
+    path: "TOPDIR/GRCh38_EBV.chrom.sizes.tsv"
+strandedness: "stranded"
+rsem_index:
+    class: File
+    path: "TOPDIR/ENCFF285DRD.tar.gz"
+rnd_seed: 12345
+read_strand: "reverse"
+tr_id_to_gene_type_tsv:
+    class: File
+    path: "TOPDIR/gencodeV29pri-UCSC-tRNAs-ERCC-phiX.transcript_id_to_genes.tsv"
+sample_list:
+  - bamroot: "SE_xxx"
+    fastqs_R1:
+      - class: File
+        path: "TOPDIR/xxx_1.fastq.gz"
+  - bamroot: "SE_yyy"
+    fastqs_R1:
+      - class: File
+        path: "TOPDIR/yyy_1.fastq.gz"
+
+```
