@@ -1,2 +1,0 @@
-sample_A.genes.results
-sample_B.genes.results

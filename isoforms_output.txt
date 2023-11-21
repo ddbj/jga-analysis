@@ -1,3 +1,0 @@
-sample_A.isoforms.results
-sample_B.isoforms.results
-sample_C.isoforms.results
