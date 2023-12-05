@@ -15,7 +15,7 @@ requirements:
 baseCommand: [bash]
 
 inputs:
-  sh_rsem: #rsem_aggr.sh
+  sh_rsem:
     type: File
     inputBinding:
       position: 1
@@ -56,11 +56,3 @@ outputs:
     type: File
     outputBinding:
       glob: "$(inputs.prefix_rsem).rsem_genes_expected_count.txt.gz"
-  # ISOFORMS_OUTFILE :
-  #   type: File
-  #   outputBinding:
-  #     glob: isoforms_output.txt
-  # GENES_OUTFILE :
-  #   type: File
-  #   outputBinding:
-  #     glob: genes_output.txt

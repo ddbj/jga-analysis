@@ -20,8 +20,6 @@ inputs:
     type: string
   index:
     type: File
-  # bamroot:
-  #   type: string
   ncpus:
     type: int
   ramGB:
@@ -48,8 +46,6 @@ inputs:
               type: string
             fastqs_R1:
               type: File[]
-            # fastqs_R2:
-            #   type: File[]
 
 steps:
   per-sample:
@@ -67,13 +63,10 @@ steps:
       rnd_seed: rnd_seed
       tr_id_to_gene_type_tsv: tr_id_to_gene_type_tsv
       sample_list: sample_list
-      # bamroot: bamroot
       bamroot: 
         valueFrom: $(inputs.sample_list.bamroot)
       fastqs_R1: 
         valueFrom: $(inputs.sample_list.fastqs_R1)
-      # fastqs_R2: 
-      #   valueFrom: $(inputs.sample_list.fastqs_R2)
     scatter:
       - sample_list
     scatterMethod: dotproduct
@@ -100,7 +93,6 @@ steps:
       - python_log_rsem
       - rnaQC
       - python_log_rna_qc
-    # out: [genomebam, annobam, genome_flagstat, anno_flagstat, log, genome_flagstat_json, anno_flagstat_json, log_json, python_log]
   rsem_aggr:
     label: rsem_aggregate_scatter
     run: ../Tools/rsem_aggr.cwl
@@ -160,7 +152,7 @@ outputs:
     type: File[]
     outputSource: per-sample/python_log
   unique_unstranded:
-    type: File[]? # ref. https://cwl.discourse.group/t/workflow-step-with-file-array-for-input-and-output/740
+    type: File[]?
   all_unstranded:
     type: File[]?
   unique_plus:
