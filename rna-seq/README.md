@@ -225,7 +225,7 @@ This workflow was converted to CWL code by referring to [rsem_aggregate_results.
 ## Execute the RSEM_aggregate workflow
 ### Usage
   ```console
-  cwltool --singularity jga-analysis/rna-seq/Workflows/rsem_aggr_wf.cwl input.yaml
+  cwltool --singularity jga-analysis/rna-seq/Tools/rsem_aggr.cwl input.yaml
   ```
 
 ### Job file
