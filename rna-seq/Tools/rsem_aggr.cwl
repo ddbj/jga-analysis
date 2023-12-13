@@ -10,29 +10,25 @@ requirements:
     ramMin: 64
     coresMin: 16
   DockerRequirement:
-    dockerPull: docker://yamaken37/rsem_aggr:20231010
+    dockerPull: docker://yamaken37/rsem_aggr:20231213
 
-baseCommand: [bash]
+baseCommand: [bash, /TSCA/rsem_aggr.sh]
 
 inputs:
-  sh_rsem:
-    type: File
-    inputBinding:
-      position: 1
   rsem_isoforms:
     type: File[]
     inputBinding:
-      position: 2
+      position: 1
       prefix: "-i"
   rsem_genes:
     type: File[]
     inputBinding:
-      position: 3
+      position: 2
       prefix: "-g"
   prefix_rsem:
     type: string
     inputBinding:
-      position: 4
+      position: 3
       prefix: "-p"
 
 outputs:

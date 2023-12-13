@@ -12,8 +12,6 @@ requirements:
   StepInputExpressionRequirement: {}
 
 inputs:
-  sh_rsem:
-    type: File
   prefix_rsem:
     type: string  
   endedness:
@@ -97,7 +95,6 @@ steps:
     label: rsem_aggregate_scatter
     run: ../Tools/rsem_aggr.cwl
     in:
-      sh_rsem: sh_rsem
       rsem_isoforms: per-sample/isoforms_results
       rsem_genes: per-sample/genes_results
       prefix_rsem: prefix_rsem
