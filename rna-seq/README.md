@@ -22,9 +22,6 @@ prefix_rsem: "PE_wf_samples"
 endedness: "paired"
 ramGB: 16
 ncpus: 8
-sh_rsem:
-    class: File
-    path: "TOPDIR/jga-analysis/rna-seq/Tools/rsem_aggr.sh"
 index:
     class: File
     path: "TOPDIR/ENCFF598IDH.tar.gz"
@@ -67,9 +64,6 @@ prefix_rsem: "SE_wf_samples"
 endedness: "single"
 ramGB: 16
 ncpus: 8
-sh_rsem:
-    class: File
-    path: "TOPDIR/jga-analysis/rna-seq/Tools/rsem_aggr.sh"
 index:
     class: File
     path: "TOPDIR/ENCFF598IDH.tar.gz"
@@ -234,9 +228,6 @@ This workflow was converted to CWL code by referring to [rsem_aggregate_results.
 - Please specify TOPDIR to be a referece data top directory.
 
 ```yaml
-sh_rsem:
-    class: File
-    path: "TOPDIR/jga-analysis/rna-seq/Tools/rsem_aggr.sh"
 rsem_isoforms:
   - class: File
     path: "TOPDIR/sample_1_anno_rsem.isoforms.results"
