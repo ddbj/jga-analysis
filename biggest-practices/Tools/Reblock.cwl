@@ -7,7 +7,7 @@ cwlVersion: v1.2
 
 requirements:
   ResourceRequirement:
-    ramMin: 3750 # WDL："3750 MiB" ->3932.16MB
+    ramMin: 3750 # WDL："3750 MiB"
     coresMin: 1
   DockerRequirement:
     dockerPull: us.gcr.io/broad-gatk/gatk:4.5.0.0
@@ -30,8 +30,6 @@ inputs:
       prefix: "-V"
     secondaryFiles:
       - .tbi
-  # ref_dict:
-  #   type: File
 
 arguments:
   - position: 1
@@ -61,8 +59,6 @@ outputs:
     type: File
     outputBinding:
       glob: "$(inputs.gvcf.basename).rb.g.vcf.gz"
-    # secondaryFiles:
-    #   - .tbi
   output_vcf_index:
     type: File
     outputBinding:
