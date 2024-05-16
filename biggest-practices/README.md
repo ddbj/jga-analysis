@@ -1,8 +1,7 @@
 # GATK-JCBP-CWL
-GATK Joint Calling Biggest PracticesワークフローのCWL
-# CLI
-## Reblock.cwl
-### Usage
+Execution of the GATK Joint Calling Best Practices workflow using CWL
+# Reblock
+## 1 sample・CLI 
 ```bash
 cwltool --cachedir cash \
   --outdir output \
@@ -10,19 +9,22 @@ cwltool --cachedir cash \
   --ref_fasta /path/to/Homo_sapiens_assembly38.fasta \
   --gvcf /path/to/*.g.vcf.gz
 ```
-# cwltool
-## ReblockGVCF.cwl
+## multi sample・ShellScript
+### Usage
 ```bash
-cwltool --cachedir cash --outdir output --singularity ReblockGVCF.cwl ReblockGVCF.yaml > log.txt 2>&1
+# ./submit_jobs.sh Reblock.sh sample_name_map.txt ref-file.fasta
+./jga-analysis/biggest-practices/sh/submit_jobs.sh \
+  jga-analysis/biggest-practices/sh/Reblock.sh \
+  /path/to/sample_name_map.txt \
+  /path/to/Homo_sapiens_assembly38.fasta
 ```
-- yaml
-```yaml
- ref_fasta:
-     class: File
-     path: "/path/to/Homo_sapiens_assembly38.fasta"
- sample_list:
-   - class: File
-     path: "/path/to/*.g.vcf.gz"
-   - class: File
-     path: "/path/to/*.g.vcf.gz"
+### sample_name_map.txt
+- This file lists sample names and their corresponding gVCF file paths in tab-separated format. Each line consists of a "sample name" and its "file path" pair.
+```bash
+sampleA	/path/to/sampleA.g.vcf.gz
+sampleB	/path/to/sampleB.g.vcf.gz
+sampleC	/path/to/sampleC.g.vcf.gz
 ```
+### secondary files
+- Place the .fai and .dict files in the same directory as ref-file.fasta.
+- Place the .tbi files in the same directory as the gVCF files.

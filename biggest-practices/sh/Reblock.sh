@@ -8,13 +8,13 @@ gvcf_path=$2
 ref_fasta=$3
 exec_dir=$4
 
-# 実行ディレクトリに移動
+# change directory (working dir)
 cd "$exec_dir"
 
-# 出力ディレクトリの作成
+# create output dir
 mkdir -p output/Reblock/$sample_name
 
-# cwltoolコマンドの実行
+# exec cwltool
 cwltool --cachedir cash/Reblock \
 --outdir output/Reblock/$sample_name \
 --singularity \
