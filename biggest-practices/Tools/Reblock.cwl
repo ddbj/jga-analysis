@@ -6,6 +6,7 @@ label: ReblockGVCF
 cwlVersion: v1.2
 
 requirements:
+  InlineJavascriptRequirement: {}
   ResourceRequirement:
     ramMin: 3750 # WDL："3750 MiB"
     coresMin: 1
@@ -52,7 +53,13 @@ arguments:
     valueFrom: "40"
   - position: 10
     prefix: "-O"
-    valueFrom: "$(inputs.gvcf.basename).rb.g.vcf.gz"
+  #   valueFrom: "$(inputs.gvcf.basename).rb.g.vcf.gz"
+    valueFrom: |
+      ${
+        var basename = inputs.gvcf.basename;
+        var newBasename = basename.replace(/\.g\.vcf\.gz$/, '.rb.g.vcf.gz');
+        return newBasename;
+      }
 
 outputs:
   output_vcf:
