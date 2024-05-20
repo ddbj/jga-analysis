@@ -53,7 +53,6 @@ arguments:
     valueFrom: "40"
   - position: 10
     prefix: "-O"
-  #   valueFrom: "$(inputs.gvcf.basename).rb.g.vcf.gz"
     valueFrom: |
       ${
         var basename = inputs.gvcf.basename;
@@ -65,9 +64,18 @@ outputs:
   output_vcf:
     type: File
     outputBinding:
-      glob: "$(inputs.gvcf.basename).rb.g.vcf.gz"
+      glob: |
+        ${
+          var basename = inputs.gvcf.basename;
+          var newBasename = basename.replace(/\.g\.vcf\.gz$/, '.rb.g.vcf.gz');
+          return newBasename;
+        }
   output_vcf_index:
     type: File
     outputBinding:
-      glob: "$(inputs.gvcf.basename).rb.g.vcf.gz.tbi"
-    
+      glob: |
+        ${
+          var basename = inputs.gvcf.basename;
+          var newBasename = basename.replace(/\.g\.vcf\.gz$/, '.rb.g.vcf.gz.tbi');
+          return newBasename;
+        }
