@@ -1,15 +1,12 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: Reblock
-label: ReblockGVCF
-cwlVersion: v1.2
+id: gatk4-Reblock
+label: gatk4-Reblock
+cwlVersion: v1.1
 
 requirements:
   InlineJavascriptRequirement: {}
-  ResourceRequirement:
-    ramMin: 3750 # WDL："3750 MiB"
-    coresMin: 1
   DockerRequirement:
     dockerPull: us.gcr.io/broad-gatk/gatk:4.5.0.0
 
