@@ -8,13 +8,10 @@ gvcf_path=$2
 ref_fasta=$3
 exec_dir=$4
 
-# change directory (working dir)
 cd "$exec_dir"
 
-# create output dir
 mkdir -p output/Reblock/$sample_name
 
-# exec cwltool
 cwltool --cachedir cash/Reblock \
 --outdir output/Reblock/$sample_name \
 --singularity \
