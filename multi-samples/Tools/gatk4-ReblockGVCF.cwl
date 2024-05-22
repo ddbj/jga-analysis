@@ -28,11 +28,17 @@ inputs:
       prefix: "-V"
     secondaryFiles:
       - .tbi
+  java_options:
+    type: string?
+    default: -XX:-UseContainerSupport -Xms3g -Xmx3g
+    inputBinding:
+      position: 1
+      shellQuote: false
 
 arguments:
-  - position: 1
-    prefix: --java-options
-    valueFrom: "-Xms3000m -Xmx3000m"
+  # - position: 1
+  #   prefix: --java-options
+  #   valueFrom: "-Xms3000m -Xmx3000m"
   - position: 2
     valueFrom: ReblockGVCF
   - position: 5
