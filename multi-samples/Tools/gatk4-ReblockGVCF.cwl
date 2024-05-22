@@ -9,14 +9,16 @@ requirements:
   InlineJavascriptRequirement: {}
   DockerRequirement:
     dockerPull: us.gcr.io/broad-gatk/gatk:4.5.0.0
+  ShellCommandRequirement: {}
 
-baseCommand: [gatk]
+# baseCommand: [gatk]
+baseCommand: java
 
 inputs:
   ref_fasta:
     type: File
     inputBinding:
-      position: 3
+      position: 4
       prefix: "-R"
     secondaryFiles:
       - .fai
@@ -24,7 +26,7 @@ inputs:
   gvcf:
     type: File
     inputBinding:
-      position: 4
+      position: 5
       prefix: "-V"
     secondaryFiles:
       - .tbi
@@ -34,27 +36,39 @@ inputs:
     inputBinding:
       position: 1
       shellQuote: false
+  gq_bands:
+    type:
+      type: array
+      items: int
+      inputBinding:
+        prefix: -GQB
+    default: [20, 30, 40]
+    inputBinding:
+      position: 8
 
 arguments:
   # - position: 1
   #   prefix: --java-options
   #   valueFrom: "-Xms3000m -Xmx3000m"
   - position: 2
+    prefix: -jar
+    valueFrom: /gatk/gatk-package-4.5.0.0-local.jar
+  - position: 3
     valueFrom: ReblockGVCF
-  - position: 5
-    valueFrom: -do-qual-approx
   - position: 6
-    valueFrom: --floor-blocks
+    valueFrom: -do-qual-approx
   - position: 7
-    prefix: -GQB
-    valueFrom: "20"
-  - position: 8
-    prefix: -GQB
-    valueFrom: "30"
+    valueFrom: --floor-blocks
+  # - position: 8
+  #   prefix: -GQB
+  #   valueFrom: "20"
+  # - position: 9
+  #   prefix: -GQB
+  #   valueFrom: "30"
+  # - position: 10
+  #   prefix: -GQB
+  #   valueFrom: "40"
   - position: 9
-    prefix: -GQB
-    valueFrom: "40"
-  - position: 10
     prefix: "-O"
     valueFrom: |
       ${
