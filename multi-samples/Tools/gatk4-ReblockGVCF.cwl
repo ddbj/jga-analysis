@@ -9,6 +9,7 @@ requirements:
   DockerRequirement:
     dockerPull: us.gcr.io/broad-gatk/gatk:4.5.0.0
   ShellCommandRequirement: {}
+  InlineJavascriptRequirement: {}
 
 baseCommand: java
 
@@ -43,9 +44,28 @@ inputs:
     default: [20, 30, 40]
     inputBinding:
       position: 8
+  annotations_to_keep_command:  
+    type: string?
+    inputBinding:
+      position: 9
+  annotations_to_remove_command:  
+    type: string?
+    inputBinding:
+      position: 10
+  tree_score_cutoff:  
+    type: float?
+    inputBinding:
+      position: 11
+      prefix: "--tree-score-threshold-to-no-call"
+  move_filters_to_genotypes:
+    type: boolean
+    default: false
+    inputBinding:
+      position: 12
+      prefix: --add-site-filters-to-genotype
   outprefix:
     type: string
-
+    
 outputs:
   rb_gvcf:
     type: File
@@ -66,6 +86,6 @@ arguments:
     valueFrom: -do-qual-approx
   - position: 7
     valueFrom: --floor-blocks
-  - position: 9
+  - position: 13
     prefix: "-O"
     valueFrom: $(inputs.outprefix).rb.g.vcf.gz
