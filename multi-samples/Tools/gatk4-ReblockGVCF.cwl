@@ -44,12 +44,22 @@ inputs:
     default: [20, 30, 40]
     inputBinding:
       position: 8
-  annotations_to_keep_command:  
-    type: string?
+  annotations_to_keep_command:
+    type: 
+      - "null"
+      - type: array
+        items: string
+        inputBinding:
+          prefix: --annotations-to-keep
     inputBinding:
       position: 9
-  annotations_to_remove_command:  
-    type: string?
+  annotations_to_remove_command:
+    type:
+      - "null"
+      - type: array
+        items: string
+        inputBinding:
+          prefix: --format-annotations-to-remove
     inputBinding:
       position: 10
   tree_score_cutoff:  
