@@ -11,19 +11,19 @@ requirements:
   ShellCommandRequirement: {}
   InlineJavascriptRequirement: {}
 
-baseCommand: java
+baseCommand: [gatk]
 
 inputs:
   java_options:
     type: string?
-    default: -XX:-UseContainerSupport -Xms3g -Xmx3g
+    default: -Xms3000m -Xmx3000m
     inputBinding:
       position: 1
-      shellQuote: false
+      shellQuote: true
   reference:
     type: File
     inputBinding:
-      position: 4
+      position: 3
       prefix: "-R"
     secondaryFiles:
       - .fai
@@ -31,7 +31,7 @@ inputs:
   gvcf:
     type: File
     inputBinding:
-      position: 5
+      position: 4
       prefix: "-V"
     secondaryFiles:
       - .tbi
@@ -43,7 +43,7 @@ inputs:
         prefix: -GQB
     default: [20, 30, 40]
     inputBinding:
-      position: 8
+      position: 7
   annotations_to_keep_command:
     type: 
       - "null"
@@ -52,7 +52,7 @@ inputs:
         inputBinding:
           prefix: --annotations-to-keep
     inputBinding:
-      position: 9
+      position: 8
   annotations_to_remove_command:
     type:
       - "null"
@@ -61,17 +61,17 @@ inputs:
         inputBinding:
           prefix: --format-annotations-to-remove
     inputBinding:
-      position: 10
+      position: 9
   tree_score_cutoff:  
     type: float?
     inputBinding:
-      position: 11
+      position: 10
       prefix: "--tree-score-threshold-to-no-call"
   move_filters_to_genotypes:
     type: boolean
     default: false
     inputBinding:
-      position: 12
+      position: 11
       prefix: --add-site-filters-to-genotype
   outprefix:
     type: string
@@ -88,14 +88,11 @@ stderr: $(inputs.outprefix).rb.g.vcf.gz.log
 
 arguments:
   - position: 2
-    prefix: -jar
-    valueFrom: /gatk/gatk-package-4.5.0.0-local.jar
-  - position: 3
     valueFrom: ReblockGVCF
-  - position: 6
+  - position: 5
     valueFrom: -do-qual-approx
-  - position: 7
+  - position: 6
     valueFrom: --floor-blocks
-  - position: 13
+  - position: 12
     prefix: "-O"
     valueFrom: $(inputs.outprefix).rb.g.vcf.gz
