@@ -19,6 +19,7 @@ inputs:
     default: -Xms3000m -Xmx3000m
     inputBinding:
       position: 1
+      prefix: --java-options
       shellQuote: true
   reference:
     type: File
