@@ -9,6 +9,9 @@ requirements:
   DockerRequirement:
     dockerPull: us.gcr.io/broad-gatk/gatk:4.5.0.0
   ShellCommandRequirement: {}
+  InitialWorkDirRequirement:
+    listing:
+      - entry: $(inputs.sampleDir)
 
 baseCommand: [gatk]
 
@@ -47,12 +50,16 @@ inputs:
     inputBinding:
       prefix: --reader-threads
       position: 7
+  sampleDir:
+    type: Directory
 
 outputs:
   genomics-db:
     type: Directory
     outputBinding:
       glob: $(inputs.workspace_dir_name)
+
+stderr: $(inputs.workspace_dir_name).log
 
 arguments:
   - position: 2
