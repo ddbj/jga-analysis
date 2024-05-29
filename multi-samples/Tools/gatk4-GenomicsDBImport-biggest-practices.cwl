@@ -10,42 +10,43 @@ requirements:
     dockerPull: us.gcr.io/broad-gatk/gatk:4.5.0.0
   ShellCommandRequirement: {}
 
-baseCommand: java
+baseCommand: [gatk]
 
 inputs:
   java_options:
     type: string?
-    default: -XX:-UseContainerSupport -Xmx25g -Xms8g
+    default: -Xms8000m -Xmx25000m
     inputBinding:
       position: 1
-      shellQuote: false
+      prefix: --java-options
+      shellQuote: true
   workspace_dir_name:
     type: string
     inputBinding:
-      position: 4
+      position: 3
       prefix: --genomicsdb-workspace-path
   batch_size:
     type: int
     default: 50
     inputBinding:
       prefix: --batch-size
-      position: 5
+      position: 4
   interval:
     type: string
     inputBinding:
-      position: 6
+      position: 5
       prefix: -L
   sample_name_map:
     type: File
     inputBinding:
-      position: 7
+      position: 6
       prefix: --sample-name-map
   num_threads:
     type: int
     default: 5
     inputBinding:
       prefix: --reader-threads
-      position: 8
+      position: 7
 
 outputs:
   genomics-db:
@@ -55,11 +56,8 @@ outputs:
 
 arguments:
   - position: 2
-    prefix: -jar
-    valueFrom: /gatk/gatk-package-4.5.0.0-local.jar
-  - position: 3
     valueFrom: GenomicsDBImport
-  - position: 9
+  - position: 8
     valueFrom: --merge-input-intervals
-  - position: 10
+  - position: 9
     valueFrom: --consolidate
