@@ -35,7 +35,7 @@ inputs:
       prefix: --batch-size
       position: 4
   interval:
-    type: string
+    type: File
     inputBinding:
       position: 5
       prefix: -L
