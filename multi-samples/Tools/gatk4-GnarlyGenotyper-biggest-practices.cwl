@@ -47,6 +47,7 @@ inputs:
     inputBinding:
       position: 5
       prefix: --output-database-name annotationDB.vcf.gz
+      shellQuote: false
   dbsnp_vcf:
     type: File
     inputBinding:
