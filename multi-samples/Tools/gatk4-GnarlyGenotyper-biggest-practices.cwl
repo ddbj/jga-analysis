@@ -10,6 +10,9 @@ requirements:
     dockerPull: us.gcr.io/broad-gatk/gatk:4.5.0.0
   ShellCommandRequirement: {}
   InlineJavascriptRequirement: {}
+  InitialWorkDirRequirement:
+    listing:
+      - entry: $(inputs.workspace_dir)
 
 baseCommand: [gatk]
 
