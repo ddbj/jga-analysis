@@ -69,6 +69,8 @@ inputs:
     inputBinding:
       position: 11
       prefix: --max-alternate-alleles
+  workspace_dir:
+    type: Directory
 
 outputs:
   output_vcf:
