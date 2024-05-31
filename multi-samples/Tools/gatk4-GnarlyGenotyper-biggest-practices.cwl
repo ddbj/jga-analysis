@@ -34,10 +34,10 @@ inputs:
       - ^.dict
   idx:
     type: int
-    doc: intervals, row number
+    doc: unpadded_intervals, row number
   gnarly_idx:
     type: int
-    doc: intervals, one row messeage
+    doc: gnarly_intervals, one row messeage
   callset_name:
     type: string
     doc: (ex) gnarly_callset
@@ -47,7 +47,6 @@ inputs:
     inputBinding:
       position: 5
       prefix: --output-database-name annotationDB.vcf.gz
-      shellQuote: true
   dbsnp_vcf:
     type: File
     inputBinding:
