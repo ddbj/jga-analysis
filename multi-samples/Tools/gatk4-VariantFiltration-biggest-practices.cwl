@@ -28,12 +28,12 @@ inputs:
       position: 3
       prefix: --filter-expression
       valueFrom: ExcessHet > $(self)
-      shellQuote: true
+      shellQuote: false
   targets_interval_list:
     type: File?
     inputBinding:
       position: 5
-      valueFrom: --filter-not-in-mask --mask-name OUTSIDE_OF_TARGETS --mask $(self)
+      valueFrom: --filter-not-in-mask --mask-name OUTSIDE_OF_TARGETS --mask $(self.location)
       shellQuote: false
   vcf:
     type: File
