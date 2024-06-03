@@ -33,7 +33,7 @@ inputs:
     type: File?
     inputBinding:
       position: 5
-      valueFrom: --filter-not-in-mask --mask-name OUTSIDE_OF_TARGETS --mask $(self.location)
+      prefix: --filter-not-in-mask --mask-name OUTSIDE_OF_TARGETS --mask
       shellQuote: false
   vcf:
     type: File
