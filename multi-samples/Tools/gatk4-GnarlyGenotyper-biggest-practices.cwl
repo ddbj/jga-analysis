@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: gatk4-GnarlyGenotyper-biggest-practices.cwl
-label: gatk4-GnarlyGenotyper-biggest-practices.cwl
+id: gatk4-GnarlyGenotyper-biggest-practices
+label: gatk4-GnarlyGenotyper-biggest-practices
 cwlVersion: v1.1
 
 requirements:
