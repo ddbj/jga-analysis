@@ -23,7 +23,7 @@ inputs:
       inputBinding:
         prefix: -I
     secondaryFiles:
-      - .idx
+      - .tbi
     inputBinding:
       position: 4
     doc: VCF files to be gathered
@@ -45,7 +45,7 @@ outputs:
     outputBinding:
       glob: $(inputs.outprefix).vcf
     secondaryFiles:
-      - .idx
+      - .tbi
   - id: log
     type: stderr
 
