@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: gatk4-GatherVcfs
-label: gatk4-GatherVcfs
+id: gatk4-GatherVcfs-biggest-practices
+label: gatk4-GatherVcfs-biggest-practices
 cwlVersion: v1.1
 
 $namespaces:
@@ -45,7 +45,7 @@ outputs:
     outputBinding:
       glob: $(inputs.outprefix).vcf
     secondaryFiles:
-      - .tbi
+      - .idx
   - id: log
     type: stderr
 
