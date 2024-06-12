@@ -5,60 +5,54 @@ id: gatk4-GatherVcfs-biggest-practices
 label: gatk4-GatherVcfs-biggest-practices
 cwlVersion: v1.1
 
-$namespaces:
-  edam: 'http://edamontology.org/'
-
 requirements:
   DockerRequirement:
-    dockerPull: broadinstitute/gatk:4.2.0.0
+    dockerPull: us.gcr.io/broad-gatk/gatk:4.5.0.0
   ShellCommandRequirement: {}
-  
-baseCommand: java
+  InlineJavascriptRequirement: {}
+
+baseCommand: [gatk]
 
 inputs:
-  vcfs:
+  java_options:
+    type: string?
+    default: -Xms6000m -Xmx6500m
+    inputBinding:
+      position: 1
+      prefix: --java-options
+      shellQuote: true
+  input_vcfs:
     type:
       type: array
       items: File
       inputBinding:
-        prefix: -I
+        prefix: --input
     secondaryFiles:
       - .tbi
     inputBinding:
-      position: 4
-    doc: VCF files to be gathered
-
-  outprefix:
+      position: 5
+  callset_name:
     type: string
+    doc: (ex) gnarly_callset
 
-  java_options:
-    type: string?
-    default: -XX:-UseContainerSupport -Xmx3g -Xms3g
-    inputBinding:
-      position: 1
-      shellQuote: false
-    
 outputs:
-  - id: gathered_vcf
+  output_vcf:
     type: File
-    format: edam:format_3016
     outputBinding:
-      glob: $(inputs.outprefix).vcf
-    secondaryFiles:
-      - .idx
-  - id: log
-    type: stderr
+      glob: $(inputs.callset_name).sites_only.vcf.gz
+    # secondaryFiles:
+    #   - .tbi
 
-stderr: $(inputs.outprefix).vcf.log
-    
+stderr: $(inputs.callset_name).sites_only.vcf.gz.log
+
 arguments:
   - position: 2
-    prefix: -jar
-    valueFrom: /gatk/gatk-package-4.2.0.0-local.jar
+    valueFrom: GatherVcfsCloud
   - position: 3
-    valueFrom: GatherVcfs
-  - position: 5
-    prefix: -O
-    valueFrom: $(inputs.outprefix).vcf
-
-    
+    valueFrom: --ignore-safety-checks
+  - position: 4
+    valueFrom: --gather-type BLOCK
+    shellQuote: false
+  - position: 6
+    prefix: "--output"
+    valueFrom: $(inputs.callset_name).sites_only.vcf.gz
