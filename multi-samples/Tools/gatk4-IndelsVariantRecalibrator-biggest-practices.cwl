@@ -81,10 +81,6 @@ outputs:
       glob: gnarly_callset.indels.recal
     secondaryFiles:
       - .idx
-  # recalibration_index:
-  #   type: File
-  #   outputBinding:
-  #     glob: gnarly_callset.indels.recal.idx
   tranches:
     type: File
     outputBinding:
