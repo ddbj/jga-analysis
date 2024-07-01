@@ -46,59 +46,68 @@ inputs:
     default: ["FS", "ReadPosRankSum", "MQRankSum", "QD", "SOR"]
     inputBinding:
       position: 8
+  allele_specific_annotations:
+    type: boolean
+    default: false
+    inputBinding:
+      position: 9
+      prefix: --use-allele-specific-annotations
   max_gaussians:
     type: int
     default: 4
     inputBinding:
-      position: 10
+      position: 11
       prefix: --max-gaussians
   mills_resource_vcf:
     type: File
     inputBinding:
-      position: 11
+      position: 12
       prefix: -resource:mills,known=false,training=true,truth=true,prior=12
     secondaryFiles:
       - .tbi
   axiomPoly_resource_vcf:
     type: File
     inputBinding:
-      position: 12
+      position: 13
       prefix: -resource:axiomPoly,known=false,training=true,truth=false,prior=10
     secondaryFiles:
       - .tbi
   dbsnp_resource_vcf:
     type: File
     inputBinding:
-      position: 13
+      position: 14
       prefix: -resource:dbsnp,known=true,training=false,truth=false,prior=2
     secondaryFiles:
       - .idx
+  callset_name:
+    type: string
+    doc: (ex) gnarly_callset
 
 outputs:
   recalibration:
     type: File
     outputBinding:
-      glob: gnarly_callset.indels.recal
+      glob: $(inputs.callset_name).indels.recal
     secondaryFiles:
       - .idx
   tranches:
     type: File
     outputBinding:
-      glob: gnarly_callset.indels.tranches
+      glob: $(inputs.callset_name).indels.tranches
 
-stderr: gnarly_callset.indels.recal.log
+stderr: $(inputs.callset_name).indels.recal.log
 
 arguments:
   - position: 2
     valueFrom: VariantRecalibrator
   - position: 4
     prefix: -O
-    valueFrom: gnarly_callset.indels.recal
+    valueFrom: $(inputs.callset_name).indels.recal
   - position: 5
     prefix: --tranches-file
-    valueFrom: gnarly_callset.indels.tranches
+    valueFrom: $(inputs.callset_name).indels.tranches
   - position: 6
     valueFrom: --trust-all-polymorphic
-  - position: 9
+  - position: 10
     prefix: -mode
     valueFrom: INDEL
