@@ -21,7 +21,7 @@ inputs:
       position: 1
       prefix: --java-options
       shellQuote: true
-  gvcf:
+  sites_only_variant_filtered_vcf:
     type: File
     inputBinding:
       position: 3
