@@ -54,12 +54,16 @@ inputs:
       prefix: --use-allele-specific-annotations
   model_report:
     type: File?
-  model_report_arg:
-    type: string
     inputBinding:
       position: 11
       valueFrom: |
-        ${ return inputs.model_report ? "--input-model " + inputs.model_report.path + " --output-tranches-for-scatter" : ""; }
+        ${
+          if (self) {
+            return "--input-model " + self.path + " --output-tranches-for-scatter";
+          } else {
+            return null;
+          }
+        }
   max_gaussians:
     type: int
     default: 6
