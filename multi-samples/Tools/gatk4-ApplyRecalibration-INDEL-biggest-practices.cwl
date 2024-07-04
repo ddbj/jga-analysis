@@ -65,7 +65,7 @@ inputs:
     doc: unpadded_intervals, row number
 
 outputs:
-  recalibrated_vcf_filename:
+  tmp_indel_recalibrated_vcf_filename:
     type: File
     outputBinding:
       glob: $(inputs.callset_name).$(inputs.idx).tmp.indel.recalibrated.vcf
@@ -78,7 +78,7 @@ arguments:
   - position: 2
     valueFrom: ApplyVQSR
   - position: 3
-    prefix: "-O"
+    prefix: -O
     valueFrom: $(inputs.callset_name).$(inputs.idx).tmp.indel.recalibrated.vcf
   - position: 10
     prefix: -mode
