@@ -66,5 +66,5 @@ arguments:
     valueFrom: --filter-name ExcessHet
     shellQuote: false
   - position: 6
-    prefix: "-O"
+    prefix: -O
     valueFrom: $(inputs.callset_name).$(inputs.idx).variant_filtered.vcf.gz
