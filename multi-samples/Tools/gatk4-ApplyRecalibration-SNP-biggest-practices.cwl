@@ -27,7 +27,7 @@ inputs:
       position: 4
       prefix: -V
     secondaryFiles:
-      - .tbi
+      - .idx
   snps_recalibration:
     type: File
     inputBinding:
