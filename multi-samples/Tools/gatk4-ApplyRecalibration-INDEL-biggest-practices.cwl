@@ -52,7 +52,7 @@ inputs:
       prefix: --truth-sensitivity-filter-level
   create-output-variant-index:
     type: string?
-    default: true
+    default: "true"
     inputBinding:
       position: 9
       prefix: --create-output-variant-index
@@ -76,7 +76,7 @@ stderr: $(inputs.callset_name).$(inputs.idx).tmp.indel.recalibrated.vcf.log
 
 arguments:
   - position: 2
-    valueFrom: VariantRecalibrator
+    valueFrom: ApplyVQSR
   - position: 3
     prefix: "-O"
     valueFrom: $(inputs.callset_name).$(inputs.idx).tmp.indel.recalibrated.vcf
