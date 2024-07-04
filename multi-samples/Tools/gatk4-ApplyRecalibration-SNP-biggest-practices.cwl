@@ -78,7 +78,7 @@ arguments:
   - position: 2
     valueFrom: ApplyVQSR
   - position: 3
-    prefix: "-O"
+    prefix: -O
     valueFrom: $(inputs.callset_name).filtered.$(inputs.idx).vcf.gz
   - position: 10
     prefix: -mode
