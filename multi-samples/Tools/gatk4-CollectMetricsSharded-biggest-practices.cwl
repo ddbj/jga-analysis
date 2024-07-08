@@ -11,6 +11,8 @@ requirements:
   ShellCommandRequirement: {}
   InlineJavascriptRequirement: {}
 
+baseCommand: [gatk]
+
 inputs:
   java_options:
     type: string?
