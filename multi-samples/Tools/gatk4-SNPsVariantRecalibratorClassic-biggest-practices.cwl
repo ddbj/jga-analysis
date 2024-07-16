@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: gatk4-IndelsVariantRecalibrator-biggest-practices
-label: gatk4-IndelsVariantRecalibrator-biggest-practices
+id: gatk4-SNPsVariantRecalibratorClassic-biggest-practices
+label: gatk4-SNPsVariantRecalibratorClassic-biggest-practices
 cwlVersion: v1.1
 
 requirements:
@@ -34,7 +34,7 @@ inputs:
       items: float
       inputBinding:
         prefix: -tranche
-    default: [100.0, 99.95, 99.9, 99.5, 99.0, 97.0, 96.0, 95.0, 94.0, 93.5, 93.0, 92.0, 91.0, 90.0]
+    default: [100.0, 99.95, 99.9, 99.8, 99.7, 99.6, 99.5, 99.4, 99.3, 99.0, 98.0, 97.0, 90.0]
     inputBinding:
       position: 7
   recalibration_annotation_values:
@@ -43,7 +43,7 @@ inputs:
       items: string
       inputBinding:
         prefix: -an
-    default: ["FS", "ReadPosRankSum", "MQRankSum", "QD", "SOR"]
+    default: ["QD", "MQRankSum", "ReadPosRankSum", "FS", "SOR"]
     inputBinding:
       position: 8
   allele_specific_annotations:
@@ -52,31 +52,50 @@ inputs:
     inputBinding:
       position: 9
       prefix: --use-allele-specific-annotations
-  max_gaussians:
-    type: int
-    default: 4
+  model_report:
+    type: File?
     inputBinding:
       position: 11
-      prefix: --max-gaussians
-  mills_resource_vcf:
-    type: File
+      valueFrom: |
+        ${
+          if (self) {
+            return "--input-model " + self.path + " --output-tranches-for-scatter";
+          } else {
+            return null;
+          }
+        }
+  max_gaussians:
+    type: int
+    default: 6
     inputBinding:
       position: 12
-      prefix: -resource:mills,known=false,training=true,truth=true,prior=12
-    secondaryFiles:
-      - .tbi
-  axiomPoly_resource_vcf:
+      prefix: --max-gaussians
+  hapmap_resource_vcf:
     type: File
     inputBinding:
       position: 13
-      prefix: -resource:axiomPoly,known=false,training=true,truth=false,prior=10
+      prefix: -resource:hapmap,known=false,training=true,truth=true,prior=15
+    secondaryFiles:
+      - .tbi
+  omni_resource_vcf:
+    type: File
+    inputBinding:
+      position: 14
+      prefix: -resource:omni,known=false,training=true,truth=true,prior=12
+    secondaryFiles:
+      - .tbi
+  one_thousand_genomes_resource_vcf:
+    type: File
+    inputBinding:
+      position: 15
+      prefix: -resource:1000G,known=false,training=true,truth=false,prior=10
     secondaryFiles:
       - .tbi
   dbsnp_resource_vcf:
     type: File
     inputBinding:
-      position: 14
-      prefix: -resource:dbsnp,known=true,training=false,truth=false,prior=2
+      position: 16
+      prefix: -resource:dbsnp,known=true,training=false,truth=false,prior=7
     secondaryFiles:
       - .idx
   callset_name:
@@ -87,27 +106,27 @@ outputs:
   recalibration:
     type: File
     outputBinding:
-      glob: $(inputs.callset_name).indels.recal
+      glob: $(inputs.callset_name).snps.recal
     secondaryFiles:
       - .idx
   tranches:
     type: File
     outputBinding:
-      glob: $(inputs.callset_name).indels.tranches
+      glob: $(inputs.callset_name).snps.tranches
 
-stderr: $(inputs.callset_name).indels.recal.log
+stderr: $(inputs.callset_name).snps.recal.log
 
 arguments:
   - position: 2
     valueFrom: VariantRecalibrator
   - position: 4
     prefix: -O
-    valueFrom: $(inputs.callset_name).indels.recal
+    valueFrom: $(inputs.callset_name).snps.recal
   - position: 5
     prefix: --tranches-file
-    valueFrom: $(inputs.callset_name).indels.tranches
+    valueFrom: $(inputs.callset_name).snps.tranches
   - position: 6
     valueFrom: --trust-all-polymorphic
   - position: 10
     prefix: -mode
-    valueFrom: INDEL
+    valueFrom: SNP
