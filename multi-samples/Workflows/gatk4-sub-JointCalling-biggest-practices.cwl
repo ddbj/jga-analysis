@@ -47,6 +47,10 @@ inputs:
     type: int?
   max-alternate-alleles:
     type: int?
+  gatk4-VariantFiltration_java_options:
+    type: string?
+  filter-expression:
+    type: float?
   # gatk4-GenomicsDBImport_xxx:
   #   type: string?
 
@@ -83,6 +87,19 @@ steps:
     out:
       - output_vcf
       - output_database
+  gatk4-VariantFiltration-biggest-practices:
+    label: gatk4-VariantFiltration-biggest-practices
+    run: ../Tools/gatk4-VariantFiltration-biggest-practices.cwl
+    in:
+      java_options: gatk4-VariantFiltration_java_options
+      filter-expression: filter-expression
+      targets_interval_list: interval
+      vcf: gatk4-GnarlyGenotyper-biggest-practices/output_vcf
+      callset_name: callset_name
+      idx: idx
+    out:
+      - variant_filtered_vcf
+
   # xyz:
   #   label: xyz
   #   run: ../Tools/xyz.cwl
@@ -102,5 +119,10 @@ outputs:
   output_database:
     type: File?
     outputSource: gatk4-GnarlyGenotyper-biggest-practices/output_database
+    secondaryFiles:
+      - .tbi
+  variant_filtered_vcf:
+    type: File
+    outputSource: gatk4-VariantFiltration-biggest-practices/variant_filtered_vcf
     secondaryFiles:
       - .tbi
