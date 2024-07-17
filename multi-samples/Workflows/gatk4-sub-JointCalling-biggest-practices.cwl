@@ -51,9 +51,10 @@ inputs:
     type: string?
   filter-expression:
     type: float?
+  gatk4-MakeSitesOnlyVcf_java_options:
+    type: string?
   # gatk4-GenomicsDBImport_xxx:
   #   type: string?
-
 steps:
   gatk4-GenomicsDBImport-biggest-practices:
     label: gatk4-GenomicsDBImport-biggest-practices
@@ -99,7 +100,16 @@ steps:
       idx: idx
     out:
       - variant_filtered_vcf
-
+  gatk4-MakeSitesOnlyVcf-biggest-practices:
+    label: gatk4-MakeSitesOnlyVcf-biggest-practices
+    run: ../Tools/gatk4-MakeSitesOnlyVcf-biggest-practices.cwl
+    in:
+      java_options: gatk4-MakeSitesOnlyVcf_java_options
+      variant_filtered_vcf_filename: gatk4-VariantFiltration-biggest-practices/variant_filtered_vcf
+      callset_name: callset_name
+      idx: idx
+    out:
+      - sites_only_vcf
   # xyz:
   #   label: xyz
   #   run: ../Tools/xyz.cwl
@@ -124,5 +134,10 @@ outputs:
   variant_filtered_vcf:
     type: File
     outputSource: gatk4-VariantFiltration-biggest-practices/variant_filtered_vcf
+    secondaryFiles:
+      - .tbi
+  sites_only_vcf:
+    type: File
+    outputSource: gatk4-MakeSitesOnlyVcf-biggest-practices/sites_only_vcf
     secondaryFiles:
       - .tbi
