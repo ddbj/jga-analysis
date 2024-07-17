@@ -35,7 +35,7 @@ inputs:
     doc: unpadded_intervals, row number
 
 outputs:
-  variant_filtered_vcf:
+  sites_only_vcf:
     type: File
     outputBinding:
       glob: $(inputs.callset_name).$(inputs.idx).sites_only.variant_filtered.vcf.gz

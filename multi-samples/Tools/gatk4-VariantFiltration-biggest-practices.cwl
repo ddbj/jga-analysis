@@ -30,7 +30,7 @@ inputs:
       valueFrom: ExcessHet > $(self)
       shellQuote: false
   targets_interval_list:
-    type: File?
+    type: File
     inputBinding:
       position: 5
       prefix: --filter-not-in-mask --mask-name OUTSIDE_OF_TARGETS --mask
