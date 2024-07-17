@@ -53,8 +53,7 @@ inputs:
     type: float?
   gatk4-MakeSitesOnlyVcf_java_options:
     type: string?
-  # gatk4-GenomicsDBImport_xxx:
-  #   type: string?
+
 steps:
   gatk4-GenomicsDBImport-biggest-practices:
     label: gatk4-GenomicsDBImport-biggest-practices
@@ -110,13 +109,7 @@ steps:
       idx: idx
     out:
       - sites_only_vcf
-  # xyz:
-  #   label: xyz
-  #   run: ../Tools/xyz.cwl
-  #   in:
-  #     xxx: xxx
-  #   out:
-  #     - yyy
+
 outputs:
   genomics-db:
     type: Directory
