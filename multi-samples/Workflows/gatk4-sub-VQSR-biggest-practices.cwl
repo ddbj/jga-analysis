@@ -23,7 +23,7 @@ inputs:
   allele_specific_annotations:
     type: boolean?
   IndelsVariantRecalibrator_max_gaussians:
-    type: int
+    type: int?
   mills_resource_vcf:
     type: File
     secondaryFiles:
@@ -51,7 +51,7 @@ steps:
       recalibration_tranche_values: indel_recalibration_tranche_values
       recalibration_annotation_values: indel_recalibration_annotation_values
       allele_specific_annotations: allele_specific_annotations
-      max_gaussians: IndelsVariantRecalibrator_max_gaussian
+      max_gaussians: IndelsVariantRecalibrator_max_gaussians
       mills_resource_vcf: mills_resource_vcf
       axiomPoly_resource_vcf: axiomPoly_resource_vcf
       dbsnp_resource_vcf: dbsnp_resource_vcf
