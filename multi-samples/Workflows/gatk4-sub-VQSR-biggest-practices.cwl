@@ -38,6 +38,28 @@ inputs:
       - .idx
   callset_name:
     type: string
+  gatk4-SNPsVariantRecalibratorClassic_java_options:
+    type: string?
+  snp_recalibration_tranche_values:
+    type: float[]?
+  snp_recalibration_annotation_values:
+    type: string[]?
+  model_report:
+    type: File?
+  SNPsVariantRecalibratorClassic_max_gaussians:
+    type: int?
+  hapmap_resource_vcf:
+    type: File
+    secondaryFiles:
+      - .tbi
+  omni_resource_vcf:
+    type: File
+    secondaryFiles:
+      - .tbi
+  one_thousand_genomes_resource_vcf:
+    type: File
+    secondaryFiles:
+      - .tbi
   # gatk4-xxx_java_options:
   #   type: string?
 
@@ -59,6 +81,25 @@ steps:
     out:
       - recalibration
       - tranches
+  gatk4-SNPsVariantRecalibratorClassic-biggest-practices:
+    label: SNPsVariantRecalibratorClassic-biggest-practices
+    run: ../Tools/SNPsVariantRecalibratorClassic-biggest-practices.cwl
+    in:
+      java_options: gatk4-SNPsVariantRecalibratorClassic_java_options
+      sites_only_variant_filtered_vcf: sites_only_variant_filtered_vcf
+      recalibration_tranche_values: snp_recalibration_tranche_values
+      recalibration_annotation_values: snp_recalibration_annotation_values
+      allele_specific_annotations: allele_specific_annotations
+      model_report: model_report
+      max_gaussians: SNPsVariantRecalibratorClassic_max_gaussians
+      hapmap_resource_vcf: hapmap_resource_vcf
+      omni_resource_vcf: omni_resource_vcf
+      one_thousand_genomes_resource_vcf: one_thousand_genomes_resource_vcf
+      dbsnp_resource_vcf: dbsnp_resource_vcf
+      callset_name: callset_name
+    out:
+      - recalibration
+      - tranches
   # xyz:
   #   label: xyz
   #   run: ../Tools/xyz.cwl
@@ -68,14 +109,22 @@ steps:
   #     - yyy
 
 outputs:
-  recalibration:
+  indel_recalibration:
     type: File
     outputSource: gatk4-IndelsVariantRecalibrator-biggest-practices/recalibration
     secondaryFiles:
       - .idx
-  tranches:
+  indel_tranches:
     type: File
     outputSource: gatk4-IndelsVariantRecalibrator-biggest-practices/tranches
+  snp_recalibration:
+    type: File
+    outputSource: gatk4-SNPsVariantRecalibratorClassic-biggest-practices/recalibration
+    secondaryFiles:
+      - .idx
+  snp_tranches:
+    type: File
+    outputSource: gatk4-SNPsVariantRecalibratorClassic-biggest-practices/tranches
   # sites_only_vcf:
   #   type: File
   #   outputSource: gatk4-MakeSitesOnlyVcf-biggest-practices/sites_only_vcf
