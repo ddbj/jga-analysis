@@ -82,8 +82,8 @@ steps:
       - recalibration
       - tranches
   gatk4-SNPsVariantRecalibratorClassic-biggest-practices:
-    label: SNPsVariantRecalibratorClassic-biggest-practices
-    run: ../Tools/SNPsVariantRecalibratorClassic-biggest-practices.cwl
+    label: gatk4-SNPsVariantRecalibratorClassic-biggest-practices
+    run: ../Tools/gatk4-SNPsVariantRecalibratorClassic-biggest-practices.cwl
     in:
       java_options: gatk4-SNPsVariantRecalibratorClassic_java_options
       sites_only_variant_filtered_vcf: sites_only_variant_filtered_vcf
