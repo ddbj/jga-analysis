@@ -45,7 +45,7 @@ inputs:
       position: 7
       prefix: --tranches-file
   indel_filter_level:
-    type: float
+    type: float?
     default: 95.0
     inputBinding:
       position: 8
