@@ -28,7 +28,7 @@ inputs:
       position: 3
       prefix: --filter-expression
       valueFrom: ExcessHet > $(self)
-      shellQuote: false
+      shellQuote: true
   targets_interval_list:
     type: File?
     inputBinding:
