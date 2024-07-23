@@ -60,18 +60,18 @@ inputs:
     type: File
     secondaryFiles:
       - .tbi
-  gatk4-ApplyRecalibration-INDEL_java_options:
-    type: string?
-  variant_filtered_vcf:
-    type: File
-    secondaryFiles:
-      - .tbi
-  vqsr_indel_filter_level:
-    type: float?
-  create-output-variant-index:
-    type: string?
-  idx:
-    type: int
+  # gatk4-ApplyRecalibration-INDEL_java_options:
+  #   type: string?
+  # variant_filtered_vcf:
+  #   type: File
+  #   secondaryFiles:
+  #     - .tbi
+  # vqsr_indel_filter_level:
+  #   type: float?
+  # create-output-variant-index:
+  #   type: string?
+  # idx:
+  #   type: int
   # gatk4-xxx_java_options:
   #   type: string?
 
@@ -112,21 +112,21 @@ steps:
     out:
       - recalibration
       - tranches
-  gatk4-ApplyRecalibration-INDEL-biggest-practices:
-    label: gatk4-ApplyRecalibration-INDEL-biggest-practices
-    run: ../Tools/gatk4-ApplyRecalibration-INDEL-biggest-practices.cwl
-    in:
-      java_options: gatk4-ApplyRecalibration-INDEL_java_options
-      input_vcf: variant_filtered_vcf
-      indels_recalibration: gatk4-IndelsVariantRecalibrator-biggest-practices/recalibration
-      allele_specific_annotations: allele_specific_annotations
-      indels_tranches: gatk4-IndelsVariantRecalibrator-biggest-practices/tranches
-      indel_filter_level: vqsr_indel_filter_level
-      create-output-variant-index: create-output-variant-index
-      callset_name: callset_name
-      idx: idx
-    out:
-      - tmp_indel_recalibrated_vcf_filename
+  # gatk4-ApplyRecalibration-INDEL-biggest-practices:
+  #   label: gatk4-ApplyRecalibration-INDEL-biggest-practices
+  #   run: ../Tools/gatk4-ApplyRecalibration-INDEL-biggest-practices.cwl
+  #   in:
+  #     java_options: gatk4-ApplyRecalibration-INDEL_java_options
+  #     input_vcf: variant_filtered_vcf
+  #     indels_recalibration: gatk4-IndelsVariantRecalibrator-biggest-practices/recalibration
+  #     allele_specific_annotations: allele_specific_annotations
+  #     indels_tranches: gatk4-IndelsVariantRecalibrator-biggest-practices/tranches
+  #     indel_filter_level: vqsr_indel_filter_level
+  #     create-output-variant-index: create-output-variant-index
+  #     callset_name: callset_name
+  #     idx: idx
+  #   out:
+  #     - tmp_indel_recalibrated_vcf_filename
   # xyz:
   #   label: xyz
   #   run: ../Tools/xyz.cwl
@@ -152,11 +152,11 @@ outputs:
   snp_tranches:
     type: File
     outputSource: gatk4-SNPsVariantRecalibratorClassic-biggest-practices/tranches
-  tmp_indel_recalibrated_vcf_filename:
-    type: File
-    outputSource: gatk4-ApplyRecalibration-INDEL-biggest-practices/tmp_indel_recalibrated_vcf_filename
-    secondaryFiles:
-      - .idx
+  # tmp_indel_recalibrated_vcf_filename:
+  #   type: File
+  #   outputSource: gatk4-ApplyRecalibration-INDEL-biggest-practices/tmp_indel_recalibrated_vcf_filename
+  #   secondaryFiles:
+  #     - .idx
   # sites_only_vcf:
   #   type: File
   #   outputSource: gatk4-MakeSitesOnlyVcf-biggest-practices/sites_only_vcf
