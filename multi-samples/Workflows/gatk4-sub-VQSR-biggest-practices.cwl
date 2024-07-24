@@ -72,8 +72,10 @@ inputs:
     type: string?
   idx:
     type: int
-  # gatk4-xxx_java_options:
-  #   type: string?
+  gatk4-ApplyRecalibration-SNP_java_options:
+    type: string?
+  vqsr_snp_filter_level:
+    type: float?
 
 steps:
   gatk4-IndelsVariantRecalibrator-biggest-practices:
@@ -127,13 +129,21 @@ steps:
       idx: idx
     out:
       - tmp_indel_recalibrated_vcf_filename
-  # xyz:
-  #   label: xyz
-  #   run: ../Tools/xyz.cwl
-  #   in:
-  #     xxx: xxx
-  #   out:
-  #     - yyy
+  gatk4-ApplyRecalibration-SNP-biggest-practices:
+    label: gatk4-ApplyRecalibration-SNP-biggest-practices
+    run: ../Tools/gatk4-ApplyRecalibration-SNP-biggest-practices.cwl
+    in:
+      java_options: gatk4-ApplyRecalibration-SNP_java_options
+      tmp_indel_recalibrated_vcf: gatk4-ApplyRecalibration-INDEL-biggest-practices/tmp_indel_recalibrated_vcf_filename
+      snps_recalibration: gatk4-SNPsVariantRecalibratorClassic-biggest-practices/recalibration
+      allele_specific_annotations: allele_specific_annotations
+      snps_tranches: gatk4-SNPsVariantRecalibratorClassic-biggest-practices/tranches
+      snp_filter_level: vqsr_snp_filter_level
+      create-output-variant-index: create-output-variant-index
+      callset_name: callset_name
+      idx: idx
+    out:
+      - recalibrated_vcf_filename
 
 outputs:
   indel_recalibration:
@@ -157,8 +167,8 @@ outputs:
     outputSource: gatk4-ApplyRecalibration-INDEL-biggest-practices/tmp_indel_recalibrated_vcf_filename
     secondaryFiles:
       - .idx
-  # sites_only_vcf:
-  #   type: File
-  #   outputSource: gatk4-MakeSitesOnlyVcf-biggest-practices/sites_only_vcf
-  #   secondaryFiles:
-  #     - .tbi
+  recalibrated_vcf_filename:
+    type: File
+    outputSource: gatk4-ApplyRecalibration-SNP-biggest-practices/recalibrated_vcf_filename
+    secondaryFiles:
+      - .tbi
