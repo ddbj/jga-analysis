@@ -49,6 +49,8 @@ inputs:
     type: int?
   gatk4-VariantFiltration_java_options:
     type: string?
+  targets_interval_list:
+    type: File?
   filter-expression:
     type: float?
   gatk4-MakeSitesOnlyVcf_java_options:
@@ -93,7 +95,7 @@ steps:
     in:
       java_options: gatk4-VariantFiltration_java_options
       filter-expression: filter-expression
-      targets_interval_list: interval
+      targets_interval_list: targets_interval_list
       vcf: gatk4-GnarlyGenotyper-biggest-practices/output_vcf
       callset_name: callset_name
       idx: idx

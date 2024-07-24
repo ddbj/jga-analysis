@@ -28,9 +28,9 @@ inputs:
       position: 3
       prefix: --filter-expression
       valueFrom: ExcessHet > $(self)
-      shellQuote: false
+      shellQuote: true
   targets_interval_list:
-    type: File
+    type: File?
     inputBinding:
       position: 5
       prefix: --filter-not-in-mask --mask-name OUTSIDE_OF_TARGETS --mask
