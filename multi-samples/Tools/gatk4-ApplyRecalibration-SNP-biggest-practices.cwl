@@ -45,7 +45,7 @@ inputs:
       position: 7
       prefix: --tranches-file
   snp_filter_level:
-    type: float
+    type: float?
     default: 99.7
     inputBinding:
       position: 8
