@@ -8,6 +8,7 @@ cwlVersion: v1.1
 requirements:
   SubworkflowFeatureRequirement: {}
   StepInputExpressionRequirement: {}
+  ScatterFeatureRequirement: {}
 
 inputs:
   gatk4-IndelsVariantRecalibrator_java_options:
