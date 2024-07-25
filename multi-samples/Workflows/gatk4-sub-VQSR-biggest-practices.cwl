@@ -63,7 +63,7 @@ inputs:
   gatk4-ApplyRecalibration-INDEL_java_options:
     type: string?
   variant_filtered_vcf:
-    type: File
+    type: File[]
     secondaryFiles:
       - .tbi
   vqsr_indel_filter_level:
@@ -71,7 +71,7 @@ inputs:
   create-output-variant-index:
     type: string?
   idx:
-    type: int
+    type: int[]
   gatk4-ApplyRecalibration-SNP_java_options:
     type: string?
   vqsr_snp_filter_level:
@@ -127,6 +127,10 @@ steps:
       create-output-variant-index: create-output-variant-index
       callset_name: callset_name
       idx: idx
+    scatter:
+      - input_vcf
+      - idx
+    scatterMethod: dotproduct
     out:
       - tmp_indel_recalibrated_vcf_filename
   gatk4-ApplyRecalibration-SNP-biggest-practices:
@@ -142,6 +146,10 @@ steps:
       create-output-variant-index: create-output-variant-index
       callset_name: callset_name
       idx: idx
+    scatter:
+      - tmp_indel_recalibrated_vcf
+      - idx
+    scatterMethod: dotproduct
     out:
       - recalibrated_vcf_filename
 
@@ -163,12 +171,12 @@ outputs:
     type: File
     outputSource: gatk4-SNPsVariantRecalibratorClassic-biggest-practices/tranches
   tmp_indel_recalibrated_vcf_filename:
-    type: File
+    type: File[]
     outputSource: gatk4-ApplyRecalibration-INDEL-biggest-practices/tmp_indel_recalibrated_vcf_filename
     secondaryFiles:
       - .idx
   recalibrated_vcf_filename:
-    type: File
+    type: File[]
     outputSource: gatk4-ApplyRecalibration-SNP-biggest-practices/recalibrated_vcf_filename
     secondaryFiles:
       - .tbi
