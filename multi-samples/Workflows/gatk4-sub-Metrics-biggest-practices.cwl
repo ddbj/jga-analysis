@@ -31,8 +31,13 @@ inputs:
     type: string
   idx:
     type: int[]
-  # gatk4-xxx_java_options:
-  #   type: string?
+  gatk4-GatherVariantCallingMetrics_java_options:
+    type: string?
+  input_details:
+    type: string[]
+    doc: metricsDir/callset_name.idx
+  metricsDir:
+    type: Directory
 
 steps:
   gatk4-CollectMetricsSharded-biggest-practices:
@@ -54,23 +59,28 @@ steps:
     out:
       - detail_metrics_file
       - summary_metrics_file
-  # xyz:
-  #   label: xyz
-  #   run: ../Tools/xyz.cwl
-  #   in:
-  #     xxx: xxx
-  #   out:
-  #     - yyy
+  gatk4-GatherVariantCallingMetrics-biggest-practices:
+    label: gatk4-GatherVariantCallingMetrics-biggest-practices
+    run: ../Tools/gatk4-GatherVariantCallingMetrics-biggest-practices.cwl
+    in:
+      java_options: gatk4-GatherVariantCallingMetrics_java_options
+      input_details: input_details
+      metricsDir: metricsDir
+      output_prefix: callset_name
+    out:
+      - detail_metrics_file
+      - summary_metrics_file
 
 outputs:
-  detail_metrics_file:
+  detail_metrics_files:
     type: File[]
     outputSource: gatk4-CollectMetricsSharded-biggest-practices/detail_metrics_file
-  summary_metrics_file:
+  summary_metrics_files:
     type: File[]
     outputSource: gatk4-CollectMetricsSharded-biggest-practices/summary_metrics_file
-  # indel_recalibration:
-  #   type: File
-  #   outputSource: gatk4-IndelsVariantRecalibrator-biggest-practices/recalibration
-  #   secondaryFiles:
-  #     - .idx
+  detail_metrics_file:
+    type: File
+    outputSource: gatk4-GatherVariantCallingMetrics-biggest-practices/detail_metrics_file
+  summary_metrics_file:
+    type: File
+    outputSource: gatk4-GatherVariantCallingMetrics-biggest-practices/summary_metrics_file
