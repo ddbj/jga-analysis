@@ -64,10 +64,10 @@ steps:
 
 outputs:
   detail_metrics_file:
-    type: File
+    type: File[]
     outputSource: gatk4-CollectMetricsSharded-biggest-practices/detail_metrics_file
   summary_metrics_file:
-    type: File
+    type: File[]
     outputSource: gatk4-CollectMetricsSharded-biggest-practices/summary_metrics_file
   # indel_recalibration:
   #   type: File
