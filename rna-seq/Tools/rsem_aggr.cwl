@@ -7,7 +7,7 @@ cwlVersion: v1.2
 
 requirements:
   ResourceRequirement:
-    ramMin: 65536
+    ramMin: 4096
     coresMin: 8
   DockerRequirement:
     dockerPull: yamaken37/rsem_aggr:20231213
