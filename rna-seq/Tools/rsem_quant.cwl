@@ -7,10 +7,10 @@ cwlVersion: v1.2
 
 requirements:
   ResourceRequirement:
-    ramMin: 64
-    coresMin: 16
+    ramMin: 4096
+    coresMin: 8
   DockerRequirement:
-    dockerPull: docker://encodedcc/rna-seq-pipeline:1.2.4
+    dockerPull: encodedcc/rna-seq-pipeline:1.2.4
 baseCommand: [python3, /software/rna-seq-pipeline/src/rsem_quant.py]
 
 inputs:

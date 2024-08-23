@@ -20,7 +20,7 @@ This workflow consists of the following steps:
 ```yaml
 prefix_rsem: "PE_wf_samples"
 endedness: "paired"
-ramGB: 16
+ramGB: 64
 ncpus: 8
 index:
     class: File
@@ -62,7 +62,7 @@ sample_list:
 ```yaml
 prefix_rsem: "SE_wf_samples"
 endedness: "single"
-ramGB: 16
+ramGB: 64
 ncpus: 8
 index:
     class: File
