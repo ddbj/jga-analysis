@@ -7,7 +7,7 @@ cwlVersion: v1.2
 
 requirements:
   ResourceRequirement:
-    ramMin: 4096
+    ramMin: 2048
     coresMin: 8
   DockerRequirement:
     dockerPull: encodedcc/rna-seq-pipeline:1.2.4
