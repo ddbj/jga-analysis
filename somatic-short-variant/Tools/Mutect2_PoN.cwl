@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-id: mutect2
-label: mutect2
+id: mutect2_pon
+label: mutect2_pon
 cwlVersion: v1.1
 
 $namespaces:
