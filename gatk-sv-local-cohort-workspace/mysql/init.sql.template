@@ -1,0 +1,4 @@
+SET PASSWORD FOR 'root'@'localhost' = '<MYSQL_ROOT_PASSWORD>';
+CREATE USER 'cromwell_user'@'%' IDENTIFIED BY 'cromwelldbpw';
+GRANT ALL PRIVILEGES ON *.* TO 'cromwell_user'@'%';
+CREATE DATABASE cromwell;

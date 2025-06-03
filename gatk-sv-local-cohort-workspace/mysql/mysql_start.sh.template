@@ -1,0 +1,17 @@
+#!/bin/bash
+
+source mysql_params.sh
+
+# Check if the Apptainer instance is already run
+apptainer instance list | tail -n+2 | cut -f1 -d" " | grep mysql > /dev/null
+
+if [ $? -ne 0 ]; then
+  echo "Starting apptainer instance"
+  apptainer instance start --bind ${HOME} \
+    --bind ${MYSQL_DATA_DIR}/mysql/var/lib/mysql/:/var/lib/mysql \
+    --bind ${MYSQL_DATA_DIR}/mysql/run/mysqld:/run/mysqld \
+    <IMAGE_PATH> mysql
+fi
+
+# Start the dameon
+apptainer exec instance://mysql mysqld

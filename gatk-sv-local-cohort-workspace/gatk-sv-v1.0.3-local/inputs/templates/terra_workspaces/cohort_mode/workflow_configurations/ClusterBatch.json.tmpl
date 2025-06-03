@@ -1,0 +1,32 @@
+{
+  "ClusterBatch.contig_list": "${workspace.primary_contigs_list}",
+  "ClusterBatch.reference_fasta": "${workspace.reference_fasta}",
+  "ClusterBatch.reference_fasta_fai": "${workspace.reference_index}",
+  "ClusterBatch.reference_dict": "${workspace.reference_dict}",
+
+  "ClusterBatch.chr_x": "${workspace.chr_x}",
+  "ClusterBatch.chr_y": "${workspace.chr_y}",
+  "ClusterBatch.pesr_exclude_intervals": "${workspace.pesr_exclude_list}",
+  "ClusterBatch.pesr_interval_overlap": "0.1",
+  "ClusterBatch.pesr_breakend_window": "300",
+  "ClusterBatch.pesr_clustering_algorithm": "SINGLE_LINKAGE",
+  "ClusterBatch.depth_exclude_intervals": "${workspace.depth_exclude_list}",
+  "ClusterBatch.depth_exclude_overlap_fraction": "0.5",
+  "ClusterBatch.depth_interval_overlap": "0.8",
+  "ClusterBatch.depth_clustering_algorithm": "SINGLE_LINKAGE",
+
+  "ClusterBatch.sv_base_mini_docker": "${workspace.sv_base_mini_docker}",
+  "ClusterBatch.sv_pipeline_docker": "${workspace.sv_pipeline_docker}",
+  "ClusterBatch.gatk_docker": "${workspace.gatk_docker}",
+  "ClusterBatch.linux_docker": "${workspace.linux_docker}",
+
+  "ClusterBatch.batch": "${this.sample_set_id}",
+  "ClusterBatch.del_bed": "${this.merged_dels}",
+  "ClusterBatch.dup_bed": "${this.merged_dups}",
+  "ClusterBatch.wham_vcf_tar": "${this.std_wham_vcf_tar}",
+  "ClusterBatch.manta_vcf_tar": "${this.std_manta_vcf_tar}",
+  "ClusterBatch.melt_vcf_tar": "${this.std_melt_vcf_tar}",
+  "ClusterBatch.scramble_vcf_tar": "${this.std_scramble_vcf_tar}",
+  "ClusterBatch.ped_file": "${workspace.cohort_ped_file}",
+  "ClusterBatch.N_IQR_cutoff_plotting": "6"
+}
