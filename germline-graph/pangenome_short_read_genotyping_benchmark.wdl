@@ -1,0 +1,91 @@
+version 1.0
+
+import "pangenome_short_read_genotyping.wdl" as genotyping
+import "happy.wdl"
+import "truvari.wdl"
+
+workflow PangenomeShortReadGenotypingBenchmark {
+  meta {
+    authors: ["Takeshi Fujino"]
+  }
+
+  parameter_meta {
+    read1_fq: "read1 FASTQ (maybe gzipped) of paired-end sequencing"
+    read2_fq: "read2 FASTQ (maybe gzipped) of paired-end sequencing"
+    ref_name: "reference name in the pangenome"
+    ref_fa: "reference FASTA"
+    ref_fa_fai: "reference FASTA index"
+    gbz: "pangenome in GBZ format"
+    hapl: "pangenome haplotype index (required if diploid_sampling is true)"
+    diploid_sampling: "If true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
+    sv_benchmark_vcf_gz: "required if evaluate_sv is true"
+    sv_benchmark_vcf_gz_tbi: "required if evaluate_sv is true"
+    sv_benchmark_bed: "required if evaluate_sv is true"
+  }
+
+  input {
+    String sample_name
+    File read1_fq
+    File read2_fq
+    String ref_name = "GRCh38"
+    File ref_fa
+    File ref_fa_fai
+    File gbz
+    File? hapl
+    Boolean diploid_sampling = true
+    File small_var_benchmark_vcf_gz
+    File small_var_benchmark_vcf_gz_tbi
+    File small_var_benchmark_bed
+    File? sv_benchmark_vcf_gz
+    File? sv_benchmark_vcf_gz_tbi
+    File? sv_benchmark_bed
+    Boolean evaluate_sv = true
+  }
+
+  call genotyping.PangenomeShortReadGenotyping as Gt {
+    input:
+    sample_name = sample_name,
+    read1_fq = read1_fq,
+    read2_fq = read2_fq,
+    ref_name = ref_name,
+    ref_fa = ref_fa,
+    ref_fa_fai = ref_fa_fai,
+    gbz = gbz,
+    hapl = hapl,
+    diploid_sampling = diploid_sampling
+  }
+
+  call happy.Happy {
+    input:
+    comparison_vcf_gz = Gt.deepvariant_vcf_gz,
+    comparison_vcf_gz_tbi = Gt.deepvariant_vcf_gz_tbi,
+    baseline_vcf_gz = small_var_benchmark_vcf_gz,
+    baseline_vcf_gz_tbi = small_var_benchmark_vcf_gz_tbi,
+    baseline_bed = small_var_benchmark_bed,
+    ref_fa = ref_fa,
+    ref_fa_fai = ref_fa_fai
+  }
+
+  if (evaluate_sv) {
+    call truvari.TruvariBench {
+      input:
+      comparison_vcf_gz = Gt.vg_call_vcf_gz,
+      comparison_vcf_gz_tbi = Gt.vg_call_vcf_gz_tbi,
+      baseline_vcf_gz = select_first([sv_benchmark_vcf_gz]),
+      baseline_vcf_gz_tbi = select_first([sv_benchmark_vcf_gz_tbi]),
+      baseline_bed = select_first([sv_benchmark_bed]),
+      ref_fa = ref_fa
+    }
+  }
+
+  output {
+    File deepvariant_vcf_gz = Gt.deepvariant_vcf_gz
+    File deepvariant_vcf_gz_tbi = Gt.deepvariant_vcf_gz_tbi
+    File deepvariant_gvcf_gz = Gt.deepvariant_gvcf_gz
+    File deepvariant_gvcf_gz_tbi = Gt.deepvariant_gvcf_gz_tbi
+    File vg_call_vcf_gz = Gt.vg_call_vcf_gz
+    File vg_call_vcf_gz_tbi = Gt.vg_call_vcf_gz_tbi
+    File happy_summary = Happy.summary
+    File? truvari_summary = TruvariBench.summary
+  }
+}
