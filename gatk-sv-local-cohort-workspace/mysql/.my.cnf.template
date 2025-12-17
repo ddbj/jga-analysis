@@ -1,0 +1,6 @@
+[mysqld]
+port=<MYSQL_PORT>
+
+[client]
+user=root
+password=<MYSQL_ROOT_PASSWORD>
