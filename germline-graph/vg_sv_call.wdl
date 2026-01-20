@@ -37,11 +37,20 @@ task VgPack {
 ################################################################################
 # task VgCall
 
+# Comment:
+# Pre-calculation of snarls and using `vg call -r [snarls]` may accelerate the compuation
+
 task VgCall {
+  parameter_meta {
+    max_snarl_length: "if specified, genotype only snarls where all traversals have length <= this value"
+  }
+
   input {
+    String sample_name
     File pack
     String ref_name
     File gbz
+    Int? max_snarl_length
     Int num_cpus = 16
   }
 
@@ -51,9 +60,11 @@ task VgCall {
     /usr/bin/time -v \
       vg call \
         ~{gbz} \
-        -k ~{pack} \
-        -S ~{ref_name} \
-        -z \
+        --sample ~{sample_name} \
+        --pack ~{pack} \
+        --ref-sample ~{ref_name} \
+        --gbz \
+        ~{if defined(max_snarl_length) then '--max-length ~{max_snarl_length}' else ''} \
         -t ~{num_cpus} \
         > ~{vcf_basename}.vcf
 
