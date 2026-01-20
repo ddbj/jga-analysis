@@ -64,6 +64,7 @@ task VgCall {
         --pack ~{pack} \
         --ref-sample ~{ref_name} \
         --gbz \
+        --genotype-snarls \
         ~{if defined(max_snarl_length) then '--max-length ~{max_snarl_length}' else ''} \
         -t ~{num_cpus} \
         > ~{vcf_basename}.vcf
