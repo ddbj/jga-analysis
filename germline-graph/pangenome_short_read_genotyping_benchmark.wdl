@@ -18,6 +18,7 @@ workflow PangenomeShortReadGenotypingBenchmark {
     gbz: "pangenome in GBZ format"
     hapl: "pangenome haplotype index (required if diploid_sampling is true)"
     diploid_sampling: "If true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
+    max_snarl_length: "In vg call, genotype only snarls where all traversals have length <= this value"
     sv_benchmark_vcf_gz: "required if evaluate_sv is true"
     sv_benchmark_vcf_gz_tbi: "required if evaluate_sv is true"
     sv_benchmark_bed: "required if evaluate_sv is true"
@@ -33,6 +34,7 @@ workflow PangenomeShortReadGenotypingBenchmark {
     File gbz
     File? hapl
     Boolean diploid_sampling = true
+    Int? max_snarl_length # TODO: add default 100000
     File small_var_benchmark_vcf_gz
     File small_var_benchmark_vcf_gz_tbi
     File small_var_benchmark_bed
@@ -52,7 +54,8 @@ workflow PangenomeShortReadGenotypingBenchmark {
     ref_fa_fai = ref_fa_fai,
     gbz = gbz,
     hapl = hapl,
-    diploid_sampling = diploid_sampling
+    diploid_sampling = diploid_sampling,
+    max_snarl_length = max_snarl_length
   }
 
   call happy.Happy {
