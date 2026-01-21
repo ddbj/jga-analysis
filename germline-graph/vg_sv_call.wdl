@@ -3,6 +3,9 @@ version 1.0
 ################################################################################
 # task VgPack
 
+# Comment:
+# reduce memory size and # of threads?
+
 task VgPack {
   input {
     File gam
