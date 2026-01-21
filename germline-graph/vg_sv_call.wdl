@@ -29,7 +29,7 @@ task VgPack {
 
   runtime {
     cpu: num_cpus
-    memory: "128 GB"
+    memory: "96 GB"
     docker: "quay.io/vgteam/vg:v1.68.0"
   }
 }
