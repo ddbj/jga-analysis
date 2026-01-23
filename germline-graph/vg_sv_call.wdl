@@ -1,6 +1,38 @@
 version 1.0
 
 ################################################################################
+# task VgSnarls
+
+# Comment:
+# Resource usage should be optimized
+
+task VgSnarls {
+  input {
+    File gbz
+    Int num_cpus = 32
+  }
+
+  String snarls_filename = '~{basename(gbz, ".gam")}.snarls'
+
+  command <<<
+    /usr/bin/time -v \
+      vg snarls \
+        ~{gbz} \
+        > ~{snarls_filename}
+  >>>
+
+  output {
+    File snarls = snarls_filename
+  }
+
+  runtime {
+    cpu: num_cpus
+    memory: "64 GB"
+    docker: "quay.io/vgteam/vg:v1.68.0"
+  }
+}
+
+################################################################################
 # task VgPack
 
 # Comment:
@@ -53,6 +85,7 @@ task VgCall {
     File pack
     String ref_name
     File gbz
+    File? snarls
     Int? max_snarl_length
     Int num_cpus = 16
   }
@@ -68,6 +101,7 @@ task VgCall {
         --ref-sample ~{ref_name} \
         --gbz \
         --genotype-snarls \
+        ~{if defined(snarls) then '--snarls ~{snarls}' else ''} \
         ~{if defined(max_snarl_length) then '--max-length ~{max_snarl_length}' else ''} \
         -t ~{num_cpus} \
         > ~{vcf_basename}.vcf

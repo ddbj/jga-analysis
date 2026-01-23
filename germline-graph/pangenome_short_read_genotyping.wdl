@@ -38,7 +38,7 @@ workflow PangenomeShortReadGenotyping {
     File gbz
     File? hapl
     Boolean diploid_sampling = true
-    Int? max_snarl_length # TODO: add default 100000
+    Int? max_snarl_length # Comment: add default?
   }
 
   if (diploid_sampling) {
@@ -66,12 +66,14 @@ workflow PangenomeShortReadGenotyping {
     diploid_sampling = diploid_sampling
   }
 
+  File sampled_gbz = if diploid_sampling then VgGiraffe.sampled_gbz else gbz
+
   call bam.GamToSortedBam {
     input:
     gam = VgGiraffe.gam,
     ref_name = ref_name,
     ref_path = ExtractReferencePaths.ref_path,
-    gbz = gbz # TODO: need to confirm that the original pangenome, not the sampled graph, is acceptable for sujection
+    gbz = sampled_gbz
   }
 
   call dv.Deepvariant {
@@ -82,10 +84,15 @@ workflow PangenomeShortReadGenotyping {
     ref_fa_fai = ref_fa_fai
   }
 
+  call sv.VgSnarls {
+    input:
+    gbz = gbz
+  }
+
   call sv.VgPack {
     input:
     gam = VgGiraffe.gam,
-    gbz = gbz
+    gbz = sampled_gbz
   }
 
   call sv.VgCall {
@@ -93,7 +100,8 @@ workflow PangenomeShortReadGenotyping {
     sample_name = sample_name,
     pack = VgPack.pack,
     ref_name = ref_name,
-    gbz = gbz,
+    gbz = sampled_gbz,
+    snarls = VgSnarls.snarls,
     max_snarl_length = max_snarl_length
   }
 
