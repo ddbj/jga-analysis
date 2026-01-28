@@ -84,14 +84,14 @@ workflow PangenomeShortReadGenotyping {
     ref_fa_fai = ref_fa_fai
   }
 
-  call sv.VgSnarls {
-    input:
-    gbz = gbz
-  }
-
   call sv.VgPack {
     input:
     gam = VgGiraffe.gam,
+    gbz = gbz
+  }
+
+  call sv.VgGbwt as SampledGbwt {
+    input:
     gbz = sampled_gbz
   }
 
@@ -100,8 +100,8 @@ workflow PangenomeShortReadGenotyping {
     sample_name = sample_name,
     pack = VgPack.pack,
     ref_name = ref_name,
-    gbz = sampled_gbz,
-    snarls = VgSnarls.snarls,
+    gbz = gbz,
+    gbwt = SampledGbwt.gbwt,
     max_snarl_length = max_snarl_length
   }
 

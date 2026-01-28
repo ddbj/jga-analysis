@@ -1,33 +1,33 @@
 version 1.0
 
 ################################################################################
-# task VgSnarls
+# task VgGbwt
 
 # Comment:
 # Resource usage should be optimized
 
-task VgSnarls {
+task VgGbwt {
   input {
     File gbz
-    Int num_cpus = 32
   }
 
-  String snarls_filename = '~{basename(gbz, ".gam")}.snarls'
+  String gbwt_filename = '~{basename(gbz, ".gbz")}.gbwt'
 
   command <<<
     /usr/bin/time -v \
-      vg snarls \
+      vg gbwt \
         ~{gbz} \
-        > ~{snarls_filename}
+        --gbz-input \
+        -o ~{gbwt_filename}
   >>>
 
   output {
-    File snarls = snarls_filename
+    File gbwt = gbwt_filename
   }
 
   runtime {
-    cpu: num_cpus
-    memory: "64 GB"
+    cpu: 1
+    memory: "16 GB"
     docker: "quay.io/vgteam/vg:v1.68.0"
   }
 }
@@ -74,6 +74,7 @@ task VgPack {
 
 # Comment:
 # Pre-calculation of snarls and using `vg call -r [snarls]` may accelerate the compuation
+# Make `--genotype-snarls` optional
 
 task VgCall {
   parameter_meta {
@@ -85,6 +86,7 @@ task VgCall {
     File pack
     String ref_name
     File gbz
+    File? gbwt
     File? snarls
     Int? max_snarl_length
     Int num_cpus = 16
@@ -99,7 +101,7 @@ task VgCall {
         --sample ~{sample_name} \
         --pack ~{pack} \
         --ref-sample ~{ref_name} \
-        --gbz \
+        ~{if defined(gbwt) then '--gbwt ~{gbwt}' else ''} \
         --genotype-snarls \
         ~{if defined(snarls) then '--snarls ~{snarls}' else ''} \
         ~{if defined(max_snarl_length) then '--max-length ~{max_snarl_length}' else ''} \
