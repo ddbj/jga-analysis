@@ -76,6 +76,7 @@ task VgCall {
   parameter_meta {
     genotype_snarls: "if true, genotype every snarl, including reference calls"
     snarls: "snarls computed by vg snarls"
+    min_snarl_length: "genotype only snarls where at least one traversal has length >= this value"
     max_snarl_length: "genotype only snarls where all traversals have length <= this value"
   }
 
@@ -87,6 +88,7 @@ task VgCall {
     File? gbwt
     Boolean genotype_snarls
     File? snarls
+    Int? min_snarl_length
     Int? max_snarl_length
     Int num_cpus = 16
   }
@@ -103,6 +105,7 @@ task VgCall {
         ~{if defined(gbwt) then '--gbwt ~{gbwt}' else ''} \
         ~{if genotype_snarls then '--genotype-snarls' else ''} \
         ~{if defined(snarls) then '--snarls ~{snarls}' else ''} \
+        ~{if defined(min_snarl_length) then '--min-length ~{min_snarl_length}' else ''} \
         ~{if defined(max_snarl_length) then '--max-length ~{max_snarl_length}' else ''} \
         -t ~{num_cpus} \
         > ~{vcf_basename}.vcf

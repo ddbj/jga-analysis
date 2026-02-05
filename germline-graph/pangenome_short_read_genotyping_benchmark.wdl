@@ -20,6 +20,7 @@ workflow PangenomeShortReadGenotypingBenchmark {
     diploid_sampling: "if true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
     genotype_snarls: "[vg call] if true, genotype every snarl, including reference calls"
     snarls: "[vg call] snarls computed by vg snarls"
+    min_snarl_length: "[vg call] genotype only snarls where at least one traversal has length >= this value"
     max_snarl_length: "[vg call] genotype only snarls where all traversals have length <= this value"
     evaluate_sv: "if true, compare SV genotypes with the benchmark"
     sv_benchmark_vcf_gz: "required if evaluate_sv is true"
@@ -39,7 +40,8 @@ workflow PangenomeShortReadGenotypingBenchmark {
     Boolean diploid_sampling = true
     Boolean genotype_snarls = true
     File? snarls
-    Int? max_snarl_length # TODO: add default 100000
+    Int? min_snarl_length
+    Int? max_snarl_length
     File small_var_benchmark_vcf_gz
     File small_var_benchmark_vcf_gz_tbi
     File small_var_benchmark_bed
@@ -62,6 +64,7 @@ workflow PangenomeShortReadGenotypingBenchmark {
     diploid_sampling = diploid_sampling,
     genotype_snarls = genotype_snarls,
     snarls = snarls,
+    min_snarl_length = min_snarl_length,
     max_snarl_length = max_snarl_length
   }
 

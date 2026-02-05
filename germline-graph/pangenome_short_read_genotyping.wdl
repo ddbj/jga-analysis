@@ -27,6 +27,7 @@ workflow PangenomeShortReadGenotyping {
     diploid_sampling: "if true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
     genotype_snarls: "[vg call] if true, genotype every snarl, including reference calls"
     snarls: "[vg call] snarls computed by vg snarls"
+    min_snarl_length: "[vg call] genotype only snarls where at least one traversal has length >= this value"
     max_snarl_length: "[vg call] genotype only snarls where all traversals have length <= this value"
   }
 
@@ -42,7 +43,8 @@ workflow PangenomeShortReadGenotyping {
     Boolean diploid_sampling = true
     Boolean genotype_snarls = true
     File? snarls
-    Int? max_snarl_length # Comment: add default?
+    Int? min_snarl_length
+    Int? max_snarl_length
   }
 
   if (diploid_sampling) {
@@ -108,6 +110,7 @@ workflow PangenomeShortReadGenotyping {
     gbwt = SampledGbwt.gbwt,
     genotype_snarls = genotype_snarls,
     snarls = snarls,
+    min_snarl_length = min_snarl_length,
     max_snarl_length = max_snarl_length
   }
 
