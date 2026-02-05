@@ -75,6 +75,7 @@ task VgPack {
 task VgCall {
   parameter_meta {
     genotype_snarls: "if true, genotype every snarl, including reference calls"
+    all_snarls: "if true, genotype all snarls, including nested child snarls"
     snarls: "snarls computed by vg snarls"
     min_snarl_length: "genotype only snarls where at least one traversal has length >= this value"
     max_snarl_length: "genotype only snarls where all traversals have length <= this value"
@@ -86,7 +87,8 @@ task VgCall {
     String ref_name
     File gbz
     File? gbwt
-    Boolean genotype_snarls
+    Boolean genotype_snarls = false
+    Boolean all_snarls = false
     File? snarls
     Int? min_snarl_length
     Int? max_snarl_length
@@ -104,6 +106,7 @@ task VgCall {
         --ref-sample ~{ref_name} \
         ~{if defined(gbwt) then '--gbwt ~{gbwt}' else ''} \
         ~{if genotype_snarls then '--genotype-snarls' else ''} \
+        ~{if all_snarls then '--all-snarls' else ''} \
         ~{if defined(snarls) then '--snarls ~{snarls}' else ''} \
         ~{if defined(min_snarl_length) then '--min-length ~{min_snarl_length}' else ''} \
         ~{if defined(max_snarl_length) then '--max-length ~{max_snarl_length}' else ''} \
