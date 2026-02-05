@@ -24,8 +24,10 @@ workflow PangenomeShortReadGenotyping {
     ref_fa_fai: "reference FASTA index"
     gbz: "pangenome in GBZ format"
     hapl: "pangenome haplotype index (required if diploid_sampling is true)"
-    diploid_sampling: "If true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
-    max_snarl_length: "In vg call, genotype only snarls where all traversals have length <= this value"
+    diploid_sampling: "if true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
+    genotype_snarls: "[vg call] if true, genotype every snarl, including reference calls"
+    snarls: "[vg call] snarls computed by vg snarls"
+    max_snarl_length: "[vg call] genotype only snarls where all traversals have length <= this value"
   }
 
   input {
@@ -38,6 +40,8 @@ workflow PangenomeShortReadGenotyping {
     File gbz
     File? hapl
     Boolean diploid_sampling = true
+    Boolean genotype_snarls = true
+    File? snarls
     Int? max_snarl_length # Comment: add default?
   }
 
@@ -102,6 +106,8 @@ workflow PangenomeShortReadGenotyping {
     ref_name = ref_name,
     gbz = gbz,
     gbwt = SampledGbwt.gbwt,
+    genotype_snarls = genotype_snarls,
+    snarls = snarls,
     max_snarl_length = max_snarl_length
   }
 

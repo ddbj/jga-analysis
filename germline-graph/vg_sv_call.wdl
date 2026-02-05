@@ -72,13 +72,11 @@ task VgPack {
 ################################################################################
 # task VgCall
 
-# Comment:
-# Pre-calculation of snarls and using `vg call -r [snarls]` may accelerate the compuation
-# Make `--genotype-snarls` optional
-
 task VgCall {
   parameter_meta {
-    max_snarl_length: "if specified, genotype only snarls where all traversals have length <= this value"
+    genotype_snarls: "if true, genotype every snarl, including reference calls"
+    snarls: "snarls computed by vg snarls"
+    max_snarl_length: "genotype only snarls where all traversals have length <= this value"
   }
 
   input {
@@ -87,6 +85,7 @@ task VgCall {
     String ref_name
     File gbz
     File? gbwt
+    Boolean genotype_snarls
     File? snarls
     Int? max_snarl_length
     Int num_cpus = 16
@@ -102,7 +101,7 @@ task VgCall {
         --pack ~{pack} \
         --ref-sample ~{ref_name} \
         ~{if defined(gbwt) then '--gbwt ~{gbwt}' else ''} \
-        --genotype-snarls \
+        ~{if genotype_snarls then '--genotype-snarls' else ''} \
         ~{if defined(snarls) then '--snarls ~{snarls}' else ''} \
         ~{if defined(max_snarl_length) then '--max-length ~{max_snarl_length}' else ''} \
         -t ~{num_cpus} \
