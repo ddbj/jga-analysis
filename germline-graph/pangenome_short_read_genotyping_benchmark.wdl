@@ -16,8 +16,7 @@ workflow PangenomeShortReadGenotypingBenchmark {
     ref_fa: "reference FASTA"
     ref_fa_fai: "reference FASTA index"
     gbz: "pangenome in GBZ format"
-    hapl: "pangenome haplotype index (required if diploid_sampling is true)"
-    diploid_sampling: "if true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
+    hapl: "pangenome haplotype index"
     genotype_snarls: "[vg call] if true, genotype every snarl, including reference calls"
     all_snarls: "[vg call] if true, genotype all snarls, including nested child snarls"
     snarls: "[vg call] snarls computed by vg snarls"
@@ -38,9 +37,9 @@ workflow PangenomeShortReadGenotypingBenchmark {
     File ref_fa_fai
     File gbz
     File? hapl
-    Boolean diploid_sampling = true
     Boolean genotype_snarls = false
     Boolean all_snarls = false
+    Boolean call_sampled_genotypes = true
     File? snarls
     Int? min_snarl_length
     Int? max_snarl_length
@@ -63,9 +62,9 @@ workflow PangenomeShortReadGenotypingBenchmark {
     ref_fa_fai = ref_fa_fai,
     gbz = gbz,
     hapl = hapl,
-    diploid_sampling = diploid_sampling,
     genotype_snarls = genotype_snarls,
     all_snarls = all_snarls,
+    call_sampled_genotypes = call_sampled_genotypes,
     snarls = snarls,
     min_snarl_length = min_snarl_length,
     max_snarl_length = max_snarl_length

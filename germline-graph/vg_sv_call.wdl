@@ -73,6 +73,7 @@ task VgPack {
 # task VgCall
 
 task VgCall {
+  # TODO: add more descriptions
   parameter_meta {
     genotype_snarls: "if true, genotype every snarl, including reference calls"
     all_snarls: "if true, genotype all snarls, including nested child snarls"
@@ -104,7 +105,7 @@ task VgCall {
         --sample ~{sample_name} \
         --pack ~{pack} \
         --ref-sample ~{ref_name} \
-        ~{if defined(gbwt) then '--gbwt ~{gbwt}' else ''} \
+        ~{if defined(gbwt) then '--gbwt ~{gbwt}' else '--gbz'} \
         ~{if genotype_snarls then '--genotype-snarls' else ''} \
         ~{if all_snarls then '--all-snarls' else ''} \
         ~{if defined(snarls) then '--snarls ~{snarls}' else ''} \

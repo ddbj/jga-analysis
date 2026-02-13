@@ -23,8 +23,7 @@ workflow PangenomeShortReadGenotyping {
     ref_fa: "reference FASTA"
     ref_fa_fai: "reference FASTA index"
     gbz: "pangenome in GBZ format"
-    hapl: "pangenome haplotype index (required if diploid_sampling is true)"
-    diploid_sampling: "if true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
+    hapl: "pangenome haplotype index"
     genotype_snarls: "[vg call] if true, genotype every snarl, including reference calls"
     all_snarls: "[vg call] if true, genotype all snarls, including nested child snarls"
     snarls: "[vg call] snarls computed by vg snarls"
@@ -41,20 +40,18 @@ workflow PangenomeShortReadGenotyping {
     File ref_fa_fai
     File gbz
     File? hapl
-    Boolean diploid_sampling = true
     Boolean genotype_snarls = false
     Boolean all_snarls = false
+    Boolean call_sampled_genotypes = true
     File? snarls
     Int? min_snarl_length
     Int? max_snarl_length
   }
 
-  if (diploid_sampling) {
-    call kmer_count.KmerCount {
-      input:
-      read1_fq = read1_fq,
-      read2_fq = read2_fq
-    }
+  call kmer_count.KmerCount {
+    input:
+    read1_fq = read1_fq,
+    read2_fq = read2_fq
   }
 
   call refpath.ExtractReferencePaths {
@@ -71,17 +68,15 @@ workflow PangenomeShortReadGenotyping {
     read1_fq = read1_fq,
     read2_fq = read2_fq,
     kff = KmerCount.kff,
-    diploid_sampling = diploid_sampling
+    diploid_sampling = true
   }
-
-  File sampled_gbz = if diploid_sampling then VgGiraffe.sampled_gbz else gbz
 
   call bam.GamToSortedBam {
     input:
     gam = VgGiraffe.gam,
     ref_name = ref_name,
     ref_path = ExtractReferencePaths.ref_path,
-    gbz = sampled_gbz
+    gbz = VgGiraffe.sampled_gbz
   }
 
   call dv.Deepvariant {
@@ -98,9 +93,11 @@ workflow PangenomeShortReadGenotyping {
     gbz = gbz
   }
 
-  call sv.VgGbwt as SampledGbwt {
-    input:
-    gbz = sampled_gbz
+  if (call_sampled_genotypes) {
+    call sv.VgGbwt as SampledGbwt {
+      input:
+      gbz = VgGiraffe.sampled_gbz
+    }
   }
 
   call sv.VgCall {
