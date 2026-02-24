@@ -24,9 +24,11 @@ workflow PangenomeShortReadGenotyping {
     ref_fa_fai: "reference FASTA index"
     gbz: "pangenome in GBZ format"
     hapl: "pangenome haplotype index"
-    genotype_snarls: "[vg call] if true, genotype every snarl, including reference calls"
-    all_snarls: "[vg call] if true, genotype all snarls, including nested child snarls"
-    snarls: "[vg call] snarls computed by vg snarls"
+    genotype_snarls: "[vg call] genotype every snarl, including reference calls"
+    all_snarls: "[vg call] genotype all snarls, including nested child snarls"
+    original_gbz: "[vg pack, vg call] perform genotyping using the pangenome GBZ, not the sampled GBZ"
+    sampled_genotypes: "[vg call] restrict genotypes to the sampled haplotypes"
+    snarls: "[vg call] snarls computed by vg snarls (to avoid recomputing)"
     min_snarl_length: "[vg call] genotype only snarls where at least one traversal has length >= this value"
     max_snarl_length: "[vg call] genotype only snarls where all traversals have length <= this value"
   }
@@ -42,7 +44,8 @@ workflow PangenomeShortReadGenotyping {
     File? hapl
     Boolean genotype_snarls = false
     Boolean all_snarls = false
-    Boolean call_sampled_genotypes = true
+    Boolean original_gbz = false
+    Boolean sampled_genotypes = true
     File? snarls
     Int? min_snarl_length
     Int? max_snarl_length
@@ -87,13 +90,15 @@ workflow PangenomeShortReadGenotyping {
     ref_fa_fai = ref_fa_fai
   }
 
+  File genotyping_gbz = if original_gbz then gbz else VgGiraffe.sampled_gbz
+
   call sv.VgPack {
     input:
     gam = VgGiraffe.gam,
-    gbz = gbz
+    gbz = genotyping_gbz
   }
 
-  if (call_sampled_genotypes) {
+  if (original_gbz && sampled_genotypes) {
     call sv.VgGbwt as SampledGbwt {
       input:
       gbz = VgGiraffe.sampled_gbz
@@ -105,7 +110,7 @@ workflow PangenomeShortReadGenotyping {
     sample_name = sample_name,
     pack = VgPack.pack,
     ref_name = ref_name,
-    gbz = gbz,
+    gbz = genotyping_gbz,
     gbwt = SampledGbwt.gbwt,
     genotype_snarls = genotype_snarls,
     all_snarls = all_snarls,
