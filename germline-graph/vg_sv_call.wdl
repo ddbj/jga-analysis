@@ -77,7 +77,7 @@ task VgCall {
   parameter_meta {
     genotype_snarls: "if true, genotype every snarl, including reference calls"
     all_snarls: "if true, genotype all snarls, including nested child snarls"
-    snarls: "snarls computed by vg snarls"
+    snarls: "snarls computed by vg snarls (to avoid recomputing)"
     min_snarl_length: "genotype only snarls where at least one traversal has length >= this value"
     max_snarl_length: "genotype only snarls where all traversals have length <= this value"
   }
