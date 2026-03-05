@@ -1,6 +1,7 @@
 FROM ubuntu:26.04
 LABEL maintainer="fujino@edu.k.u-tokyo.ac.jp"
 ENV VCFLIB_COMMIT=8b5d4c8143ed486669f9f0f124cae0882b747fb8
+ENV LD_LIBRARY_PATH=/usr/local/lib
 RUN apt-get update && \
     apt-get install -y \
       libbz2-dev \
