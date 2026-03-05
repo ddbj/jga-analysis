@@ -120,6 +120,8 @@ workflow PangenomeShortReadGenotyping {
   }
 
   output {
+    File sampled_gbz = VgGiraffe.sampled_gbz
+    File gam = VgGiraffe.gam
     File deepvariant_vcf_gz = Deepvariant.vcf_gz
     File deepvariant_vcf_gz_tbi = Deepvariant.vcf_gz_tbi
     File deepvariant_gvcf_gz = Deepvariant.gvcf_gz
