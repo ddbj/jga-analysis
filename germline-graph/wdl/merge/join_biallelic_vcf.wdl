@@ -1,25 +1,22 @@
 version 1.0
 
-task SplitToBiallelicVcf {
+task JoinBiallelicVcf {
   input {
     File vcf
     File? ref_fa
-    Boolean force = false
   }
 
-  String split_filename = '~{basename(vcf, ".vcf")}.split.vcf'
+  String join_filename = '~{basename(vcf, ".vcf")}.join.vcf'
 
   command <<<
     bcftools norm \
-      -m-any \
-      --multi-overlaps . \
+      -m+any \
       ~{if defined(ref_fa) then '-f ~{ref_fa}' else ''} \
-      ~{if force then '--force' else ''} \
-      > ~{split_filename}
+      > ~{join_filename}
   >>>
 
   output {
-    File split_vcf = split_filename
+    File join_vcf = join_filename
   }
 
   runtime {
