@@ -7,7 +7,7 @@ task SortVcf {
   }
 
   command <<<
-    bcftools sort ~{vcf} -O z -W tbi -o ~{out_prefix}.vcf.gz
+    bcftools sort ~{vcf} -O z --write-index=tbi -o ~{out_prefix}.vcf.gz
   >>>
 
   output {
