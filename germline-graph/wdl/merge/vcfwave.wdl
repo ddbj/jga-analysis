@@ -13,14 +13,13 @@ task Vcfwave {
   command <<<
     # Output from vcfwave is not compliant with VCF specification and need to be fixed
 
-    /usr/bin/time -v \
-      vcfwave \
-        ~{vcf} \
-        ~{if defined(inv_min) then '-I ~{inv_min}' else ''} \
-        --quiet | \
-      sed -e 's/^##INFO=<ID=AT,Number=R/##INFO=<ID=AT,Number=./' | \
-      awk 'BEGIN { OFS = "\t" } { sub(/INV=YES/, "INV", $8) } 1' \
-      > ~{wave_filename}
+    vcfwave \
+      ~{vcf} \
+      ~{if defined(inv_min) then '-I ~{inv_min}' else ''} \
+      --quiet | \
+    sed -e 's/^##INFO=<ID=AT,Number=R/##INFO=<ID=AT,Number=./' | \
+    awk 'BEGIN { OFS = "\t" } { sub(/INV=YES/, "INV", $8) } 1' \
+    > ~{wave_filename}
   >>>
 
   output {
