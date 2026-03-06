@@ -13,8 +13,8 @@ task Vcfbub {
     /usr/bin/time -v \
       vcfbub \
         --input ~{vcf} \
-        ~{if defined(max_level) then '-l {max_level}' else ''} \
-        ~{if defined(max_allele_length) then '-a {max_allele_length}' else ''} \
+        ~{if defined(max_level) then '-l ~{max_level}' else ''} \
+        ~{if defined(max_allele_length) then '-a ~{max_allele_length}' else ''} \
         > ~{bub_filename}
   >>>
 
