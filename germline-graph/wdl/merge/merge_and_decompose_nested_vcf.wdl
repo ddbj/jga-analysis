@@ -15,6 +15,7 @@ workflow MergeAndDecomposeNestedVcf {
 
   input {
     Array[File] vcf_gz_list
+    Array[File] vcf_gz_tbi_list
     String ref_name = "GRCh38"
     File ref_fa
     Int max_allele_length = 100000
@@ -25,6 +26,7 @@ workflow MergeAndDecomposeNestedVcf {
   call merge.BcftoolsMerge {
     input:
     vcf_gz_list = vcf_gz_list,
+    vcf_gz_tbi_list = vcf_gz_tbi_list,
   }
 
   call reheader.ReheaderVcf {

@@ -7,6 +7,7 @@ version 1.0
 task BcftoolsMerge {
   input {
     Array[File] vcf_gz_list
+    Array[File] vcf_gz_tbi_list
     String out_prefix = "merge"
   }
 

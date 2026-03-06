@@ -12,6 +12,7 @@ workflow SimpleMergeVcf {
 
   input {
     Array[File] vcf_gz_list
+    Array[File] vcf_gz_tbi_list
     String ref_name = "GRCh38"
     File ref_fa
     String out_prefix
@@ -20,6 +21,7 @@ workflow SimpleMergeVcf {
   call merge.BcftoolsMerge {
     input:
     vcf_gz_list = vcf_gz_list,
+    vcf_gz_tbi_list = vcf_gz_tbi_list,
   }
 
   call reheader.ReheaderVcf {
