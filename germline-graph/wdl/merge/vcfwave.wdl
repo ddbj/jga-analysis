@@ -30,6 +30,6 @@ task Vcfwave {
   runtime {
     cpu: 1
     memory: "32 GB"
-    docker: "docker pull ghcr.io/tafujino/vcflib:8b5d4c81"
+    docker: "ghcr.io/tafujino/vcflib:8b5d4c81"
   }
 }
