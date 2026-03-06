@@ -10,6 +10,7 @@ task JoinBiallelicVcf {
 
   command <<<
     bcftools norm \
+      ~{vcf} \
       -m+any \
       ~{if defined(ref_fa) then '-f ~{ref_fa}' else ''} \
       > ~{join_filename}

@@ -15,6 +15,7 @@ task Vcfwave {
 
     /usr/bin/time -v \
       vcfwave \
+        ~{vcf} \
         ~{if defined(inv_min) then '-I ~{inv_min}' else ''} \
         --quiet | \
       sed -e 's/^##INFO=<ID=AT,Number=R/##INFO=<ID=AT,Number=./' | \

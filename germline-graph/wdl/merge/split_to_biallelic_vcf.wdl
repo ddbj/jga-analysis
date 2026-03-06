@@ -11,6 +11,7 @@ task SplitToBiallelicVcf {
 
   command <<<
     bcftools norm \
+      ~{vcf} \
       -m-any \
       --multi-overlaps . \
       ~{if defined(ref_fa) then '-f ~{ref_fa}' else ''} \
