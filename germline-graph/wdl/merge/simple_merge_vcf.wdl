@@ -15,6 +15,7 @@ workflow SimpleMergeVcf {
     Array[File] vcf_gz_tbi_list
     String ref_name = "GRCh38"
     File ref_fa
+    File ref_fa_fai
     String out_prefix
   }
 
@@ -33,7 +34,8 @@ workflow SimpleMergeVcf {
   call split.SplitToBiallelicVcf {
     input:
     vcf = ReheaderVcf.reheader_vcf,
-    ref_fa = ref_fa
+    ref_fa = ref_fa,
+    ref_fa_fai = ref_fa_fai,
   }
 
   call sort.SortVcf {

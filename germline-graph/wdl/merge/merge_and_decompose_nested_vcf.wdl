@@ -13,11 +13,17 @@ workflow MergeAndDecomposeNestedVcf {
     authors: ["Takeshi Fujino"]
   }
 
+  parameter_meta {
+    vcf_gz_tbi_list: "Each pair of .vcf.gz and .vcf.gz.tbi should be placed in the same directory"
+    ref_fa_fai: "ref_fa and ref_fa_fai should be placed in the same directory"
+  }
+
   input {
     Array[File] vcf_gz_list
     Array[File] vcf_gz_tbi_list
     String ref_name = "GRCh38"
     File ref_fa
+    File ref_fa_fai
     Int max_allele_length = 100000
     Int inv_min = 1000
     String out_prefix
@@ -56,7 +62,8 @@ workflow MergeAndDecomposeNestedVcf {
   call join.JoinBiallelicVcf {
     input:
     vcf = Vcfwave.wave_vcf,
-    ref_fa = ref_fa
+    ref_fa = ref_fa,
+    ref_fa_fai = ref_fa_fai
   }
 
   call split.SplitToBiallelicVcf as split2 {

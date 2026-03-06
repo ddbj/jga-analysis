@@ -1,9 +1,14 @@
 version 1.0
 
 task JoinBiallelicVcf {
+  parameter_meta {
+    ref_fa_fai: "ref_fa and ref_fa_fai should be placed in the same directory"
+  }
+
   input {
     File vcf
     File? ref_fa
+    File? ref_fa_fai
   }
 
   String join_filename = '~{basename(vcf, ".vcf")}.join.vcf'

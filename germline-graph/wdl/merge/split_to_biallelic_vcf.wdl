@@ -1,9 +1,14 @@
 version 1.0
 
 task SplitToBiallelicVcf {
+  parameter_meta {
+    ref_fa_fai: "ref_fa and ref_fa_fai should be placed in the same directory"
+  }
+
   input {
     File vcf
     File? ref_fa
+    File? ref_fa_fai
     Boolean force = false
   }
 
