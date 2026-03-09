@@ -18,7 +18,7 @@ task BcftoolsMerge {
     bcftools merge \
     -m all \
     -l ~{write_lines(vcf_gz_list)} \
-    ~{if defined(force_single) then '--force-single}' else ''} \
+    ~{if defined(force_single) then '--force-single' else ''} \
     > ~{merge_filename}
   >>>
 
