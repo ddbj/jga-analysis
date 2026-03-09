@@ -9,12 +9,17 @@ task BcftoolsMerge {
     Array[File] vcf_gz_list
     Array[File] vcf_gz_tbi_list
     String out_prefix = "merge"
+    Boolean force_single = false
   }
 
   String merge_filename = "~{out_prefix}.vcf"
 
   command <<<
-    bcftools merge -m all -l ~{write_lines(vcf_gz_list)} > ~{merge_filename}
+    bcftools merge \
+    -m all \
+    -l ~{write_lines(vcf_gz_list)} \
+    ~{if defined(force_single) then '--force-single}' else ''} \
+    > ~{merge_filename}
   >>>
 
   output {

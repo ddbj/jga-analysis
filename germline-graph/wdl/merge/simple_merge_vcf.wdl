@@ -13,6 +13,7 @@ workflow SimpleMergeVcf {
   input {
     Array[File] vcf_gz_list
     Array[File] vcf_gz_tbi_list
+    Boolean force_single = false
     String ref_name = "GRCh38"
     File ref_fa
     File ref_fa_fai
@@ -23,6 +24,7 @@ workflow SimpleMergeVcf {
     input:
     vcf_gz_list = vcf_gz_list,
     vcf_gz_tbi_list = vcf_gz_tbi_list,
+    force_single = force_single
   }
 
   call reheader.ReheaderVcf {
