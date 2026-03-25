@@ -16,11 +16,18 @@ workflow PangenomeShortReadGenotypingBenchmark {
     ref_fa: "reference FASTA"
     ref_fa_fai: "reference FASTA index"
     gbz: "pangenome in GBZ format"
-    hapl: "pangenome haplotype index (required if diploid_sampling is true)"
-    diploid_sampling: "If true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
-    sv_benchmark_vcf_gz: "required if evaluate_sv is true"
-    sv_benchmark_vcf_gz_tbi: "required if evaluate_sv is true"
-    sv_benchmark_bed: "required if evaluate_sv is true"
+    hapl: "pangenome haplotype index"
+    genotype_snarls: "[vg call] genotype every snarl, including reference calls"
+    all_snarls: "[vg call] genotype all snarls, including nested child snarls"
+    original_gbz: "[vg pack, vg call] perform genotyping using the pangenome GBZ, not the sampled GBZ"
+    sampled_genotypes: "[vg call] restrict genotypes to the sampled haplotypes"
+    snarls: "[vg call] snarls computed by vg snarls (to avoid recomputing)"
+    min_snarl_length: "[vg call] genotype only snarls where at least one traversal has length >= this value"
+    max_snarl_length: "[vg call] genotype only snarls where all traversals have length <= this value"
+    evaluate_sv: "compare SV genotypes with the benchmark"
+    sv_benchmark_vcf_gz: "(required if evaluate_sv is true)"
+    sv_benchmark_vcf_gz_tbi: "(required if evaluate_sv is true)"
+    sv_benchmark_bed: "(required if evaluate_sv is true)"
   }
 
   input {
@@ -32,14 +39,19 @@ workflow PangenomeShortReadGenotypingBenchmark {
     File ref_fa_fai
     File gbz
     File? hapl
-    Boolean diploid_sampling = true
+    Boolean genotype_snarls = false
+    Boolean all_snarls = false
+    Boolean call_sampled_genotypes = true
+    File? snarls
+    Int? min_snarl_length
+    Int? max_snarl_length
     File small_var_benchmark_vcf_gz
     File small_var_benchmark_vcf_gz_tbi
     File small_var_benchmark_bed
+    Boolean evaluate_sv = true
     File? sv_benchmark_vcf_gz
     File? sv_benchmark_vcf_gz_tbi
     File? sv_benchmark_bed
-    Boolean evaluate_sv = true
   }
 
   call genotyping.PangenomeShortReadGenotyping as Gt {
@@ -52,7 +64,12 @@ workflow PangenomeShortReadGenotypingBenchmark {
     ref_fa_fai = ref_fa_fai,
     gbz = gbz,
     hapl = hapl,
-    diploid_sampling = diploid_sampling
+    genotype_snarls = genotype_snarls,
+    all_snarls = all_snarls,
+    call_sampled_genotypes = call_sampled_genotypes,
+    snarls = snarls,
+    min_snarl_length = min_snarl_length,
+    max_snarl_length = max_snarl_length
   }
 
   call happy.Happy {

@@ -23,8 +23,14 @@ workflow PangenomeShortReadGenotyping {
     ref_fa: "reference FASTA"
     ref_fa_fai: "reference FASTA index"
     gbz: "pangenome in GBZ format"
-    hapl: "pangenome haplotype index (required if diploid_sampling is true)"
-    diploid_sampling: "If true, performs diploid sampling and maps reads to the sampled graph; otherwise maps reads to the original graph"
+    hapl: "pangenome haplotype index"
+    genotype_snarls: "[vg call] genotype every snarl, including reference calls"
+    all_snarls: "[vg call] genotype all snarls, including nested child snarls"
+    original_gbz: "[vg pack, vg call] perform genotyping using the pangenome GBZ, not the sampled GBZ"
+    sampled_genotypes: "[vg call] restrict genotypes to the sampled haplotypes"
+    snarls: "[vg call] snarls computed by vg snarls (to avoid recomputing)"
+    min_snarl_length: "[vg call] genotype only snarls where at least one traversal has length >= this value"
+    max_snarl_length: "[vg call] genotype only snarls where all traversals have length <= this value"
   }
 
   input {
@@ -36,15 +42,19 @@ workflow PangenomeShortReadGenotyping {
     File ref_fa_fai
     File gbz
     File? hapl
-    Boolean diploid_sampling = true
+    Boolean genotype_snarls = false
+    Boolean all_snarls = false
+    Boolean original_gbz = false
+    Boolean sampled_genotypes = true
+    File? snarls
+    Int? min_snarl_length
+    Int? max_snarl_length
   }
 
-  if (diploid_sampling) {
-    call kmer_count.KmerCount {
-      input:
-      read1_fq = read1_fq,
-      read2_fq = read2_fq
-    }
+  call kmer_count.KmerCount {
+    input:
+    read1_fq = read1_fq,
+    read2_fq = read2_fq
   }
 
   call refpath.ExtractReferencePaths {
@@ -61,17 +71,15 @@ workflow PangenomeShortReadGenotyping {
     read1_fq = read1_fq,
     read2_fq = read2_fq,
     kff = KmerCount.kff,
-    diploid_sampling = diploid_sampling
+    diploid_sampling = true
   }
-
-  File call_gbz = if diploid_sampling then VgGiraffe.sampled_gbz else gbz
 
   call bam.GamToSortedBam {
     input:
     gam = VgGiraffe.gam,
     ref_name = ref_name,
     ref_path = ExtractReferencePaths.ref_path,
-    gbz = call_gbz
+    gbz = VgGiraffe.sampled_gbz
   }
 
   call dv.Deepvariant {
@@ -82,20 +90,38 @@ workflow PangenomeShortReadGenotyping {
     ref_fa_fai = ref_fa_fai
   }
 
+  File genotyping_gbz = if original_gbz then gbz else VgGiraffe.sampled_gbz
+
   call sv.VgPack {
     input:
     gam = VgGiraffe.gam,
-    gbz = call_gbz
+    gbz = genotyping_gbz
+  }
+
+  if (original_gbz && sampled_genotypes) {
+    call sv.VgGbwt as SampledGbwt {
+      input:
+      gbz = VgGiraffe.sampled_gbz
+    }
   }
 
   call sv.VgCall {
     input:
+    sample_name = sample_name,
     pack = VgPack.pack,
     ref_name = ref_name,
-    gbz = call_gbz
+    gbz = genotyping_gbz,
+    gbwt = SampledGbwt.gbwt,
+    genotype_snarls = genotype_snarls,
+    all_snarls = all_snarls,
+    snarls = snarls,
+    min_snarl_length = min_snarl_length,
+    max_snarl_length = max_snarl_length
   }
 
   output {
+    File sampled_gbz = VgGiraffe.sampled_gbz
+    File gam = VgGiraffe.gam
     File deepvariant_vcf_gz = Deepvariant.vcf_gz
     File deepvariant_vcf_gz_tbi = Deepvariant.vcf_gz_tbi
     File deepvariant_gvcf_gz = Deepvariant.gvcf_gz

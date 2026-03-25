@@ -1,5 +1,8 @@
 version 1.0
 
+Workflow TruvariSvEvaluation {
+}
+
 ################################################################################
 ## task TruvariBench
 
